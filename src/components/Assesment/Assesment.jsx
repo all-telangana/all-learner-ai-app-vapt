@@ -389,7 +389,8 @@ export const ProfileHeader = ({
   const handleLogout = () => {
     localStorage.clear();
     end({});
-    navigate("/login");
+    // navigate("/login");
+    window.parent.postMessage({ type: "LOGOUT" }, "*");
   };
 
   const CustomIconButton = styled(IconButton)({
