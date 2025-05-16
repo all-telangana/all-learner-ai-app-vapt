@@ -86,8 +86,7 @@ const LoginPage = () => {
   // }, []);
 
   useEffect(() => {
-    const trustedOrigins =
-      process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
+    const trustedOrigins = "https://kalikadeepa.the-axl.ai/";
     const GetMessageFromIframe = (event) => {
       if (!trustedOrigins.includes(event.origin)) {
         console.warn("⚠️ Untrusted origin:", event.origin);
