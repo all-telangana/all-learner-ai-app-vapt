@@ -24,11 +24,15 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // const trustedOrigins = ["http://localhost:5000"];
     const trustedOrigins =
       process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
 
+    console.log("✅ Trusted Origins:", trustedOrigins);
+
     const handleParentMessage = (event) => {
+      console.log("📨 Received message from origin:", event.origin);
+      console.log("📨 Message data:", event.data);
+
       if (!trustedOrigins.includes(event.origin)) {
         console.warn("❌ Untrusted origin:", event.origin);
         return;
@@ -37,6 +41,12 @@ const LoginPage = () => {
       if (event.data?.type === "INIT") {
         const { username, virtualIdToken, decryptKey, grade } =
           event.data.payload || {};
+        console.log("🔐 INIT payload received:", {
+          username,
+          virtualIdToken,
+          decryptKey,
+          grade,
+        });
         setLoading(true);
         if (username && virtualIdToken && decryptKey && grade) {
           setUsername(username);
@@ -44,7 +54,7 @@ const LoginPage = () => {
           localStorage.setItem("discovery_id", decryptKey);
           // StorageServiceSet("profileName", username);
           setLocalData("profileName", username);
-
+          console.log("✅ Credentials valid, navigating to /discover-start");
           navigate("/discover-start");
         } else {
           console.warn("Invalid credentials received for auto-login");
@@ -59,6 +69,7 @@ const LoginPage = () => {
           },
           event.origin
         );
+        console.log("📤 Sent RECEIVED_CONFIRMATION to parent:", event.origin);
       }
     };
 
@@ -68,6 +79,7 @@ const LoginPage = () => {
     // Notify parent iframe is ready
     trustedOrigins.forEach((origin) => {
       window.parent.postMessage({ type: "LOADED" }, origin);
+      console.log("📤 Sent LOADED message to parent origin:", origin);
     });
 
     return () => window.removeEventListener("message", handleParentMessage);
