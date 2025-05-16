@@ -9668,8 +9668,13 @@ export const randomizeArray = (arr) => {
 
 export function handleEncrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
+  if (!API_SECRET_KEY) {
+    console.error("Encryption failed: Missing API_SECRET_KEY");
+    return null;
+  }
+
   try {
-    var ciphertext = CryptoJS.AES.encrypt(
+    const ciphertext = CryptoJS.AES.encrypt(
       JSON.stringify(value),
       API_SECRET_KEY
     ).toString();
@@ -9682,9 +9687,22 @@ export function handleEncrypt(value) {
 
 export function handleDecrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
+  if (!API_SECRET_KEY) {
+    console.error("Decryption failed: Missing API_SECRET_KEY");
+    return null;
+  }
+  if (!value) {
+    console.error("Decryption failed: No value provided");
+    return null;
+  }
+
   try {
-    var bytes = CryptoJS.AES.decrypt(value, API_SECRET_KEY);
-    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    const bytes = CryptoJS.AES.decrypt(value, API_SECRET_KEY);
+    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+    if (!decrypted) {
+      throw new Error("Decryption returned empty string");
+    }
+    const decryptedData = JSON.parse(decrypted);
     return decryptedData;
   } catch (error) {
     console.error("Crypto operation failed:", error.message);
