@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -9,10 +9,10 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-import config from "../../utils/urlConstants.json";
+// import config from "../../utils/urlConstants.json";
 import { useMediaQuery } from "@mui/material";
 import { fetchVirtualId } from "../../services/userservice/userService";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import "./LoginPage.css";
 import { setLocalData } from "../../utils/constants";
 
@@ -23,66 +23,99 @@ const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   const [loading, setLoading] = useState(false);
 
+  // useEffect(() => {
+  //   const trustedOrigins =
+  //     process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
+
+  //   console.log("✅ Trusted Origins:", trustedOrigins);
+
+  //   const handleParentMessage = (event) => {
+  //     console.log("📨 Received message from origin:", event.origin);
+  //     console.log("📨 Message data:", event.data);
+
+  //     // if (!trustedOrigins.includes(event.origin)) {
+  //     //   console.warn("❌ Untrusted origin:", event.origin);
+  //     //   return;
+  //     // }
+
+  //     if (event.data?.type === "INIT") {
+  //       const { username, virtualIdToken, decryptKey, grade } =
+  //         event.data.payload || {};
+  //       console.log("🔐 INIT payload received:", {
+  //         username,
+  //         virtualIdToken,
+  //         decryptKey,
+  //         grade,
+  //       });
+  //       setLoading(true);
+  //       if (username && virtualIdToken && decryptKey && grade) {
+  //         setUsername(username);
+  //         localStorage.setItem("apiToken", virtualIdToken);
+  //         localStorage.setItem("discovery_id", decryptKey);
+  //         // StorageServiceSet("profileName", username);
+  //         setLocalData("profileName", username);
+  //         console.log("✅ Credentials valid, navigating to /discover-start");
+  //         navigate("/discover-start");
+  //       } else {
+  //         console.warn("Invalid credentials received for auto-login");
+  //         setLoading(false);
+  //       }
+
+  //       // Respond back to parent confirming message received
+  //       window.parent.postMessage(
+  //         {
+  //           type: "RECEIVED_CONFIRMATION",
+  //           payload: { username, status: "received" },
+  //         },
+  //         event.origin
+  //       );
+  //       console.log("📤 Sent RECEIVED_CONFIRMATION to parent:", event.origin);
+  //     }
+  //   };
+
+  //   // Listen for message from parent
+  //   window.addEventListener("message", handleParentMessage);
+
+  //   // Notify parent iframe is ready
+  //   trustedOrigins.forEach((origin) => {
+  //     window.parent.postMessage({ type: "LOADED" }, origin);
+  //     console.log("📤 Sent LOADED message to parent origin:", origin);
+  //   });
+
+  //   return () => window.removeEventListener("message", handleParentMessage);
+  // }, []);
+
   useEffect(() => {
     const trustedOrigins =
       process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
-
-    console.log("✅ Trusted Origins:", trustedOrigins);
-
-    const handleParentMessage = (event) => {
-      console.log("📨 Received message from origin:", event.origin);
-      console.log("📨 Message data:", event.data);
-
+    const GetMessageFromIframe = (event) => {
       if (!trustedOrigins.includes(event.origin)) {
-        console.warn("❌ Untrusted origin:", event.origin);
+        console.warn("⚠️ Untrusted origin:", event.origin);
         return;
       }
 
-      if (event.data?.type === "INIT") {
-        const { username, virtualIdToken, decryptKey, grade } =
-          event.data.payload || {};
-        console.log("🔐 INIT payload received:", {
-          username,
-          virtualIdToken,
-          decryptKey,
-          grade,
-        });
-        setLoading(true);
-        if (username && virtualIdToken && decryptKey && grade) {
-          setUsername(username);
-          localStorage.setItem("apiToken", virtualIdToken);
-          localStorage.setItem("discovery_id", decryptKey);
-          // StorageServiceSet("profileName", username);
-          setLocalData("profileName", username);
-          console.log("✅ Credentials valid, navigating to /discover-start");
-          navigate("/discover-start");
-        } else {
-          console.warn("Invalid credentials received for auto-login");
-          setLoading(false);
-        }
+      const { username, virtualIdToken, grade } = event.data?.message || {};
 
-        // Respond back to parent confirming message received
-        window.parent.postMessage(
-          {
-            type: "RECEIVED_CONFIRMATION",
-            payload: { username, status: "received" },
-          },
-          event.origin
-        );
-        console.log("📤 Sent RECEIVED_CONFIRMATION to parent:", event.origin);
+      if (username && virtualIdToken && grade) {
+        setUsername(username);
+        localStorage.setItem("apiToken", virtualIdToken);
+        // localStorage.setItem("discovery_id", decriptKey);
+        setLocalData("profileName", username);
+        navigate("/discover-start");
+      } else {
+        console.warn("⚠️ Incomplete data received, skipping state update.");
       }
     };
 
-    // Listen for message from parent
-    window.addEventListener("message", handleParentMessage);
+    window.addEventListener("message", GetMessageFromIframe);
 
-    // Notify parent iframe is ready
     trustedOrigins.forEach((origin) => {
-      window.parent.postMessage({ type: "LOADED" }, origin);
-      console.log("📤 Sent LOADED message to parent origin:", origin);
+      window.parent.postMessage({ type: "REQUEST_DATA" }, origin);
     });
 
-    return () => window.removeEventListener("message", handleParentMessage);
+    return () => {
+      window.removeEventListener("message", GetMessageFromIframe);
+    };
   }, []);
 
   useEffect(() => {
