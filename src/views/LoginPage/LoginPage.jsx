@@ -25,7 +25,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     const trustedOrigins =
-      process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
+      process.env.REACT_APP_TRUSTED_ORIGINS?.split(",").map((origin) =>
+        origin.trim()
+      ) || [];
 
     console.log("✅ Learner-ai-app --- Trusted Origins:", trustedOrigins);
 
@@ -50,9 +52,16 @@ const LoginPage = () => {
         });
 
         setLoading(true);
+
         if (username && virtualIdToken && grade) {
           setUsername(username);
           localStorage.setItem("apiToken", virtualIdToken);
+          if (localStorage.getItem("apiToken")) {
+            console.log(" 999999999999999999999999999 --- token get in local");
+          } else {
+            console.log("111111111111111111 -- no data");
+          }
+
           setLocalData("profileName", username);
           console.log(
             "✅ Learner-ai-app ---  Credentials valid, navigating to /discover-start"
