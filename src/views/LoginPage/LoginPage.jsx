@@ -23,99 +23,109 @@ const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const trustedOrigins =
-  //     process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
-
-  //   console.log("✅ Trusted Origins:", trustedOrigins);
-
-  //   const handleParentMessage = (event) => {
-  //     console.log("📨 Received message from origin:", event.origin);
-  //     console.log("📨 Message data:", event.data);
-
-  //     // if (!trustedOrigins.includes(event.origin)) {
-  //     //   console.warn("❌ Untrusted origin:", event.origin);
-  //     //   return;
-  //     // }
-
-  //     if (event.data?.type === "INIT") {
-  //       const { username, virtualIdToken, decryptKey, grade } =
-  //         event.data.payload || {};
-  //       console.log("🔐 INIT payload received:", {
-  //         username,
-  //         virtualIdToken,
-  //         decryptKey,
-  //         grade,
-  //       });
-  //       setLoading(true);
-  //       if (username && virtualIdToken && decryptKey && grade) {
-  //         setUsername(username);
-  //         localStorage.setItem("apiToken", virtualIdToken);
-  //         localStorage.setItem("discovery_id", decryptKey);
-  //         // StorageServiceSet("profileName", username);
-  //         setLocalData("profileName", username);
-  //         console.log("✅ Credentials valid, navigating to /discover-start");
-  //         navigate("/discover-start");
-  //       } else {
-  //         console.warn("Invalid credentials received for auto-login");
-  //         setLoading(false);
-  //       }
-
-  //       // Respond back to parent confirming message received
-  //       window.parent.postMessage(
-  //         {
-  //           type: "RECEIVED_CONFIRMATION",
-  //           payload: { username, status: "received" },
-  //         },
-  //         event.origin
-  //       );
-  //       console.log("📤 Sent RECEIVED_CONFIRMATION to parent:", event.origin);
-  //     }
-  //   };
-
-  //   // Listen for message from parent
-  //   window.addEventListener("message", handleParentMessage);
-
-  //   // Notify parent iframe is ready
-  //   trustedOrigins.forEach((origin) => {
-  //     window.parent.postMessage({ type: "LOADED" }, origin);
-  //     console.log("📤 Sent LOADED message to parent origin:", origin);
-  //   });
-
-  //   return () => window.removeEventListener("message", handleParentMessage);
-  // }, []);
-
   useEffect(() => {
-    const trustedOrigins = "https://kalikadeepa.the-axl.ai/";
-    const GetMessageFromIframe = (event) => {
+    const trustedOrigins =
+      process.env.REACT_APP_TRUSTED_ORIGINS?.split(",") || [];
+
+    console.log("✅ Learner-ai-app --- Trusted Origins:", trustedOrigins);
+
+    const handleParentMessage = (event) => {
+      console.log(
+        "📨 Learner-ai-app ---  Received message from origin:",
+        event.origin
+      );
+      console.log("📨 Learner-ai-app ---  Message data:", event.data);
+
       if (!trustedOrigins.includes(event.origin)) {
-        console.warn("⚠️ Untrusted origin:", event.origin);
+        console.warn("❌ Learner-ai-app ---  Untrusted origin:", event.origin);
         return;
       }
 
-      const { username, virtualIdToken, grade } = event.data?.message || {};
+      if (event.data?.type === "INIT") {
+        const { username, virtualIdToken, grade } = event.data.payload || {};
+        console.log("🔐 Learner-ai-app ---  INIT payload received:", {
+          username,
+          virtualIdToken,
+          grade,
+        });
 
-      if (username && virtualIdToken && grade) {
-        setUsername(username);
-        localStorage.setItem("apiToken", virtualIdToken);
-        // localStorage.setItem("discovery_id", decriptKey);
-        setLocalData("profileName", username);
-        navigate("/discover-start");
-      } else {
-        console.warn("⚠️ Incomplete data received, skipping state update.");
+        setLoading(true);
+        if (username && virtualIdToken && grade) {
+          setUsername(username);
+          localStorage.setItem("apiToken", virtualIdToken);
+          setLocalData("profileName", username);
+          console.log(
+            "✅ Learner-ai-app ---  Credentials valid, navigating to /discover-start"
+          );
+          navigate("/discover-start");
+        } else {
+          console.warn(
+            " Learner-ai-app --- Invalid credentials received for auto-login"
+          );
+          setLoading(false);
+        }
+
+        // Respond back to parent confirming message received
+        window.parent.postMessage(
+          {
+            type: "RECEIVED_CONFIRMATION",
+            payload: { username, status: "received" },
+          },
+          event.origin
+        );
+        console.log(
+          "📤 Learner-ai-app ---  Sent RECEIVED_CONFIRMATION to parent:",
+          event.origin
+        );
       }
     };
 
-    window.addEventListener("message", GetMessageFromIframe);
+    // Listen for message from parent
+    window.addEventListener("message", handleParentMessage);
 
+    // Notify parent iframe is ready
     trustedOrigins.forEach((origin) => {
-      window.parent.postMessage({ type: "REQUEST_DATA" }, origin);
+      window.parent.postMessage({ type: "LOADED" }, origin);
+      console.log(
+        "📤 Learner-ai-app ---  Sent LOADED message to parent origin:",
+        origin
+      );
     });
 
-    return () => {
-      window.removeEventListener("message", GetMessageFromIframe);
-    };
+    return () => window.removeEventListener("message", handleParentMessage);
   }, []);
+
+  // useEffect(() => {
+  //   const trustedOrigins = "https://kalikadeepa.the-axl.ai/";
+  //   const GetMessageFromIframe = (event) => {
+  //     if (!trustedOrigins.includes(event.origin)) {
+  //       console.warn("⚠️ Untrusted origin:", event.origin);
+  //       return;
+  //     }
+
+  //     const { username, virtualIdToken, grade } = event.data?.message || {};
+
+  //     if (username && virtualIdToken && grade) {
+  //       setUsername(username);
+  //       localStorage.setItem("apiToken", virtualIdToken);
+  //       // localStorage.setItem("discovery_id", decriptKey);
+  //       setLocalData("profileName", username);
+  //       navigate("/discover-start");
+  //     } else {
+  //       console.warn("⚠️ Incomplete data received, skipping state update.");
+  //     }
+  //   };
+
+  //   window.addEventListener("message", GetMessageFromIframe);
+
+  //   trustedOrigins.forEach((origin) => {
+  //     window.parent.postMessage({ type: "REQUEST_DATA" }, origin);
+  //   });
+
+  //   return () => {
+  //     window.removeEventListener("message", GetMessageFromIframe);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (localStorage.getItem("apiToken") !== null) {
