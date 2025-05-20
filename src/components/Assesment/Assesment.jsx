@@ -639,7 +639,7 @@ const Assesment = ({ discoverStart }) => {
           }
         }
 
-        console.log("Assigned LEVEL:", level);
+        // console.log("Assigned LEVEL:", level);
 
         localStorage.setItem(
           "virtualId",
@@ -701,7 +701,7 @@ const Assesment = ({ discoverStart }) => {
           }
         }
 
-        console.log("Assigned LEVEL:", level);
+        // console.log("Assigned LEVEL:", level);
 
         let sessionId = getLocalData("sessionId");
 

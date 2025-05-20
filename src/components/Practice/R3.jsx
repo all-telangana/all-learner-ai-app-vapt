@@ -268,7 +268,7 @@ const R3 = ({
 
   const startRecording = () => {
     setIsRecording(true);
-    console.log("Recording started...");
+    // console.log("Recording started...");
     // if (!browserSupportsSpeechRecognition) {
     //   //alert("Speech recognition is not supported in your browser.");
     //   return;
@@ -281,13 +281,13 @@ const R3 = ({
   };
 
   const stopRecording = () => {
-    console.log("Recording stopped...");
+    // console.log("Recording stopped...");
     SpeechRecognition.stopListening();
     const finalTranscript = transcriptRef.current;
     setIsRecording(false);
   };
 
-  console.log("transcript", currentStep, conversation);
+  // console.log("transcript", currentStep, conversation);
 
   const toggleModal = () => {
     stopRecording();

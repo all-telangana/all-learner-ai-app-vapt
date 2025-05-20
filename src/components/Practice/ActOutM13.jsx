@@ -276,7 +276,7 @@ const ActOutM13 = ({
   const transcriptRef = useRef("");
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    // console.log("Live Transcript:", transcript);
   }, [transcript]);
 
   const startRecording = () => {
@@ -296,8 +296,8 @@ const ActOutM13 = ({
     const finalTranscript = transcriptRef.current;
   };
 
-  console.log("transcript", transcript, transcriptRef.current);
-  console.log("showcase", fluency, isShowCase, livesData, gameOverData);
+  // console.log("transcript", transcript, transcriptRef.current);
+  // console.log("showcase", fluency, isShowCase, livesData, gameOverData);
 
   const getConversation = (level, currentLevel) => {
     const levelData = levelMap[level];
@@ -406,7 +406,7 @@ const ActOutM13 = ({
     }, 2000);
   };
 
-  console.log("levelM13", level, currentStep, currentLevel);
+  // console.log("levelM13", level, currentStep, currentLevel);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -454,7 +454,7 @@ const ActOutM13 = ({
         );
 
         const result = await response.json();
-        console.log("API Response:", result);
+        // console.log("API Response:", result);
 
         const responseText =
           result?.responseObj?.responseDataParams?.data || "";
@@ -471,7 +471,7 @@ const ActOutM13 = ({
           [currentIndex]: { score, feedback },
         }));
 
-        console.log("Stored Evaluation:", { score, feedback });
+        // console.log("Stored Evaluation:", { score, feedback });
       } catch (error) {
         console.error("Error calling API:", error);
       }

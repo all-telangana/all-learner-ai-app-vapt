@@ -131,10 +131,10 @@ const PhoneConversation = ({
 
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    // console.log("Live Transcript:", transcript);
   }, [transcript]);
 
-  console.log("showcases", isShowCase, startShowCase);
+  // console.log("showcases", isShowCase, startShowCase);
 
   //steps = 1;
 
@@ -253,7 +253,7 @@ const PhoneConversation = ({
     }
   }, [showQuestion]);
 
-  console.log("m1011", currentLevel, selectedOption, recAudio);
+  // console.log("m1011", currentLevel, selectedOption, recAudio);
 
   const handleStartRecording = () => {
     // if (!browserSupportsSpeechRecognition) {
@@ -311,10 +311,10 @@ const PhoneConversation = ({
       }));
       setRecording("recording");
 
-      console.log("Evaluation Results:", {
-        ...evaluationResults,
-        [questionText]: isAnswerCorrect ? "Correct" : "Wrong",
-      });
+      // console.log("Evaluation Results:", {
+      //   ...evaluationResults,
+      //   [questionText]: isAnswerCorrect ? "Correct" : "Wrong",
+      // });
       return;
     }
 

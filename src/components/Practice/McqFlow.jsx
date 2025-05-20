@@ -175,7 +175,7 @@ const McqFlow = ({
     (option) => option.id === task.answer
   )?.value;
 
-  console.log("mcqFlow", correctAnswer);
+  // console.log("mcqFlow", correctAnswer);
 
   const resetState = () => {
     setSelectedOption(null);

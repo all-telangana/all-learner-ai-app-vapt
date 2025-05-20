@@ -215,14 +215,14 @@ const Mechanics4 = ({
     }
   };
 
-  console.log(
-    "Mechanics4",
-    parentWords,
-    words,
-    wordsAfterSplit,
-    currentStep,
-    currentLevel
-  );
+  // console.log(
+  //   "Mechanics4",
+  //   parentWords,
+  //   words,
+  //   wordsAfterSplit,
+  //   currentStep,
+  //   currentLevel
+  // );
 
   const answer =
     selectedWords?.length !== wordsAfterSplit?.length

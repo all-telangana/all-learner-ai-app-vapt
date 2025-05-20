@@ -190,7 +190,7 @@ const MainLayout = (props) => {
     }
   }
 
-  console.log("Assigned LEVEL:", LEVEL, props.rStep);
+  // console.log("Assigned LEVEL:", LEVEL, props.rStep);
 
   const {
     handleNext,
@@ -292,7 +292,7 @@ const MainLayout = (props) => {
     };
   }, []);
 
-  console.log("isCo", isCorrect);
+  // console.log("isCo", isCorrect);
 
   useEffect(() => {
     if (isRecordingComplete && answer && isCorrect) {
@@ -1336,7 +1336,7 @@ const MainLayout = (props) => {
                                 (mFlow === true || mFlow === "true") &&
                                 language === "en"
                               ) {
-                                console.log("mFlow value:", mFlow);
+                                // console.log("mFlow value:", mFlow);
                                 setLocalData("rFlow", true);
                               }
                               if (

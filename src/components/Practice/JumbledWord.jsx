@@ -213,14 +213,14 @@ const JumbledWord = ({
   const levelData = getConversation(level, currentLevel);
   //const levelData = content.L1[0];
 
-  console.log("lData", levelData);
+  // console.log("lData", levelData);
 
   const callTelemetry = async () => {
     const sessionId = getLocalData("sessionId");
     const responseStartTime = new Date().getTime();
     let responseText = "";
     const base64Data = await blobToBase64(recordedBlob);
-    console.log("bvlobss", recordedBlob);
+    // console.log("bvlobss", recordedBlob);
 
     await callTelemetryApi(
       levelData?.correctWord[0]?.correctSentence,

@@ -198,7 +198,7 @@ const BingoCard = ({
     const responseStartTime = new Date().getTime();
     let responseText = "";
     const base64Data = await blobToBase64(recordedBlob);
-    console.log("bvlobss", recordedBlob);
+    // console.log("bvlobss", recordedBlob);
 
     await callTelemetryApi(
       levels[currentLevel]?.arrM[currentWordIndex],
@@ -323,7 +323,7 @@ const BingoCard = ({
 
   const currentLevel = practiceSteps?.[currentPracticeStep]?.titleNew || "L1";
 
-  console.log("loggslevel", currentLevel, currentPracticeStep);
+  // console.log("loggslevel", currentLevel, currentPracticeStep);
 
   useEffect(() => {
     setShowHint(false);

@@ -28,7 +28,7 @@ const LoginPage = () => {
     // const trustedOrigin = "http://localhost:5000";
     const trustedOrigin = process.env.REACT_APP_TRUSTED_ORIGIN;
     const handleMessageFromParent = (event) => {
-      console.log(event.origin, "child origin");
+      // console.log(event.origin, "child origin");
       if (event.origin !== trustedOrigin) return;
 
       const { type, payload } = event.data;
@@ -49,7 +49,7 @@ const LoginPage = () => {
     window.addEventListener("message", handleMessageFromParent);
     // Notify parent iframe is ready
     window.parent.postMessage({ type: "DATA_FROM_PARENT" }, trustedOrigin);
-    console.log("📤 Child sent READY_FOR_DATA");
+    // console.log("📤 Child sent READY_FOR_DATA");
 
     return () => window.removeEventListener("message", handleMessageFromParent);
   }, []);

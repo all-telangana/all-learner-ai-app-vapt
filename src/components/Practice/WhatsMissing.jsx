@@ -288,7 +288,7 @@ function Step2({ handleNext, level, currentStep }) {
 
   const conversation = getConversation(level, currentLevel);
 
-  console.log("lvlstep", currentPracticeStep);
+  // console.log("lvlstep", currentPracticeStep);
 
   const items = finalState
     ? conversation[currentStep - 1]?.allwords.filter(
@@ -614,7 +614,7 @@ function WhatsMissing({
 
   const handleNextStep = () => setCurrentSteps(2);
 
-  console.log("lvls", currentStep);
+  // console.log("lvls", currentStep);
 
   return (
     <MainLayout
