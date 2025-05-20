@@ -35,7 +35,6 @@ const LoginPage = () => {
 
       if (type === "DATA_FROM_PARENT") {
         setMessage(payload);
-        localStorage.setItem("messageFromPArent", payload);
         const { username, virtualIdToken, grade } = payload || {};
         if (username && virtualIdToken && grade) {
           setUsername(username);
