@@ -839,12 +839,12 @@ const ReadAloud = ({
   const currentQuestion =
     content[currentLevel][currentQIndex][currentIndex]?.questions || "";
 
-  console.log(
-    "transcript",
-    currentPracticeStep,
-    currentLevel,
-    evaluationResults
-  );
+  // console.log(
+  //   "transcript",
+  //   currentPracticeStep,
+  //   currentLevel,
+  //   evaluationResults
+  // );
 
   // const handleReadAloud = () => {
   //   if (utteranceRef.current) {
@@ -953,7 +953,7 @@ const ReadAloud = ({
         );
 
         const result = await response.json();
-        console.log("API Response:", result);
+        // console.log("API Response:", result);
         const responseText =
           result?.responseObj?.responseDataParams?.data || "";
         const marksMatch = responseText.match(/- \*\*Marks:\*\* (\d+)\/\d+/);
@@ -969,7 +969,7 @@ const ReadAloud = ({
           [currentIndex]: { score, feedback },
         }));
 
-        console.log("Stored Evaluation:", { score, feedback });
+        // console.log("Stored Evaluation:", { score, feedback });
       } catch (error) {
         console.error("Error calling API:", error);
       }

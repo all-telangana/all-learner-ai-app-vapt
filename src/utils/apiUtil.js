@@ -71,7 +71,7 @@ export const handleTextEvaluation = async (teacherText, studentText) => {
     );
 
     const result = await response.json();
-    console.log("Evaluation API Response:", result);
+    // console.log("Evaluation API Response:", result);
 
     const evalResult = result?.responseObj?.responseDataParams?.data?.[0] || {};
 

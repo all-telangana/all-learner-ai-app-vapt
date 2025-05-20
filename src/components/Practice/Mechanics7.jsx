@@ -168,7 +168,7 @@ const Mechanics7 = ({
     : currentImg?.syllablesAudio?.[stepIndex]?.audio || null;
   const [stepsIndex, setStepsIndex] = useState(0);
 
-  console.log("wordSyl", currentText);
+  // console.log("wordSyl", currentText);
 
   const walkSteps = [
     {
@@ -271,7 +271,7 @@ const Mechanics7 = ({
       };
 
       mediaRecorder.onstop = () => {
-        console.log("⛔ Recording stopped.");
+        // console.log("⛔ Recording stopped.");
         if (chunksRef.current.length === 0) {
           console.warn("❗ No data to create blob.");
           return;
@@ -413,7 +413,7 @@ const Mechanics7 = ({
         setIsMicOn(false);
         console.error("Speech recognition error:", event.error);
         if (event.error === "no-speech") {
-          console.log("No Speech!");
+          // console.log("No Speech!");
         } else if (event.error === "aborted") {
           recognitionInstance.start();
         }
@@ -469,7 +469,7 @@ const Mechanics7 = ({
       SpeechRecognition.stopListening();
       stopAudioRecording();
       const finalTranscript = transcriptRef.current;
-      console.log("textR", word, finalTranscript);
+      // console.log("textR", word, finalTranscript);
 
       const matchPercentage = phoneticMatch(word, finalTranscript);
 
@@ -555,7 +555,7 @@ const Mechanics7 = ({
   }, [currentImg]);
 
   const handleWordsLogic = (word, transcribedText, isSelected) => {
-    console.log("wordsZ", word, transcribedText);
+    // console.log("wordsZ", word, transcribedText);
 
     const matchPercentage = phoneticMatch(word, transcribedText);
 
@@ -642,7 +642,7 @@ const Mechanics7 = ({
     setIsCorrect(isWrong);
   }, [selectedWordsRef.current, wordsAfterSplit, parentWords]);
 
-  console.log("ans", incorrectWords);
+  // console.log("ans", incorrectWords);
 
   const getBorderColor = () => {
     if (answer === "correct") {
@@ -697,7 +697,7 @@ const Mechanics7 = ({
   const isCorrectWord = incorrectWords[currentText] === false;
   const isIncorrectWord = incorrectWords[currentText] === true;
 
-  console.log("audios", completeAudio, answer);
+  // console.log("audios", completeAudio, answer);
 
   return (
     <MainLayout

@@ -177,7 +177,7 @@ const SyllablePuzzle = ({
         setIsMicOn(false);
         console.error("Speech recognition error:", event.error);
         if (event.error === "no-speech") {
-          console.log("No Speech!");
+          // console.log("No Speech!");
         } else if (event.error === "aborted") {
           recognitionInstance.start();
         }
@@ -285,7 +285,7 @@ const SyllablePuzzle = ({
 
   const currentLevel = practiceSteps?.[currentPracticeStep]?.title || "L1";
 
-  console.log("lvlData", currentPracticeStep, currentStep, currentLevel, level);
+  // console.log("lvlData", currentPracticeStep, currentStep, currentLevel, level);
 
   useEffect(() => {
     setCurrentIndex(0);

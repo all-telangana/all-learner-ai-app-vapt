@@ -137,7 +137,7 @@ const AnouncementFlow = ({
   const transcriptRef = useRef("");
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    // console.log("Live Transcript:", transcript);
   }, [transcript]);
 
   // let mediaRecorder;
@@ -460,14 +460,14 @@ const AnouncementFlow = ({
     setStep("initiate");
   }, [currentLevel]);
 
-  console.log(
-    "m10",
-    tasks,
-    currentTaskIndex,
-    currentLevel,
-    evaluationResults,
-    recAudio
-  );
+  // console.log(
+  //   "m10",
+  //   tasks,
+  //   currentTaskIndex,
+  //   currentLevel,
+  //   evaluationResults,
+  //   recAudio
+  // );
 
   const allTexts = conversationData[0]?.message;
 
@@ -543,10 +543,10 @@ const AnouncementFlow = ({
       }));
       setRecording("recording");
 
-      console.log("Evaluation Results:", {
-        ...evaluationResults,
-        [questionText]: isAnswerCorrect ? "Correct" : "Wrong",
-      });
+      // console.log("Evaluation Results:", {
+      //   ...evaluationResults,
+      //   [questionText]: isAnswerCorrect ? "Correct" : "Wrong",
+      // });
       return;
     }
 

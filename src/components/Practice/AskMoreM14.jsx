@@ -153,7 +153,7 @@ const AskMoreM14 = ({
 
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    // console.log("Live Transcript:", transcript);
   }, [transcript]);
 
   const handleStartRecording = () => {
@@ -293,15 +293,15 @@ const AskMoreM14 = ({
     setImageData(getImages(level, currentLevel));
   }, [currentLevel]);
 
-  console.log(
-    "levelM14",
-    level,
-    currentStep,
-    currentLevel,
-    conversation,
-    steps,
-    imageData
-  );
+  // console.log(
+  //   "levelM14",
+  //   level,
+  //   currentStep,
+  //   currentLevel,
+  //   conversation,
+  //   steps,
+  //   imageData
+  // );
 
   useEffect(() => {
     setCurrentStep(-1);

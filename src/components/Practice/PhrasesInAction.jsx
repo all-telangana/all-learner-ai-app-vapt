@@ -175,7 +175,7 @@ const PhrasesInAction = ({
     getInitialStep(currentLevel)
   );
 
-  console.log("m3", currentLevel, level);
+  // console.log("m3", currentLevel, level);
 
   const content = {
     L1: [
@@ -1125,7 +1125,7 @@ const PhrasesInAction = ({
   //const levelData = content?.[currentLevel][currentWordIndex][currentSteps];
   const levelData = content?.[currentLevel]?.[currentWordIndex]?.[currentSteps];
 
-  console.log("dataP410", levelData, currentLevel);
+  // console.log("dataP410", levelData, currentLevel);
 
   let audioElement = new Audio(levelData?.audio);
 
@@ -1151,7 +1151,7 @@ const PhrasesInAction = ({
     const responseStartTime = new Date().getTime();
     let responseText = "";
     const base64Data = await blobToBase64(recordedBlob);
-    console.log("bvlobss", recordedBlob);
+    // console.log("bvlobss", recordedBlob);
 
     await callTelemetryApi(
       currentSteps === "step1"

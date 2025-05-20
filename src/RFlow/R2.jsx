@@ -588,7 +588,7 @@ const R2 = ({
     }, 3000);
   };
 
-  console.log("cq", currentQuestion, rStep);
+  // console.log("cq", currentQuestion, rStep);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -704,7 +704,7 @@ const R2 = ({
           // }
           onComplete();
         } else {
-          console.log("contents", content);
+          // console.log("contents", content);
           setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
       }, 3000);

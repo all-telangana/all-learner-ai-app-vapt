@@ -634,7 +634,7 @@ const Practice = () => {
 
   const currentLevel = practiceSteps?.[currentPracticeStep]?.title || "P1";
 
-  console.log("prog", progressDatas);
+  // console.log("prog", progressDatas);
 
   const rFlow = String(getLocalData("rFlow"));
 
@@ -645,7 +645,7 @@ const Practice = () => {
   }, [lang]);
 
   useEffect(() => {
-    console.log("levelsssss", level, rFlow, rStep);
+    // console.log("levelsssss", level, rFlow, rStep);
 
     let currentLevelMap;
     let currentImageMap;
@@ -674,7 +674,7 @@ const Practice = () => {
 
       const levelData = selectedLevels[currentLevelMap];
       const levelImage = selectedLevels[currentImageMap];
-      console.log("levelsNew", level, levelData);
+      // console.log("levelsNew", level, levelData);
       const currentWord = levelData[currentQuestion];
 
       setCurrentImage(levelImage[currentQuestion]);
@@ -791,7 +791,7 @@ const Practice = () => {
           try {
             const decoded = jwtDecode(token);
             const emisUsername = String(decoded.emis_username);
-            console.log("emu", emisUsername);
+            // console.log("emu", emisUsername);
 
             if (levelMapping[emisUsername] !== undefined) {
               setLevel(levelMapping[emisUsername]);
@@ -802,7 +802,7 @@ const Practice = () => {
         }
       }
 
-      console.log("Assigned LEVEL:", level);
+      // console.log("Assigned LEVEL:", level);
       const token = getLocalData("token");
       let emisUsername = null;
 
@@ -810,7 +810,7 @@ const Practice = () => {
         try {
           const decoded = jwtDecode(token);
           emisUsername = String(decoded.emis_username);
-          console.log("emu", emisUsername);
+          // console.log("emu", emisUsername);
         } catch (error) {
           console.error("Error decoding JWT token:", error);
         }
@@ -850,7 +850,7 @@ const Practice = () => {
 
       const currentGetContent = getCurrentContent(newPracticeStep);
 
-      console.log("cqer", currentQuestion, questions, level);
+      // console.log("cqer", currentQuestion, questions, level);
 
       // if(updatedLevel === 14){
       //   setCurrentQuestion(currentQuestion + 1);
@@ -1077,7 +1077,7 @@ const Practice = () => {
             try {
               const decoded = jwtDecode(token);
               const emisUsername = String(decoded.emis_username);
-              console.log("emu", emisUsername);
+              // console.log("emu", emisUsername);
 
               if (levelMapping[emisUsername] !== undefined) {
                 setLevel(levelMapping[emisUsername]);
@@ -1088,7 +1088,7 @@ const Practice = () => {
           }
         }
 
-        console.log("Assigned LEVEL:", level);
+        // console.log("Assigned LEVEL:", level);
       } else if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
 
@@ -1155,7 +1155,7 @@ const Practice = () => {
         Number(getMilestoneDetails?.data?.milestone_level?.replace("m", "")) ||
         1;
 
-      console.log("curGetCont3", level, getMilestoneDetails);
+      // console.log("curGetCont3", level, getMilestoneDetails);
 
       setLevel(level);
 
@@ -1194,7 +1194,7 @@ const Practice = () => {
 
       const getCurrentContent = (stepKey) => {
         const lang = getLocalData("lang") || "en";
-        console.log("curGetCont2", lang, level);
+        // console.log("curGetCont2", lang, level);
         return levelGetContent[lang]?.[level]?.find(
           (elem) => elem.title === practiceSteps?.[stepKey]?.name
         );
@@ -1202,7 +1202,7 @@ const Practice = () => {
 
       const currentGetContent = getCurrentContent(userState);
 
-      console.log("curGetCont", userState, currentGetContent);
+      // console.log("curGetCont", userState, currentGetContent);
 
       if (![10, 11, 12, 13, 14, 15].includes(level)) {
         const resWord = await getContent(
@@ -1288,7 +1288,7 @@ const Practice = () => {
 
   const getCurrentContent = (stepKey) => {
     const lang = getLocalData("lang") || "en";
-    console.log("curGetCont2", lang, level);
+    // console.log("curGetCont2", lang, level);
     return levelGetContent[lang]?.[level]?.find(
       (elem) => elem.title === practiceSteps?.[stepKey]?.name
     );
@@ -1520,7 +1520,7 @@ const Practice = () => {
     }
   }, [questions[currentQuestion]]);
 
-  console.log("mec", mechanism, level, rFlow, currentLevel);
+  // console.log("mec", mechanism, level, rFlow, currentLevel);
 
   const renderMechanics = () => {
     if (
