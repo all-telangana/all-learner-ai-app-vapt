@@ -9669,7 +9669,6 @@ export const randomizeArray = (arr) => {
 export function handleEncrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
   if (!API_SECRET_KEY) {
-    console.error("Encryption failed: Missing API_SECRET_KEY");
     return null;
   }
 
@@ -9688,7 +9687,6 @@ export function handleEncrypt(value) {
 export function handleDecrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
   if (!API_SECRET_KEY) {
-    console.error("Decryption failed: Missing API_SECRET_KEY");
     return null;
   }
   if (!value) {

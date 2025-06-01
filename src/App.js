@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -6,44 +6,51 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import routes from "./routes";
 import { AppContent } from "./views";
 import theme from "./assets/styles/theme";
-import { initialize, end } from "./services/telementryService";
+import { initialize } from "./services/telementryService";
 import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
+import { getLocalData } from "./utils/constants";
 
 const App = () => {
   const navigate = useNavigate();
   const ranonce = useRef(false);
+  const [appInitialized, setAppInitialized] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("apiToken");
+    const profileName = getLocalData("profileName");
+
+    if (token && profileName) {
+      setAppInitialized(true);
+    }
+  }, [navigate]);
+
   useEffect(() => {
     const initService = async (visitorId) => {
       await initialize({
         context: {
-          mode: process.env.REACT_APP_MODE, // To identify preview used by the user to play/edit/preview
-          authToken: localStorage.getItem("apiToken"), // Auth key to make  api calls
-          did: localStorage.getItem("deviceId") || visitorId, // Unique id to identify the device or browser
+          mode: process.env.REACT_APP_MODE,
+          authToken: localStorage.getItem("apiToken"),
+          did: localStorage.getItem("deviceId") || visitorId,
           uid: "anonymous",
-          channel: process.env.REACT_APP_CHANNEL, // Unique id of the channel(Channel ID)
+          channel: process.env.REACT_APP_CHANNEL,
           env: process.env.REACT_APP_ENV,
-
           pdata: {
-            // optional
-            id: process.env.REACT_APP_ID, // Producer ID. For ex: For sunbird it would be "portal" or "genie"
-            ver: process.env.REACT_APP_VER, // Version of the App
-            pid: process.env.REACT_APP_PID, // Optional. In case the component is distributed, then which instance of that component
+            id: process.env.REACT_APP_ID,
+            ver: process.env.REACT_APP_VER,
+            pid: process.env.REACT_APP_PID,
           },
-          tags: [
-            // Defines the tags data
-            "",
-          ],
-          timeDiff: 0, // Defines the time difference// Defines the object roll up data
-          host: process.env.REACT_APP_HOST, // Defines the from which domain content should be load
+          tags: [""],
+          timeDiff: 0,
+          host: process.env.REACT_APP_HOST,
           endpoint: process.env.REACT_APP_ENDPOINT,
           apislug: process.env.REACT_APP_APISLUG,
         },
         config: {},
-        // tslint:disable-next-line:max-line-length
         metadata: {},
       });
+
       if (!ranonce.current) {
         if (localStorage.getItem("contentSessionId") === null) {
           startEvent();
@@ -54,11 +61,7 @@ const App = () => {
 
     const setFp = async () => {
       const fp = await FingerprintJS.load();
-
       const { visitorId } = await fp.get();
-      // //if (!localStorage.getItem("did")) {
-      //   localStorage.setItem("did", visitorId);
-      // //}
       initService(visitorId);
     };
 
@@ -66,40 +69,31 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      window.telemetry &&
-        window.telemetry.syncEvents &&
-        window.telemetry.syncEvents();
+    const handleBeforeUnload = () => {
+      window.telemetry?.syncEvents?.();
     };
 
-    // Add the event listener
     window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
-  axios.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 400)
-      ) {
+  useEffect(() => {
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const errorData = error?.response?.data?.error;
+
         if (
-          error?.response?.data?.error === "Unauthorized" ||
-          error?.response?.data?.error === "Invalid token"
+          error?.response &&
+          (error.response.status === 401 || error.response.status === 400) &&
+          (errorData === "Unauthorized" || errorData === "Invalid token")
         ) {
           if (
             localStorage.getItem("contentSessionId") &&
             process.env.REACT_APP_IS_APP_IFRAME === "true"
           ) {
             window.parent.postMessage(
-              {
-                message: "Unauthorized",
-              },
+              { message: "Unauthorized" },
               window?.location?.ancestorOrigins?.[0] ||
                 window.parent.location.origin
             );
@@ -109,10 +103,13 @@ const App = () => {
             navigate("/login");
           }
         }
+
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
-    }
-  );
+    );
+  }, [navigate]);
+
+  if (!appInitialized) return <div>Loading...</div>;
 
   return (
     <StyledEngineProvider injectFirst>

@@ -389,8 +389,8 @@ export const ProfileHeader = ({
   const handleLogout = () => {
     localStorage.clear();
     end({});
-    // navigate("/login");
-    window.parent.postMessage({ type: "LOGOUT" }, "*");
+    navigate("/login");
+    // window.parent.postMessage({ type: "LOGOUT" }, "*");
   };
 
   const CustomIconButton = styled(IconButton)({
@@ -565,7 +565,7 @@ export const ProfileHeader = ({
               </Box>
             </Box>
           </Box>
-          {process.env.REACT_APP_IS_IN_APP_AUTHORISATION === "true" && (
+          {process.env.REACT_APP_IS_IN_APP_AUTHORISATION === "false" && (
             <CustomTooltip title="Logout">
               <Box>
                 <CustomIconButton onClick={handleLogout}>

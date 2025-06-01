@@ -9,10 +9,10 @@ let playSessionId;
 let url;
 let isBuddyLogin = checkTokenInLocalStorage();
 
-if (localStorage.getItem("token") !== null) {
-  let jwtToken = localStorage.getItem("token");
-  let userDetails = jwtDecode(jwtToken);
-}
+// if (localStorage.getItem("token") !== null) {
+//   let jwtToken = localStorage.getItem("token");
+//   let userDetails = jwtDecode(jwtToken);
+// }
 
 function checkTokenInLocalStorage() {
   const token = localStorage.getItem("buddyToken");
