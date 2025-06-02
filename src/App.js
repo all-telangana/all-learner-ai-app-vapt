@@ -111,7 +111,25 @@ const App = () => {
     }
   );
 
-  if (!appInitialized) return <div>Loading...</div>;
+  if (!appInitialized)
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100vw",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#f5f5f5",
+          fontSize: "20px",
+          fontWeight: "bold",
+          color: "#333",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        "Profile name is missing. Please log out and log in again."{" "}
+      </div>
+    );
 
   return (
     <StyledEngineProvider injectFirst>
