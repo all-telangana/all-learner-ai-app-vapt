@@ -77,23 +77,26 @@ const App = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
-  useEffect(() => {
-    axios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        const errorData = error?.response?.data?.error;
-
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 400)
+      ) {
         if (
-          error?.response &&
-          (error.response.status === 401 || error.response.status === 400) &&
-          (errorData === "Unauthorized" || errorData === "Invalid token")
+          error?.response?.data?.error === "Unauthorized" ||
+          error?.response?.data?.error === "Invalid token" ||
+          error?.response?.data?.error === "Token expired"
         ) {
           if (
             localStorage.getItem("contentSessionId") &&
             process.env.REACT_APP_IS_APP_IFRAME === "true"
           ) {
             window.parent.postMessage(
-              { message: "Unauthorized" },
+              {
+                message: "Unauthorized",
+              },
               window?.location?.ancestorOrigins?.[0] ||
                 window.parent.location.origin
             );
@@ -103,11 +106,10 @@ const App = () => {
             navigate("/login");
           }
         }
-
-        return Promise.reject(error);
       }
-    );
-  }, [navigate]);
+      return Promise.reject(error);
+    }
+  );
 
   if (!appInitialized) return <div>Loading...</div>;
 

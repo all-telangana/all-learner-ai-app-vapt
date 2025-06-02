@@ -4285,12 +4285,12 @@ export const level15 = [
         },
         {
           question: {
-            text: "Which of the above can fly?",
+            text: "The horses _____ to seek attention",
             type: "text",
           },
           answer: "audio1",
           options: [
-            { id: "audio1", value: "BirdAudio", type: "audio" },
+            { id: "audio1", value: "neighAudio", type: "audio" },
             { id: "audio2", value: "DogAudio", type: "audio" },
             { id: "audio3", value: "CatAudio", type: "audio" },
           ],
@@ -5335,8 +5335,8 @@ export const level10 = [
           question: "It is important to remember that it is not your ______.",
           options: [
             { id: "option1", value: "fault" },
-            { id: "option2", value: "responsibility" },
-            { id: "option3", value: "choice" },
+            { id: "option2", value: "umbrella" },
+            { id: "option3", value: "vacation" },
           ],
           answer: "option1",
         },
@@ -5357,7 +5357,7 @@ export const level10 = [
           options: [
             { id: "audio1", value: "level10P7FourAudio2", type: "audio" },
             { id: "audio2", value: "level10P7FiveAudio3", type: "audio" },
-            { id: "audio3", value: "level10P7FiveAudio1", type: "audio" },
+            { id: "audio3", value: "level10P7FiveAudio2", type: "audio" },
           ],
         },
         {
@@ -5381,7 +5381,7 @@ export const level10 = [
           options: [
             { id: "audio1", value: "level10P7FourAudio2", type: "audio" },
             { id: "audio2", value: "level10P7FiveAudio3", type: "audio" },
-            { id: "audio3", value: "level10P7ThreeAudio3", type: "audio" },
+            { id: "audio3", value: "level10P7FourAudio1", type: "audio" },
           ],
         },
         {

@@ -7,6 +7,8 @@ import {
   Tooltip,
   Typography,
   Dialog,
+  isMuiElement,
+  createTheme,
 } from "../../../node_modules/@mui/material/index";
 import { useMediaQuery, useTheme } from "@mui/material";
 import LogoutImg from "../../assets/images/logout.svg";
@@ -67,6 +69,8 @@ import { fetchUserPoints } from "../../services/orchestration/orchestrationServi
 import { fetchVirtualId } from "../../services/userservice/userService";
 import { getFetchMilestoneDetails } from "../../services/learnerAi/learnerAiService";
 import * as Assets from "../../utils/imageAudioLinks";
+
+const theme = createTheme();
 
 export const LanguageModal = ({ lang, setLang, setOpenLangModal }) => {
   const [selectedLang, setSelectedLang] = useState(lang);
@@ -243,6 +247,8 @@ export const MessageDialog = ({
   isError,
   dontShowHeader,
 }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
@@ -274,7 +280,14 @@ export const MessageDialog = ({
           position: "relative",
         }}
       >
-        <Box sx={{ position: "absolute", left: 10, bottom: 0 }}>
+        <Box
+          sx={{
+            position: "absolute",
+            left: 10,
+            bottom: 0,
+            pointerEvents: "none",
+          }}
+        >
           {isError ? (
             <img src={cryPanda} alt="cryPanda" />
           ) : (
@@ -307,9 +320,9 @@ export const MessageDialog = ({
             style={{
               color: "#000000",
               fontWeight: 700,
-              fontSize: "40px",
+              fontSize: isMobile ? " 20px" : "40px",
               fontFamily: "Quicksand",
-              lineHeight: "62px",
+              lineHeight: isMobile ? "35px" : "62px",
               textAlign: "center",
             }}
           >
@@ -318,7 +331,7 @@ export const MessageDialog = ({
         </Box>
         <Box
           sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-          mt="60px"
+          mt={isMobile ? "15px" : "60px"}
           // mr="110px"
           mb={2}
         >
@@ -336,13 +349,14 @@ export const MessageDialog = ({
               justifyContent: "center",
               alignItems: "center",
               padding: "0px 24px 0px 20px",
+              zIndex: "9999",
             }}
           >
             <span
               style={{
                 color: "#FFFFFF",
                 fontWeight: 600,
-                fontSize: "20px",
+                fontSize: isMobile ? "16px" : "20px",
                 fontFamily: "Quicksand",
               }}
             >
@@ -602,6 +616,7 @@ const Assesment = ({ discoverStart }) => {
   const [openLangModal, setOpenLangModal] = useState(false);
   const [lang, setLang] = useState(getLocalData("lang") || "en");
   const [points, setPoints] = useState(0);
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     setLocalData("lang", lang);
@@ -928,12 +943,17 @@ const Assesment = ({ discoverStart }) => {
           <Box
             sx={{
               position: "absolute",
-              right: { xs: 20, md: 200 },
+              //right: { xs: 20, md: 200 },
+              //right: isMobile ? 20 : 200,
+              top: "30%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
               mt: { xs: 2, md: 5 },
+              textAlign: "center",
             }}
           >
             <Typography
