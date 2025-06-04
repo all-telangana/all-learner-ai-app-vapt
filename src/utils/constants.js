@@ -9669,7 +9669,7 @@ export const randomizeArray = (arr) => {
 export function handleEncrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
   if (!API_SECRET_KEY) {
-    console.error("Encryption failed: Missing API_SECRET_KEY");
+    // console.error("Encryption failed: Missing API_SECRET_KEY");
     return null;
   }
 
@@ -9680,7 +9680,7 @@ export function handleEncrypt(value) {
     ).toString();
     return ciphertext;
   } catch (error) {
-    console.error("Crypto operation failed:", error.message);
+    // console.error("Crypto operation failed:", error.message);
     return null;
   }
 }
@@ -9688,11 +9688,11 @@ export function handleEncrypt(value) {
 export function handleDecrypt(value) {
   const API_SECRET_KEY = localStorage.getItem("apiToken");
   if (!API_SECRET_KEY) {
-    console.error("Decryption failed: Missing API_SECRET_KEY");
+    // console.error("Decryption failed: Missing API_SECRET_KEY");
     return null;
   }
   if (!value) {
-    console.error("Decryption failed: No value provided");
+    // console.error("Decryption failed: No value provided");
     return null;
   }
 
@@ -9705,7 +9705,7 @@ export function handleDecrypt(value) {
     const decryptedData = JSON.parse(decrypted);
     return decryptedData;
   } catch (error) {
-    console.error("Crypto operation failed:", error.message);
+    // console.error("Crypto operation failed:", error.message);
     return null;
   }
 }

@@ -971,7 +971,7 @@ const ReadAloud = ({
 
         // console.log("Stored Evaluation:", { score, feedback });
       } catch (error) {
-        console.error("Error calling API:", error);
+        // console.error("Error calling API:", error);
       }
 
       if (step === "questions" || step === "stoppedRecording") {

@@ -49,7 +49,7 @@ export const fetchASROutput = async (base64Data, options, setLoader) => {
 
     return data;
   } catch (error) {
-    console.error("Error in fetchASROutput:", error);
+    // console.error("Error in fetchASROutput:", error);
     return "";
   } finally {
     setLoader(false);
@@ -85,7 +85,7 @@ export const handleTextEvaluation = async (teacherText, studentText) => {
       overall: evalResult.overall || 0,
     };
   } catch (error) {
-    console.error("Error in evaluateText API:", error);
+    // console.error("Error in evaluateText API:", error);
     return null;
   }
 };

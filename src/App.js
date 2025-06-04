@@ -81,6 +81,8 @@ const App = () => {
     };
   }, []);
 
+  const trustedOrigin = process.env.REACT_APP_TRUSTED_ORIGIN;
+
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -90,12 +92,15 @@ const App = () => {
       ) {
         if (
           error?.response?.data?.error === "Unauthorized" ||
-          error?.response?.data?.error === "Invalid token"
+          error?.response?.data?.error === "Invalid token" ||
+          error?.response?.data?.error === "Token expired"
         ) {
           if (
             localStorage.getItem("contentSessionId") &&
             process.env.REACT_APP_IS_APP_IFRAME === "true"
           ) {
+            window.parent.postMessage({ type: "LOGOUT" }, trustedOrigin);
+
             window.parent.postMessage(
               {
                 message: "Unauthorized",
@@ -104,6 +109,8 @@ const App = () => {
                 window.parent.location.origin
             );
           } else {
+            window.parent.postMessage({ type: "LOGOUT" }, trustedOrigin);
+
             localStorage.clear();
             sessionStorage.clear();
             navigate("/login");

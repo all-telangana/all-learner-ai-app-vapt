@@ -27,7 +27,7 @@ export const fetchAssessmentData = async (lang) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching assessment:", error);
+    // console.error("Error fetching assessment:", error);
     throw error;
   }
 };
@@ -44,7 +44,7 @@ export const fetchPaginatedContent = async (
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching pagination data:", error);
+    // console.error("Error fetching pagination data:", error);
     throw error; // Rethrow for handling in the calling function
   }
 };

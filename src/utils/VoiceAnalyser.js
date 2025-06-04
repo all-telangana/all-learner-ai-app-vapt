@@ -124,12 +124,12 @@ function VoiceAnalyser(props) {
       });
 
       audio.addEventListener("error", (e) => {
-        console.error("Audio failed to load", e);
+        // console.error("Audio failed to load", e);
         setPauseAudio(false); // Set pause state to false
         alert("Failed to load the audio. Please try again.");
       });
     } catch (err) {
-      console.error("An error occurred:", err);
+      // console.error("An error occurred:", err);
       alert("An unexpected error occurred while trying to play the audio.");
     }
   };
@@ -151,12 +151,12 @@ function VoiceAnalyser(props) {
         }
       });
       audio.addEventListener("error", (e) => {
-        console.error("Audio failed to load", e);
+        // console.error("Audio failed to load", e);
         setIsStudentAudioPlaying(false);
         alert("Failed to load the audio. Please try again.");
       });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -564,7 +564,7 @@ function VoiceAnalyser(props) {
       }
       setRecordedAudioBase64("");
       setApiResponse("error");
-      console.error("err", error);
+      // console.error("err", error);
     }
   };
 
@@ -655,7 +655,7 @@ function VoiceAnalyser(props) {
         setLivesData(newLivesData);
       }
     } catch (e) {
-      console.error("error", e);
+      // console.error("error", e);
     }
   };
 
@@ -685,7 +685,7 @@ function VoiceAnalyser(props) {
         setAudioPermission(true);
       })
       .catch((error) => {
-        console.error("Permission Denied");
+        // console.error("Permission Denied");
         setAudioPermission(false);
         //alert("Microphone Permission Denied");
       });

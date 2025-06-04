@@ -72,7 +72,7 @@ const Mechanics2 = ({
           setSentences(wordsArr);
           setSelectedWord("");
         } catch (error) {
-          console.error("Error in initializeFillInTheBlank:", error);
+          // console.error("Error in initializeFillInTheBlank:", error);
         }
       }
     };
@@ -87,7 +87,7 @@ const Mechanics2 = ({
         try {
           await getSimilarWords(parentWords);
         } catch (error) {
-          console.error("Error in initializeAudio:", error);
+          // console.error("Error in initializeAudio:", error);
         }
       }
     };

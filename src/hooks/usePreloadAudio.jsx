@@ -11,7 +11,7 @@ const usePreloadAudio = (audioUrl) => {
         const audioObjectUrl = URL.createObjectURL(audioBlob);
         setAudioSrc(audioObjectUrl);
       } catch (error) {
-        console.error("Error preloading audio:", error);
+        // console.error("Error preloading audio:", error);
       }
     };
 

@@ -42,7 +42,7 @@ const LoginPage = () => {
           setLocalData("profileName", username);
           navigate("/discover-start");
         } else {
-          console.warn("⚠️ Incomplete data received, skipping state update.");
+          // console.warn("⚠️ Incomplete data received, skipping state update.");
         }
       }
     };
@@ -81,7 +81,7 @@ const LoginPage = () => {
         alert("Enter correct username and password");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       alert("An error occurred. Please try again later.");
     } finally {
       setLoading(false);

@@ -144,7 +144,7 @@ const WordsOrImage = ({
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
       if (!MediaRecorder.isTypeSupported(mimeType)) {
-        console.error("MIME type not supported:", mimeType);
+        // console.error("MIME type not supported:", mimeType);
         return;
       }
 
@@ -158,7 +158,7 @@ const WordsOrImage = ({
 
       mediaRecorder.onstop = () => {
         if (recordedChunksRef.current.length === 0) {
-          console.warn("No audio data captured.");
+          // console.warn("No audio data captured.");
           setRecordedBlob(null);
           return;
         }
@@ -174,7 +174,7 @@ const WordsOrImage = ({
       mediaRecorder.start(100); // Emit data every 100ms
       setIsRecording(true);
     } catch (err) {
-      console.error("Error starting audio recording:", err);
+      // console.error("Error starting audio recording:", err);
     }
   }, []);
 
@@ -191,7 +191,7 @@ const WordsOrImage = ({
     // console.log("play", isPlaying);
 
     if (!recordedBlob || !(recordedBlob instanceof Blob)) {
-      console.error("No valid audio blob to play:", recordedBlob);
+      // console.error("No valid audio blob to play:", recordedBlob);
       return;
     }
 
@@ -222,12 +222,12 @@ const WordsOrImage = ({
     };
 
     audio.onerror = () => {
-      console.error("Playback failed:", audio.error);
+      // console.error("Playback failed:", audio.error);
       setIsPlaying(false);
     };
 
     audio.play().catch((err) => {
-      console.error("Playback failed:", err);
+      // console.error("Playback failed:", err);
       setIsPlaying(false);
     });
   }, [recordedBlob]);
@@ -287,7 +287,7 @@ const WordsOrImage = ({
 
       recognitionInstance.onerror = (event) => {
         setIsRecording(false);
-        console.error("Speech recognition error:", event.error);
+        // console.error("Speech recognition error:", event.error);
         if (event.error === "no-speech") {
           // console.log("No Speech!");
         } else if (event.error === "aborted") {
@@ -477,7 +477,7 @@ const WordsOrImage = ({
       const audioBlobUrl = URL.createObjectURL(recordedAudioBlob);
       audioRef.current.src = audioBlobUrl;
       audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
+        // console.error("Error playing audio:", error);
       });
     }
   };

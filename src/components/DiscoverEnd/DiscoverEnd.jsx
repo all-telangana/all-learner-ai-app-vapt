@@ -56,7 +56,7 @@ const SpeakSentenceComponent = () => {
         navigate("/discover-start");
       }
     } catch (error) {
-      console.error("Error posting message:", error);
+      // console.error("Error posting message:", error);
     }
   };
 

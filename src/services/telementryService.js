@@ -73,7 +73,7 @@ export const initialize = async ({ context, config, metadata }) => {
         telemetryConfig
       );
     } catch (error) {
-      console.error(":e", error);
+      // console.error(":e", error);
     }
   }
 };
@@ -92,7 +92,7 @@ export const start = (duration) => {
       },
     });
   } catch (error) {
-    console.error("err", error);
+    // console.error("err", error);
   }
 };
 
@@ -120,11 +120,11 @@ export const Log = (context, pageid, telemetryMode) => {
         },
       });
     } catch (error) {
-      console.error("Failed to log telemetry:", error, {
-        context,
-        pageid,
-        telemetryMode,
-      });
+      // console.error("Failed to log telemetry:", error, {
+      //   context,
+      //   pageid,
+      //   telemetryMode,
+      // });
     }
   }
 };
@@ -144,7 +144,7 @@ export const end = (data) => {
       },
     });
   } catch (error) {
-    console.error("Error in end telemetry event:", error);
+    // console.error("Error in end telemetry event:", error);
   }
 };
 

@@ -180,7 +180,7 @@ const AskMoreM14 = ({
           setIsPlaying(true);
         })
         .catch((error) => {
-          console.error("Error playing audio:", error);
+          // console.error("Error playing audio:", error);
         });
     }
   };
@@ -226,7 +226,7 @@ const AskMoreM14 = ({
         setAudioInstance(audio);
         setIsPlaying(true);
       } else {
-        console.error("Audio file not found:", audioKey);
+        // console.error("Audio file not found:", audioKey);
       }
     }
   };

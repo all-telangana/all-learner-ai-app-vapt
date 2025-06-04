@@ -382,7 +382,7 @@ export const ProfileHeader = ({
         navigate("/discover-start");
       }
     } catch (error) {
-      console.error("Error posting message:", error);
+      // console.error("Error posting message:", error);
     }
   };
 
@@ -634,7 +634,7 @@ const Assesment = ({ discoverStart }) => {
                 setLevel(levelMapping[emisUsername]);
               }
             } catch (error) {
-              console.error("Error decoding JWT token:", error);
+              // console.error("Error decoding JWT token:", error);
             }
           }
         }
@@ -664,7 +664,7 @@ const Assesment = ({ discoverStart }) => {
               setPoints(points);
             })
             .catch((error) => {
-              console.error("Error fetching user points:", error);
+              // console.error("Error fetching user points:", error);
               setPoints(0);
             });
         }
@@ -696,7 +696,7 @@ const Assesment = ({ discoverStart }) => {
                 setLevel(levelMapping[emisUsername]);
               }
             } catch (error) {
-              console.error("Error decoding JWT token:", error);
+              // console.error("Error decoding JWT token:", error);
             }
           }
         }
@@ -720,7 +720,7 @@ const Assesment = ({ discoverStart }) => {
               setPoints(points);
             })
             .catch((error) => {
-              console.error("Error fetching user points:", error);
+              // console.error("Error fetching user points:", error);
               setPoints(0);
             });
         }
@@ -743,10 +743,10 @@ const Assesment = ({ discoverStart }) => {
           process.env.REACT_APP_PARENT_ORIGIN_URL || "[]"
         );
       } catch (error) {
-        console.error(
-          "Invalid JSON format in REACT_APP_PARENT_ORIGIN_URL:",
-          error
-        );
+        // console.error(
+        //   "Invalid JSON format in REACT_APP_PARENT_ORIGIN_URL:",
+        //   error
+        // );
       }
 
       const parentOrigin =
@@ -761,10 +761,10 @@ const Assesment = ({ discoverStart }) => {
             parentOrigin
           );
         } catch (error) {
-          console.error("Error sending postMessage:", error);
+          // console.error("Error sending postMessage:", error);
         }
       } else {
-        console.warn(`Parent origin "${parentOrigin}" is not allowed.`);
+        // console.warn(`Parent origin "${parentOrigin}" is not allowed.`);
       }
     }
   };

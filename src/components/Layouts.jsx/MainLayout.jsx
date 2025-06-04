@@ -185,7 +185,7 @@ const MainLayout = (props) => {
           LEVEL = levelMapping[emisUsername];
         }
       } catch (error) {
-        console.error("Error decoding JWT token:", error);
+        // console.error("Error decoding JWT token:", error);
       }
     }
   }
@@ -279,7 +279,7 @@ const MainLayout = (props) => {
 
         setAudioCache(cache);
       } catch (error) {
-        console.error("Error preloading audio:", error);
+        // console.error("Error preloading audio:", error);
       }
     };
 
@@ -316,7 +316,7 @@ const MainLayout = (props) => {
       if (audioSrc) {
         const audio = new Audio(audioSrc);
         audio.play().catch((error) => {
-          console.error("Error playing audio:", error);
+          // console.error("Error playing audio:", error);
         });
 
         if (!gameOverData?.userWon) {

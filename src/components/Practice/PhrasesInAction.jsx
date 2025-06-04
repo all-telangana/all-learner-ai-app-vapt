@@ -92,7 +92,7 @@ const PhrasesInAction = ({
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
       if (!MediaRecorder.isTypeSupported(mimeType)) {
-        console.error("MIME type not supported:", mimeType);
+        // console.error("MIME type not supported:", mimeType);
         return;
       }
 
@@ -106,7 +106,7 @@ const PhrasesInAction = ({
 
       mediaRecorder.onstop = () => {
         if (recordedChunksRef.current.length === 0) {
-          console.warn("No audio data captured.");
+          // console.warn("No audio data captured.");
           setRecordedBlob(null);
           return;
         }
@@ -120,7 +120,7 @@ const PhrasesInAction = ({
       mediaRecorder.start(100); // Emit data every 100ms
       setIsRecording(true);
     } catch (err) {
-      console.error("Error starting audio recording:", err);
+      // console.error("Error starting audio recording:", err);
     }
   }, []);
 

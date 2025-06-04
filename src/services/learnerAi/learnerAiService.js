@@ -27,7 +27,7 @@ export const getContent = async (criteria, lang, limit, options = {}) => {
     const response = await axios.get(url, getHeaders());
     return response.data;
   } catch (error) {
-    console.error("Error fetching content:", error);
+    // console.error("Error fetching content:", error);
     throw error;
   }
 };
@@ -41,7 +41,7 @@ export const getFetchMilestoneDetails = async (lang) => {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching milestone details:", error);
+      // console.error("Error fetching milestone details:", error);
       throw error;
     }
   }
@@ -71,7 +71,7 @@ export const fetchGetSetResult = async (
     );
     return response.data;
   } catch (error) {
-    console.error("Error in getSetResult:", error);
+    // console.error("Error in getSetResult:", error);
     throw error;
   }
 };
@@ -101,7 +101,7 @@ export const getSetResultPractice = async ({
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching set result:", error);
+    // console.error("Error fetching set result:", error);
     throw error; // Rethrow the error to handle it in the calling function
   }
 };
@@ -115,7 +115,7 @@ export const updateLearnerProfile = async (lang, requestBody) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error updating learner profile:", error);
+    // console.error("Error updating learner profile:", error);
     throw error;
   }
 };

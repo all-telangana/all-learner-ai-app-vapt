@@ -24,7 +24,7 @@ export const getLessonProgressByID = async (lang) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching lesson progress by ID:", error);
+    // console.error("Error fetching lesson progress by ID:", error);
     throw error;
   }
 };
@@ -40,7 +40,7 @@ export const fetchUserPoints = async () => {
     );
     return response?.data?.result?.totalLanguagePoints || 0;
   } catch (error) {
-    console.error("Error fetching user points:", error);
+    // console.error("Error fetching user points:", error);
     return 0;
   }
 };
@@ -62,7 +62,7 @@ export const addPointer = async (points, milestone) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error adding points:", error);
+    // console.error("Error adding points:", error);
     throw error;
   }
 };
@@ -92,7 +92,7 @@ export const createLearnerProgress = async (
     );
     return response.data;
   } catch (error) {
-    console.error("Error creating learner progress:", error);
+    // console.error("Error creating learner progress:", error);
     throw error;
   }
 };
@@ -120,7 +120,7 @@ export const addLesson = async ({
     );
     return response.data;
   } catch (error) {
-    console.error("Error adding lesson:", error);
+    // console.error("Error adding lesson:", error);
     throw error;
   }
 };

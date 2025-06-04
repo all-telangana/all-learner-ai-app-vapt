@@ -24,7 +24,7 @@ export function* handleSignin(action) {
     yield put(setUser({ userData }));
     //console.log(userData);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 }
 
@@ -45,7 +45,7 @@ export function* fetchOTP(action) {
 
     yield put(setOTPSent({ otpSent: true }));
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 }
 
@@ -63,6 +63,6 @@ export function* handleVerifyOtp(action) {
     yield put(setOtpVerified({ isOtpVerified: true }));
   } catch (error) {
     yield put(setOtpVerified({ isOtpVerified: false }));
-    console.error(error);
+    // console.error(error);
   }
 }

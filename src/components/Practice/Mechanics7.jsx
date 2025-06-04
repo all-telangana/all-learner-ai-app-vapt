@@ -273,7 +273,7 @@ const Mechanics7 = ({
       mediaRecorder.onstop = () => {
         // console.log("⛔ Recording stopped.");
         if (chunksRef.current.length === 0) {
-          console.warn("❗ No data to create blob.");
+          // console.warn("❗ No data to create blob.");
           return;
         }
 
@@ -288,7 +288,7 @@ const Mechanics7 = ({
       mediaRecorder.start();
       //console.log("🎙️ Recording started...");
     } catch (error) {
-      console.error("🚨 Error starting audio recording:", error);
+      // console.error("🚨 Error starting audio recording:", error);
     }
   };
 
@@ -300,13 +300,13 @@ const Mechanics7 = ({
       //console.log("🛑 Stopping recording...");
       mediaRecorderRef.current.stop();
     } else {
-      console.warn("❗ Recorder already inactive or null.");
+      // console.warn("❗ Recorder already inactive or null.");
     }
   };
 
   const playAudioFromBlob = (blob) => {
     if (!(blob instanceof Blob)) {
-      console.error("Invalid input: Expected a Blob or File.");
+      // console.error("Invalid input: Expected a Blob or File.");
       return;
     }
 
@@ -321,7 +321,7 @@ const Mechanics7 = ({
         setIsPlaying(true);
       })
       .catch((error) => {
-        console.error("Error playing audio:", error);
+        // console.error("Error playing audio:", error);
       });
 
     audio.onended = () => {
@@ -353,7 +353,7 @@ const Mechanics7 = ({
           setIsPlaying(true);
         })
         .catch((error) => {
-          console.error("Error playing audio:", error);
+          // console.error("Error playing audio:", error);
         });
     }
   };
@@ -411,7 +411,7 @@ const Mechanics7 = ({
         setIsRecording(false);
         setIsProcessing(false);
         setIsMicOn(false);
-        console.error("Speech recognition error:", event.error);
+        // console.error("Speech recognition error:", event.error);
         if (event.error === "no-speech") {
           // console.log("No Speech!");
         } else if (event.error === "aborted") {
@@ -527,7 +527,7 @@ const Mechanics7 = ({
     if (matchedSyllable) {
       playAudio(matchedSyllable.audio);
     } else {
-      console.warn(`No audio found for the syllable: ${elem}`);
+      // console.warn(`No audio found for the syllable: ${elem}`);
     }
   };
 

@@ -175,7 +175,7 @@ const SyllablePuzzle = ({
         setIsRecording(false);
         setIsProcessing(false);
         setIsMicOn(false);
-        console.error("Speech recognition error:", event.error);
+        // console.error("Speech recognition error:", event.error);
         if (event.error === "no-speech") {
           // console.log("No Speech!");
         } else if (event.error === "aborted") {

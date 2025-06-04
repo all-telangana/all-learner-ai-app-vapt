@@ -379,7 +379,7 @@ const ActOutM13 = ({
 
           fetchASROutput(base64Data, options, setLoader, setApiResponse);
         } else {
-          console.error("Failed to get evaluation result.");
+          // console.error("Failed to get evaluation result.");
         }
       }
     } else {
@@ -473,7 +473,7 @@ const ActOutM13 = ({
 
         // console.log("Stored Evaluation:", { score, feedback });
       } catch (error) {
-        console.error("Error calling API:", error);
+        // console.error("Error calling API:", error);
       }
     }
 

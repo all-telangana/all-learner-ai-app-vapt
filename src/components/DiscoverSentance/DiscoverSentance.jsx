@@ -84,7 +84,7 @@ const SpeakSentenceComponent = () => {
           setPoints(points);
         })
         .catch((error) => {
-          console.error("Error fetching user points:", error);
+          // console.error("Error fetching user points:", error);
           setPoints(0);
         });
     }
@@ -151,7 +151,7 @@ const SpeakSentenceComponent = () => {
             setPoints(result?.result?.totalLanguagePoints || 0);
           } catch (error) {
             setPoints(0);
-            console.error("Error adding points:", error);
+            // console.error("Error adding points:", error);
           }
         } else {
           sendTestRigScore(5);
@@ -170,7 +170,7 @@ const SpeakSentenceComponent = () => {
               milestoneLevel
             );
           } catch (error) {
-            console.error("Error creating learner progress:", error);
+            // console.error("Error creating learner progress:", error);
           }
         }
         if (
@@ -240,7 +240,7 @@ const SpeakSentenceComponent = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -256,7 +256,7 @@ const SpeakSentenceComponent = () => {
         );
 
         if (!sentences?.collectionId) {
-          console.error("No collection ID found for sentences.");
+          // console.error("No collection ID found for sentences.");
           return;
         }
         // Fetch paginated content
@@ -273,7 +273,7 @@ const SpeakSentenceComponent = () => {
         quesArr = [...quesArr, ...(resPagination?.data || [])];
         setQuestions(quesArr);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     })();
   }, []);

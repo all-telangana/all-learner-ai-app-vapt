@@ -54,7 +54,7 @@ const AudioRecorder = (props) => {
 
       props.handleStartRecording?.();
     } catch (err) {
-      console.error("Failed to start recording:", err);
+      // console.error("Failed to start recording:", err);
     }
   };
 
@@ -70,7 +70,7 @@ const AudioRecorder = (props) => {
             setAudioBlob(blob);
             saveBlob(blob);
           } else {
-            console.error("Failed to retrieve audio blob.");
+            // console.error("Failed to retrieve audio blob.");
           }
           if (mediaStreamRef.current) {
             mediaStreamRef.current.getTracks().forEach((track) => track.stop());

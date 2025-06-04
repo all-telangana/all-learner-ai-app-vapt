@@ -57,7 +57,7 @@ const AssesmentEnd = () => {
             setPoints(points);
           })
           .catch((error) => {
-            console.error("Error fetching user points:", error);
+            // console.error("Error fetching user points:", error);
             setPoints(0);
           });
       }

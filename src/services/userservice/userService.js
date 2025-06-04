@@ -11,7 +11,7 @@ export const fetchVirtualId = async (username) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching virtual ID:", error);
+    // console.error("Error fetching virtual ID:", error);
     throw error;
   }
 };
@@ -24,7 +24,7 @@ export const getVirtualId = () => {
       const tokenDetails = jwtDecode(TOKEN);
       virtualId = JSON.stringify(tokenDetails?.virtual_id);
     } catch (error) {
-      console.error("Error decoding token:", error);
+      // console.error("Error decoding token:", error);
     }
   }
   return virtualId;
