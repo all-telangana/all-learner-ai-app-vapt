@@ -76,21 +76,35 @@ const SpeakSentenceComponent = () => {
       }}
     >
       <Card sx={sectionStyle}>
-        <Box sx={{ position: "absolute", left: "3px", bottom: "0px" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            left: "3px",
+            bottom: "0px",
+            pointerEvents: "none",
+          }}
+        >
           <img
             src={discoverEndLeft}
             alt="timer"
             className={shake && "shakeImage"}
           />
         </Box>
-        <Box sx={{ position: "absolute", right: "3px", bottom: "0px" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            right: "3px",
+            bottom: "0px",
+            pointerEvents: "none",
+          }}
+        >
           <img
             src={discoverEndRight}
             alt="timer"
             className={shake && "shakeImage"}
           />
         </Box>
-        <Box>
+        <Box sx={{ pointerEvents: "none" }}>
           {/* {!shake && <img src={discoverEndTop} alt="timer" className={shake && 'shakeImage'} />} */}
           {shake && <Confetti width={width} height={"600px"} />}
         </Box>
@@ -135,6 +149,7 @@ const SpeakSentenceComponent = () => {
               width: "60%",
               margin: "0 auto",
               cursor: "pointer",
+              zIndex: "99999",
             }}
           >
             <LetsStart />
