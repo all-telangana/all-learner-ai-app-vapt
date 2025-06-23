@@ -11,6 +11,7 @@ import R1 from "../../RFlow/R1";
 import R2 from "../../RFlow/R2";
 import R3Flow from "../../RFlow/R3";
 import R4 from "../../RFlow/R4";
+import TowreFlow from "../../components/Practice/TowreFlow";
 import McqFlow from "../../components/Practice/McqFlow";
 import JumbledWord from "../../components/Practice/JumbledWord";
 import AskMoreM14 from "../../components/Practice/AskMoreM14";
@@ -81,6 +82,8 @@ const Practice = () => {
   const [parentWords, setParentWords] = useState({});
   const [levelOneWord, setLevelOneWord] = useState("");
   const [level, setLevel] = useState(0);
+  const [vocabCount, setVocabCount] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
   const [isShowCase, setIsShowCase] = useState(false);
   const [startShowCase, setStartShowCase] = useState(false);
   const limit = 5;
@@ -187,6 +190,86 @@ const Practice = () => {
       },
     ],
     L2: [
+      {
+        completeWord: "Basket",
+        syllable: ["Bas", "ket"],
+        img: getAssetUrl(s3Assets.Basket) || Assets.Basket,
+        syllablesAudio: [
+          { name: "Bas", audio: getAssetAudioUrl(s3Assets.Bas) || Assets.Bas },
+          { name: "Ket", audio: Assets.Ket },
+        ],
+        completeAudio: getAssetAudioUrl(s3Assets.BasketS) || Assets.BasketS,
+      },
+      {
+        completeWord: "Dinner",
+        syllable: ["Din", "ner"],
+        img: getAssetUrl(s3Assets.DinnerNewImg) || Assets.DinnerNewImg,
+        syllablesAudio: [
+          {
+            name: "Din",
+            audio: getAssetAudioUrl(s3Assets.dinAudio) || Assets.dinAudio,
+          },
+          {
+            name: "ner",
+            audio: getAssetAudioUrl(s3Assets.nerAudio) || Assets.nerAudio,
+          },
+        ],
+        completeAudio:
+          getAssetAudioUrl(s3Assets.dinnerAudio) || Assets.dinnerAudio,
+      },
+      {
+        completeWord: "Window",
+        syllable: ["Win", "dow"],
+        img: getAssetUrl(s3Assets.WindowNewImg) || Assets.WindowNewImg,
+        syllablesAudio: [
+          {
+            name: "Win",
+            audio: getAssetAudioUrl(s3Assets.winAudio) || Assets.winAudio,
+          },
+          {
+            name: "dow",
+            audio: getAssetAudioUrl(s3Assets.dowAudio) || Assets.dowAudio,
+          },
+        ],
+        completeAudio:
+          getAssetAudioUrl(s3Assets.windowAudio) || Assets.windowAudio,
+      },
+      {
+        completeWord: "Magnet",
+        syllable: ["Mag", "net"],
+        img: getAssetUrl(s3Assets.MagnetNewImg) || Assets.MagnetNewImg,
+        syllablesAudio: [
+          {
+            name: "Mag",
+            audio: getAssetAudioUrl(s3Assets.magAudio) || Assets.magAudio,
+          },
+          {
+            name: "net",
+            audio: getAssetAudioUrl(s3Assets.netAudio) || Assets.netAudio,
+          },
+        ],
+        completeAudio:
+          getAssetAudioUrl(s3Assets.magnetAudio) || Assets.magnetAudio,
+      },
+      {
+        completeWord: "Tennis",
+        syllable: ["Ten", "nis"],
+        img: getAssetUrl(s3Assets.TennisNewImg) || Assets.TennisNewImg,
+        syllablesAudio: [
+          {
+            name: "Ten",
+            audio: getAssetAudioUrl(s3Assets.tenAudio) || Assets.tenAudio,
+          },
+          {
+            name: "nis",
+            audio: getAssetAudioUrl(s3Assets.nisAudio) || Assets.nisAudio,
+          },
+        ],
+        completeAudio:
+          getAssetAudioUrl(s3Assets.tennisAudio) || Assets.tennisAudio,
+      },
+    ],
+    L5: [
       {
         completeWord: "Basket",
         syllable: ["Bas", "ket"],
@@ -637,12 +720,17 @@ const Practice = () => {
   // //console.log("prog", progressDatas);
 
   const rFlow = String(getLocalData("rFlow"));
+  const tFlow = String(getLocalData("tFlow"));
 
-  useEffect(() => {
-    if (lang !== "en") {
-      setLocalData("rFlow", false);
-    }
-  }, [lang]);
+  // useEffect(() => {
+  //   if (lang !== "en") {
+  //     setLocalData("rFlow", false);
+  //   }
+  // }, [lang]);
+
+  // useEffect(() => {
+  //   setLocalData("rFlow", true)
+  // }, []);
 
   useEffect(() => {
     // //console.log("levelsssss", level, rFlow, rStep);
@@ -925,6 +1013,19 @@ const Practice = () => {
               gameOver({ link: "/assesment-end" }, true);
               return;
             }
+            const lang = getLocalData("lang");
+            const getMilestoneDetails = await getFetchMilestoneDetails(lang);
+            setVocabCount(
+              getMilestoneDetails?.data?.extra?.vocabulary_count || 0
+            );
+            setWordCount(
+              getMilestoneDetails?.data?.extra?.latest_towre_data
+                ?.wordsPerMinute || 0
+            );
+            if (level === 3 || level === 6 || level === 9) {
+              gameOver({ link: "/assesment-end" }, true);
+              setLocalData("tFlow", true);
+            }
 
             try {
               await addLesson({
@@ -952,6 +1053,20 @@ const Practice = () => {
           }
         }
 
+        try {
+          const lang = getLocalData("lang");
+          const getMilestoneDetails = await getFetchMilestoneDetails(lang);
+          setVocabCount(
+            getMilestoneDetails?.data?.extra?.vocabulary_count || 0
+          );
+          setWordCount(
+            getMilestoneDetails?.data?.extra?.latest_towre_data
+              ?.wordsPerMinute || 0
+          );
+        } catch (e) {
+          // catch error
+        }
+
         let quesArr = [];
 
         if (newPracticeStep === 10) {
@@ -972,7 +1087,7 @@ const Practice = () => {
           return;
         }
 
-        if (![10, 11, 12, 13, 14, 15].includes(level)) {
+        if (![1, 2, 10, 11, 12, 13, 14, 15].includes(level)) {
           const resGetContent = await getContent(
             currentGetContent.criteria,
             lang,
@@ -1038,7 +1153,7 @@ const Practice = () => {
           setQuestions(quesArr);
         }
 
-        if ([10, 11, 12, 13, 14, 15].includes(level)) {
+        if ([1, 2, 10, 11, 12, 13, 14, 15].includes(level)) {
           let showcaseLevel =
             currentPracticeStep === 3 || currentPracticeStep === 8;
           setIsShowCase(showcaseLevel);
@@ -1170,7 +1285,10 @@ const Practice = () => {
 
       // TODO: validate the getMilestoneDetails API return
       setLocalData("getMilestone", JSON.stringify({ ...getMilestoneDetails }));
-
+      setVocabCount(getMilestoneDetails?.data?.extra?.vocabulary_count || 0);
+      setWordCount(
+        getMilestoneDetails?.data?.extra?.latest_towre_data?.wordsPerMinute || 0
+      );
       let level =
         Number(getMilestoneDetails?.data?.milestone_level?.replace("m", "")) ||
         1;
@@ -1544,8 +1662,8 @@ const Practice = () => {
 
   const renderMechanics = () => {
     if (
-      (!mechanism && rFlow !== "true") ||
-      (mechanism?.id === "mechanic_15" && rFlow !== "true")
+      (!mechanism && rFlow !== "true" && tFlow !== "true") ||
+      (mechanism?.id === "mechanic_15" && rFlow !== "true" && tFlow !== "true")
     ) {
       const mechanics_data = questions[currentQuestion]?.mechanics_data;
 
@@ -1566,7 +1684,8 @@ const Practice = () => {
                 ? `Guess the below image`
                 : `Speak the below ${questions[currentQuestion]?.contentType}`),
             words:
-              lang === "en" && (level === 1 || level === 2 || level === 3)
+              (lang === "en" || lang === "hi") &&
+              (level === 1 || level === 2 || level === 3)
                 ? levelOneWord
                 : mechanism?.id === "mechanic_15"
                 ? questions[currentQuestion]?.mechanics_data?.[0]?.text
@@ -1614,6 +1733,54 @@ const Practice = () => {
             setEnableNext,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
+          }}
+        />
+      );
+    } else if (tFlow === "true") {
+      return (
+        <TowreFlow
+          page={page}
+          setPage={setPage}
+          {...{
+            level: level,
+            header:
+              questions[currentQuestion]?.contentType === "image"
+                ? `Guess the below image`
+                : `Speak the below word`,
+            //
+            currentImg: currentImage,
+            parentWords: parentWords,
+            contentType: currentContentType,
+            contentId: questions[currentQuestion]?.contentId,
+            setVoiceText,
+            setRecordedAudio,
+            setVoiceAnimate,
+            storyLine,
+            handleNext,
+            type: "word",
+            // image: elephant,
+            enableNext,
+            showTimer: false,
+            points,
+            steps: questions?.length,
+            currentStep: currentQuestion + 1,
+            progressData,
+            showProgress: true,
+            background:
+              isShowCase &&
+              "linear-gradient(281.02deg, #AE92FF 31.45%, #555ADA 100%)",
+            playTeacherAudio,
+            callUpdateLearner: isShowCase,
+            disableScreen,
+            isShowCase,
+            handleBack: !isShowCase && handleBack,
+            setEnableNext,
+            loading,
+            setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2110,6 +2277,8 @@ const Practice = () => {
             fluency,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2161,6 +2330,8 @@ const Practice = () => {
             setOpenMessageDialog,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2205,6 +2376,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2249,6 +2422,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2293,6 +2468,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2348,6 +2525,8 @@ const Practice = () => {
             fluency,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2458,6 +2637,8 @@ const Practice = () => {
             fluency,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2502,6 +2683,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2546,6 +2729,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2601,6 +2786,8 @@ const Practice = () => {
             fluency,
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2645,6 +2832,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2689,6 +2878,8 @@ const Practice = () => {
             setEnableNext,
             loading,
             setOpenMessageDialog,
+            vocabCount,
+            wordCount,
           }}
         />
       );
@@ -2752,6 +2943,8 @@ const Practice = () => {
               : [],
             isNextButtonCalled,
             setIsNextButtonCalled,
+            vocabCount,
+            wordCount,
           }}
         />
       );

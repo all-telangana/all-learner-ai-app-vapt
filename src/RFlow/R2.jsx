@@ -530,6 +530,8 @@ const R2 = ({
   currentImg,
   rStep,
   onComplete,
+  vocabCount,
+  wordCount,
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedWord, setSelectedWord] = useState(null);
@@ -745,6 +747,8 @@ const R2 = ({
         handleBack,
         disableScreen,
         loading,
+        vocabCount,
+        wordCount,
       }}
     >
       {currentQuestion?.question ? (
