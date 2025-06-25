@@ -9,6 +9,7 @@ import {
   getLocalData,
   NextButtonRound,
   RetryIcon,
+  setLocalData,
 } from "../../utils/constants";
 import r3WrongTick from "../../assets/r3WrongTick.svg";
 import bingoReset from "../../assets/bingoReset.svg";
@@ -36,6 +37,7 @@ import {
   handleTextEvaluation,
   callTelemetryApi,
 } from "../../utils/apiUtil";
+import { filterBadWords } from "@tekdi/multilingual-profanity-filter";
 
 // const isChrome =
 //   /Chrome/.test(navigator.userAgent) &&
@@ -76,6 +78,8 @@ const BingoCard = ({
   setOpenMessageDialog,
   audio,
   currentImg,
+  vocabCount,
+  wordCount,
 }) => {
   const [showHint, setShowHint] = useState(false);
   const [hideButtons, setHideButtons] = useState(false);
@@ -94,6 +98,12 @@ const BingoCard = ({
   const [showInitialEffect, setShowInitialEffect] = useState(false);
   const [startGame, setStartGame] = useState(true);
   const [showRecording, setShowRecording] = useState(false);
+  const [abusiveFound, setAbusiveFound] = useState(false);
+  const [detectedWord, setDetectedWord] = useState("");
+  const [language, setLanguage] = useState(getLocalData("lang") || "en");
+  const [showWrongTick, setShowWrongTick] = useState(true);
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const {
     transcript,
     interimTranscript,
@@ -101,13 +111,33 @@ const BingoCard = ({
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  const [showWrongTick, setShowWrongTick] = useState(true);
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   const transcriptRef = useRef("");
   useEffect(() => {
     transcriptRef.current = transcript;
+    console.log("Live Transcript:", transcript);
+
+    if (transcript) {
+      const filteredText = filterBadWords(transcript, language);
+      console.log("filteredText", filteredText);
+
+      if (filteredText.includes("*")) {
+        const count = parseInt(getLocalData("profanityCheck") || "0");
+
+        if (count > 2) {
+          setOpenMessageDialog({
+            open: true,
+            message: `Please speak properly.`,
+            severity: "warning",
+            isError: true,
+          });
+        }
+
+        stopRecording();
+
+        setLocalData("profanityCheck", (count + 1).toString());
+      }
+    }
   }, [transcript]);
 
   const [wordsAfterSplit, setWordsAfterSplit] = useState([]);
@@ -241,9 +271,12 @@ const BingoCard = ({
       // }
       resetTranscript();
       startAudioRecording();
+      setAbusiveFound(false);
+      setDetectedWord("");
       SpeechRecognition.startListening({
         continuous: true,
         interimResults: true,
+        language: language || "en-US",
       });
     }
     setIsRecording(true);
@@ -259,6 +292,7 @@ const BingoCard = ({
       setIsMicOn(false);
       setIsRecording(false);
       setIsProcessing(false);
+      setAbusiveFound(false);
     } else {
       // if (recognition) {
       //   recognition.stop();
@@ -619,6 +653,51 @@ const BingoCard = ({
       },
       arrM: ["DOCTOR", "MARKET", "BASKET", "CRICKET", "WINDOW"],
     },
+    L5: {
+      words: [
+        "MAR",
+        "BAS",
+        "DOW",
+        "TOR",
+        "KET",
+        "CRICK",
+        "DOC",
+        "WIN",
+        "BOT",
+        "CHER",
+        "TLE",
+        "ET",
+      ],
+      imageAudioMap: {
+        DOCTOR: {
+          image: getAssetUrl(s3Assets.doctorImg) || Assets.doctorImg,
+          audio:
+            getAssetAudioUrl(s3Assets.doctorNewAudio) || Assets.doctorNewAudio,
+        },
+        MARKET: {
+          image: getAssetUrl(s3Assets.marketImg) || Assets.marketImg,
+          audio:
+            getAssetAudioUrl(s3Assets.marketNewAudio) || Assets.marketNewAudio,
+        },
+        BASKET: {
+          image: getAssetUrl(s3Assets.basketImg) || Assets.basketImg,
+          audio:
+            getAssetAudioUrl(s3Assets.basketNewAudio) || Assets.basketNewAudio,
+        },
+        CRICKET: {
+          image: getAssetUrl(s3Assets.cricketImg) || Assets.cricketImg,
+          audio:
+            getAssetAudioUrl(s3Assets.cricketNewAudio) ||
+            Assets.cricketNewAudio,
+        },
+        WINDOW: {
+          image: getAssetUrl(s3Assets.WindowNewImg) || Assets.WindowNewImg,
+          audio:
+            getAssetAudioUrl(s3Assets.windowNewAudio) || Assets.windowNewAudio,
+        },
+      },
+      arrM: ["DOCTOR", "MARKET", "BASKET", "CRICKET", "WINDOW"],
+    },
     L3: {
       words: [
         "BAL",
@@ -799,6 +878,16 @@ const BingoCard = ({
       PUPPY: ["PUP", "PY"],
       STUDENT: ["STU", "DENT"],
       PAPER: ["PA", "PER"],
+      कद: ["क", "द"],
+      गगन: ["ग", "गन"],
+      गायक: ["गाय", "क"],
+      औरत: ["औ", "रत"],
+      टायर: ["टा", "यर"],
+      मटर: ["म", "टर"],
+      पलंग: ["प", "लंग"],
+      मटका: ["मट", "का"],
+      मंदिर: ["मं", "दिर"],
+      कददू: ["क", "ददू"],
     };
 
     const currentWord = levels[currentLevel]?.arrM[currentWordIndex];
@@ -903,6 +992,8 @@ const BingoCard = ({
         handleBack,
         disableScreen,
         loading,
+        vocabCount,
+        wordCount,
       }}
     >
       <ThemeProvider theme={theme}>

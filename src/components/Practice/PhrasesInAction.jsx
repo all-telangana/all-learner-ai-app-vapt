@@ -19,6 +19,8 @@ import Stop from "../../assets/pausse.svg";
 import correctSound from "../../assets/correct.wav";
 import wrongSound from "../../assets/audio/wrong.wav";
 import RecordVoiceVisualizer from "../../utils/RecordVoiceVisualizer";
+import { filterBadWords } from "@tekdi/multilingual-profanity-filter";
+
 import {
   practiceSteps,
   getLocalData,
@@ -26,12 +28,16 @@ import {
   RetryIcon,
   ListenButton,
   StopButton,
+  setLocalData,
 } from "../../utils/constants";
 import {
   fetchASROutput,
   handleTextEvaluation,
   callTelemetryApi,
 } from "../../utils/apiUtil";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const theme = createTheme();
 
@@ -65,6 +71,8 @@ const PhrasesInAction = ({
   setOpenMessageDialog,
   audio,
   currentImg,
+  vocabCount,
+  wordCount,
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -79,13 +87,63 @@ const PhrasesInAction = ({
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordedBlob, setRecordedBlob] = useState(null);
+  const [abusiveFound, setAbusiveFound] = useState(false);
+  const [detectedWord, setDetectedWord] = useState("");
+  const [language, setLanguage] = useState(getLocalData("lang") || "en");
+  const [finalTranscript, setFinalTranscript] = useState("");
+  const [recAudio, setRecAudio] = useState("");
+  const {
+    transcript,
+    interimTranscript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
 
   const mimeType = "audio/webm;codecs=opus";
+  const transcriptRef = useRef("");
+  useEffect(() => {
+    transcriptRef.current = transcript;
+    console.log("Live Transcript:", transcript);
+
+    // Only check if there's new content and we're not already in abusive state
+    if (transcript && !abusiveFound) {
+      const filteredText = filterBadWords(transcript, language);
+      if (filteredText.includes("*")) {
+        const count = parseInt(getLocalData("profanityCheck") || "0");
+
+        if (count > 2) {
+          setOpenMessageDialog({
+            open: true,
+            message: `Please speak properly.`,
+            severity: "warning",
+            isError: true,
+          });
+        }
+
+        stopAudioRecording();
+
+        setLocalData("profanityCheck", (count + 1).toString());
+      }
+    }
+  }, [transcript]);
 
   const startAudioRecording = useCallback(async () => {
     setRecordedBlob(null);
+    setRecAudio(null);
+    resetTranscript();
+    setIsRecording(true);
+    setLanguage(language);
+    setAbusiveFound(false);
+    setDetectedWord("");
+    SpeechRecognition.startListening({
+      continuous: true,
+      interimResults: true,
+      language: language || "en-US",
+    });
     recordedChunksRef.current = [];
 
     try {
@@ -129,8 +187,12 @@ const PhrasesInAction = ({
     if (recorder && recorder.state !== "inactive") {
       recorder.requestData(); // Flush remaining data
       recorder.stop();
+      setFinalTranscript(transcriptRef.current);
+      setAbusiveFound(false);
+
       setIsRecording(false);
     }
+    SpeechRecognition.stopListening();
   }, []);
 
   const blobToBase64 = (blob) => {
@@ -1386,6 +1448,8 @@ const PhrasesInAction = ({
         handleBack,
         disableScreen,
         loading,
+        vocabCount,
+        wordCount,
       }}
     >
       <ThemeProvider theme={theme}>

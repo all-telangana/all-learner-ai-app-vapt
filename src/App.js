@@ -27,6 +27,8 @@ const App = () => {
   }, [navigate]);
 
   useEffect(() => {
+    if (!appInitialized) return;
+
     const initService = async (visitorId) => {
       await initialize({
         context: {
@@ -66,16 +68,18 @@ const App = () => {
     };
 
     setFp();
-  }, []);
+  }, [appInitialized]);
 
   useEffect(() => {
+    if (!appInitialized) return;
+
     const handleBeforeUnload = () => {
       window.telemetry?.syncEvents?.();
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, []);
+  }, [appInitialized]);
 
   axios.interceptors.response.use(
     (response) => response,

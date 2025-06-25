@@ -124,3 +124,25 @@ export const addLesson = async ({
     throw error;
   }
 };
+
+export const logoutUser = async () => {
+  try {
+    const token = localStorage.getItem("apiToken");
+
+    if (!token) return;
+
+    const response = await axios.post(
+      `${API_BASE_URL_ORCHESTRATION}/${config.URLS.GET_LOGOUT}`,
+      { token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding lesson:", error);
+    throw error;
+  }
+};
