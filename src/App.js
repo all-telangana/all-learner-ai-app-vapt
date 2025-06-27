@@ -131,7 +131,8 @@ const App = () => {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        "Profile name is missing. Please log out and log in again."{" "}
+        "If the PWA app doesn't load properly, please try logging out and back
+        in."
       </div>
     );
 
