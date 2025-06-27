@@ -28,6 +28,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { addTowreRecord } from "../../services/learnerAi/learnerAiService";
+import * as Assets from "../../utils/imageAudioLinks";
 
 env.localModelPath = "https://huggingface.co/Xenova/whisper-tiny/resolve/main/";
 
@@ -179,22 +180,24 @@ const CombinedReportPage = ({
   allWords,
   transcript,
   totalSec,
+  wpm,
 }) => {
   const [showWordList, setShowWordList] = useState(false);
   const theme = createTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const wordCount = transcript.trim().split(/\s+/).length;
-  const wordsPerMinute = Math.round((wordCount / totalSec) * 60);
+  //const wordsPerMinute = Math.round((wordCount / totalSec) * 60);
   const totalWordsInCurrentSets = (currentWordSetIndex + 1) * 12;
 
-  console.log("transcript", wordCount);
+  //console.log("transcript", wordCount);
 
   const attemptedWordsCount = wordCount;
   const correctWordsCount = allWords.filter((word) => word.isCorrect).length;
+  const wordsPerMinute = Math.round((correctWordsCount / totalSec) * 60);
   const unattemptedWordsCount = allWords.length - wordCount;
   const newWordsLearnt = correctWordsCount;
-  const totalWordsLearnt = 100;
+  const totalWordsLearnt = correctWordsCount + wpm;
   const renderResults = () => (
     <div
       style={{
@@ -205,8 +208,8 @@ const CombinedReportPage = ({
         backgroundRepeat: "no-repeat",
         borderRadius: "20px",
         width: "100%",
-        maxWidth: "1100px",
-        height: "470px",
+        //maxWidth: "1100px",
+        //height: "470px",
         position: "relative",
         boxShadow: "0 0 20px rgba(0,0,0,0.1)",
         padding: "25px",
@@ -219,7 +222,7 @@ const CombinedReportPage = ({
       <img
         src={reportPandaImg}
         alt="Panda"
-        style={{ width: "100px", marginBottom: "10px" }}
+        style={{ width: isMobile ? "80px" : "100px", marginBottom: "10px" }}
       />
 
       <h2
@@ -227,7 +230,7 @@ const CombinedReportPage = ({
           color: "#FF7F36",
           textAlign: "center",
           margin: "0 0 5px 0",
-          fontSize: "28px",
+          fontSize: isMobile ? "22px" : "28px",
           fontFamily: "Quicksand",
           fontWeight: "700",
         }}
@@ -238,7 +241,7 @@ const CombinedReportPage = ({
         style={{
           color: "#333F61",
           textAlign: "center",
-          fontSize: "26px",
+          fontSize: isMobile ? "20px" : "26px",
           fontFamily: "Quicksand",
           marginBottom: "25px",
         }}
@@ -258,14 +261,20 @@ const CombinedReportPage = ({
           <img
             src={speedometerImg}
             alt="speed"
-            style={{ width: "80px", marginBottom: "8px" }}
+            style={{ width: isMobile ? "65px" : "80px", marginBottom: "8px" }}
           />
           <div
-            style={{ color: "#1CB0F6", fontSize: "22px", fontWeight: "700" }}
+            style={{
+              color: "#1CB0F6",
+              fontSize: isMobile ? "20px" : "22px",
+              fontWeight: "700",
+            }}
           >
             {wordsPerMinute}
           </div>
-          <div style={{ color: "#333F61", fontSize: "20px" }}>
+          <div
+            style={{ color: "#333F61", fontSize: isMobile ? "18px" : "20px" }}
+          >
             Words Per Minute
           </div>
         </div>
@@ -274,14 +283,20 @@ const CombinedReportPage = ({
           <img
             src={bookImg}
             alt="book"
-            style={{ width: "80px", marginBottom: "8px" }}
+            style={{ width: isMobile ? "65px" : "80px", marginBottom: "8px" }}
           />
           <div
-            style={{ color: "#9D4EDD", fontSize: "22px", fontWeight: "700" }}
+            style={{
+              color: "#9D4EDD",
+              fontSize: isMobile ? "20px" : "22px",
+              fontWeight: "700",
+            }}
           >
             {newWordsLearnt}
           </div>
-          <div style={{ color: "#333F61", fontSize: "20px" }}>
+          <div
+            style={{ color: "#333F61", fontSize: isMobile ? "18px" : "20px" }}
+          >
             New Words Learnt
           </div>
         </div>
@@ -290,18 +305,49 @@ const CombinedReportPage = ({
           <img
             src={booksStackImg}
             alt="books"
-            style={{ width: "80px", marginBottom: "8px" }}
+            style={{ width: isMobile ? "65px" : "80px", marginBottom: "8px" }}
           />
           <div
-            style={{ color: "#F72585", fontSize: "22px", fontWeight: "700" }}
+            style={{
+              color: "#F72585",
+              fontSize: isMobile ? "20px" : "22px",
+              fontWeight: "700",
+            }}
           >
             {totalWordsLearnt}
           </div>
-          <div style={{ color: "#333F61", fontSize: "20px" }}>
+          <div
+            style={{ color: "#333F61", fontSize: isMobile ? "18px" : "20px" }}
+          >
             Total Words Learnt
           </div>
         </div>
       </div>
+
+      {isMobile && (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+          <button
+            onClick={() => setShowWordList(true)}
+            style={{
+              backgroundColor: "white",
+              borderRadius: "50%",
+              padding: "12px",
+              border: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src={reportImg}
+              alt="Check Report"
+              style={{ width: "110px" }}
+            />
+          </button>
+        </Box>
+      )}
+
       <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <button
           style={{
@@ -338,26 +384,34 @@ const CombinedReportPage = ({
           height: "auto",
         }}
       >
-        <img
-          src={reportBoyImg}
-          alt="boy character"
-          style={{ width: "200px", position: "relative", zIndex: 1 }}
-        />
+        {!isMobile && (
+          <>
+            <img
+              src={reportBoyImg}
+              alt="boy character"
+              style={{ width: "200px", position: "relative", zIndex: 1 }}
+            />
 
-        <button
-          onClick={() => setShowWordList(true)}
-          style={{
-            position: "absolute",
-            bottom: "35px",
-            right: "45px",
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            zIndex: 2,
-          }}
-        >
-          <img src={reportImg} alt="Check Report" style={{ width: "110px" }} />
-        </button>
+            <button
+              onClick={() => setShowWordList(true)}
+              style={{
+                position: "absolute",
+                bottom: "35px",
+                right: "45px",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                zIndex: 2,
+              }}
+            >
+              <img
+                src={reportImg}
+                alt="Check Report"
+                style={{ width: "110px" }}
+              />
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
@@ -392,7 +446,7 @@ const CombinedReportPage = ({
         alignItems: "center",
         textAlign: "center",
         padding: "18px 9px",
-        fontSize: "17px",
+        fontSize: isMobile ? "14px" : "17px",
         fontWeight: 500,
         height: "100%",
         width: "100%",
@@ -442,7 +496,7 @@ const CombinedReportPage = ({
           borderRadius: "24px",
           p: isMobile ? 2 : 4,
           width: isMobile ? "95%" : "90%",
-          maxWidth: "1200px",
+          //maxWidth: "1200px",
           boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
           position: "relative",
           overflowY: "auto",
@@ -493,7 +547,7 @@ const CombinedReportPage = ({
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
           <button
             style={{
-              backgroundColor: "#FF7A00",
+              backgroundColor: "white",
               borderRadius: "50%",
               padding: "12px",
               border: "none",
@@ -501,11 +555,11 @@ const CombinedReportPage = ({
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
-              boxShadow: "0px 4px 8px rgba(0,0,0,0.15)",
+              //boxShadow: "0px 4px 8px rgba(0,0,0,0.15)",
             }}
             onClick={() => setShowWordList(false)}
           >
-            <img src={nextImg} alt="Next" style={{ width: 24, height: 24 }} />
+            <img src={nextImg} alt="Next" style={{ width: 50, height: 50 }} />
           </button>
         </Box>
       </Box>
@@ -516,12 +570,13 @@ const CombinedReportPage = ({
     <div
       style={{
         backgroundColor: showWordList ? "#C6EDFF" : "#d8f0fc",
-        width: "96%",
+        width: "100%",
         minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: "25px",
+        padding: isMobile ? "0px" : "0px",
+        alignContent: "center",
         overflowX: "hidden",
         overflowY: "hidden",
       }}
@@ -592,6 +647,7 @@ const TowreFlow = ({
   const streamRef = useRef(null);
   const chunksRef = useRef([]);
   const [loading, setLoading] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [recordedAudioBlob, setRecordedAudioBlob] = useState(null);
   const [transcripts, setTranscripts] = useState("");
@@ -605,13 +661,13 @@ const TowreFlow = ({
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const currentWordSet = allWordSets[currentWordSetIndex];
   const transcriptRef = useRef("");
 
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    //console.log("Live Transcript:", transcript);
   }, [transcript]);
 
   useEffect(() => {
@@ -627,7 +683,7 @@ const TowreFlow = ({
           if (prevTimer <= 1) {
             const endTime = Date.now();
             const elapsedSeconds = (endTime - startTime) / 1000;
-            console.log("testingg");
+            //console.log("testingg");
             setTotalSec(elapsedSeconds);
             stopAudioRecording();
             setLoading(true);
@@ -659,17 +715,24 @@ const TowreFlow = ({
       setMessage("Here come your next words!");
       setActiveSet(1);
     } else if (activeSet === 1) {
-      setMessage("Great job!\nHere come your next words.");
+      setMessage("Great job! Here come your next words.");
       setActiveSet(2);
     } else if (activeSet === 2) {
       setMessage(
-        "You'll go to the next set of words\nwhen you click the button below."
+        "You'll go to the next set of words, when you click the button below."
       );
       setActiveSet(3);
     } else if (activeSet === 3) {
-      setMessage("Are You Ready?⏱️ You'll have 45 seconds.");
+      setMessage(
+        "If you are not able to speak a word, You can move to the next word."
+      );
       setActiveSet(4);
     } else if (activeSet === 4) {
+      isMobile
+        ? setMessage("Are You Ready? You'll have 45 seconds.")
+        : setMessage("Are You Ready?⏱️ You'll have 45 seconds.");
+      setActiveSet(5);
+    } else if (activeSet === 5) {
       startCountdown();
     }
   };
@@ -756,7 +819,7 @@ const TowreFlow = ({
       };
 
       mediaRecorder.onstop = async () => {
-        console.log("Recording stopped.");
+        //console.log("Recording stopped.");
         if (chunksRef.current.length === 0) {
           console.warn("No data to create blob.");
           return;
@@ -782,7 +845,7 @@ const TowreFlow = ({
             stride_length_s: 5,
           });
 
-          console.log("Transcription result:", output.text);
+          //console.log("Transcription result:", output.text);
 
           const transcripts = output.text;
           setTranscripts(transcripts);
@@ -804,7 +867,7 @@ const TowreFlow = ({
           setCompleted(true);
         } catch (error) {
           console.error("Error during transcription:", error);
-          console.log("transcriptok", transcriptRef.current);
+          //console.log("transcriptok", transcriptRef.current);
           setTranscripts(transcriptRef.current);
           const transcriptWords = normalize(transcriptRef.current);
           const transcriptPhonetics = new Set(transcriptWords.map(getPhonetic));
@@ -859,6 +922,7 @@ const TowreFlow = ({
         allWords={allWords}
         transcript={transcripts}
         totalSec={totalSec}
+        wpm={wordCount}
       />
     );
   }
@@ -892,14 +956,14 @@ const TowreFlow = ({
     >
       <div
         style={{
-          backgroundColor: "#dff3fc",
-          minHeight: "100vh",
+          //backgroundColor: "#dff3fc",
+          //minHeight: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        {!loading && (
+        {!loading && isStarted && (
           <div
             style={{
               width: "95%",
@@ -945,10 +1009,10 @@ const TowreFlow = ({
                   <div
                     style={{
                       position: "absolute",
-                      bottom: 116,
-                      right: 237,
-                      width: 183,
-                      height: 120,
+                      bottom: isMobile ? 150 : 116,
+                      right: isMobile ? 140 : 237,
+                      width: isMobile ? 150 : 183,
+                      height: isMobile ? 100 : 120,
                     }}
                   >
                     <img
@@ -965,12 +1029,17 @@ const TowreFlow = ({
                         textAlign: "center",
                       }}
                     >
-                      <div style={{ fontSize: 14, fontWeight: "bold" }}>
+                      <div
+                        style={{
+                          fontSize: isMobile ? 12 : 14,
+                          fontWeight: "bold",
+                        }}
+                      >
                         Starts In
                       </div>
                       <div
                         style={{
-                          fontSize: 28,
+                          fontSize: isMobile ? 24 : 28,
                           fontWeight: "bold",
                           color: "#ff6e00",
                         }}
@@ -984,7 +1053,7 @@ const TowreFlow = ({
                     src={pandaTimerImg}
                     alt="panda"
                     style={{
-                      height: 180,
+                      height: isMobile ? 150 : 180,
                       position: "absolute",
                       right: 100,
                       bottom: 20,
@@ -1038,7 +1107,11 @@ const TowreFlow = ({
                   }}
                 >
                   <div style={{ position: "relative" }}>
-                    <img src={clockImg} alt="clock" style={{ width: 60 }} />
+                    <img
+                      src={clockImg}
+                      alt="clock"
+                      style={{ width: isMobile ? 50 : 60 }}
+                    />
                     <div
                       style={{
                         position: "absolute",
@@ -1058,22 +1131,29 @@ const TowreFlow = ({
                   style={{
                     backgroundColor: "#FFDBDB",
                     borderRadius: 30,
-                    padding: "6px 20px",
+                    padding: isMobile ? "6px 18px" : "6px 20px",
                     display: "flex",
                     alignItems: "center",
                     gap: 10,
                     position: "absolute",
-                    right: 20,
-                    top: 20,
+                    right: 10,
+                    top: 10,
                   }}
                 >
                   <img
                     src={pauseImg}
                     alt="pause"
-                    style={{ width: 14, height: 14 }}
+                    style={{
+                      width: isMobile ? 12 : 14,
+                      height: isMobile ? 12 : 14,
+                    }}
                   />
                   <span
-                    style={{ fontWeight: "bold", color: "#d00", fontSize: 14 }}
+                    style={{
+                      fontWeight: "bold",
+                      color: "#d00",
+                      fontSize: isMobile ? 12 : 14,
+                    }}
                   >
                     Recording
                   </span>
@@ -1088,9 +1168,9 @@ const TowreFlow = ({
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        gap: 5,
-                        marginLeft: "40px",
-                        marginRight: "40px",
+                        gap: isMobile ? 7 : 5,
+                        marginLeft: isMobile ? "2px" : "40px",
+                        marginRight: isMobile ? "2px" : "40px",
                       }}
                     >
                       {row.map((wordObj, colIndex) => (
@@ -1120,8 +1200,8 @@ const TowreFlow = ({
                           <div
                             style={{
                               position: "absolute",
-                              fontWeight: 600,
-                              fontSize: 20,
+                              fontWeight: 700,
+                              fontSize: isMobile ? 12 : 20,
                             }}
                           >
                             {wordObj.title}
@@ -1163,9 +1243,9 @@ const TowreFlow = ({
                     padding: "6px 20px",
                     display: "flex",
                     alignItems: "center",
-                    gap: 10,
+                    gap: isMobile ? 2 : 10,
                     position: "absolute",
-                    right: 20,
+                    right: isMobile ? 4 : 20,
                     top: 20,
                   }}
                 >
@@ -1175,7 +1255,11 @@ const TowreFlow = ({
                     style={{ width: 14, height: 14 }}
                   />
                   <span
-                    style={{ fontWeight: "bold", color: "#d00", fontSize: 14 }}
+                    style={{
+                      fontWeight: "bold",
+                      color: "#d00",
+                      fontSize: isMobile ? 11 : 14,
+                    }}
                   >
                     Recording
                   </span>
@@ -1190,7 +1274,11 @@ const TowreFlow = ({
                   }}
                 >
                   <div style={{ position: "relative" }}>
-                    <img src={clockImg} alt="clock" style={{ width: 60 }} />
+                    <img
+                      src={clockImg}
+                      alt="clock"
+                      style={{ width: isMobile ? 50 : 60 }}
+                    />
                     <div
                       style={{
                         position: "absolute",
@@ -1215,7 +1303,7 @@ const TowreFlow = ({
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        gap: 5,
+                        gap: 6,
                         marginLeft: "40px",
                         marginRight: "40px",
                         position: "relative",
@@ -1232,7 +1320,7 @@ const TowreFlow = ({
                             key={colIndex}
                             style={{
                               position: "relative",
-                              width: 180,
+                              width: isMobile ? 200 : 180,
                               height: 110,
                               display: "flex",
                               justifyContent: "center",
@@ -1278,7 +1366,7 @@ const TowreFlow = ({
                                 position: "absolute",
                                 color: isActive ? "#000" : "#aaa",
                                 fontWeight: 600,
-                                fontSize: 20,
+                                fontSize: isMobile ? 11 : 20,
                               }}
                             >
                               {wordObj.title}
@@ -1303,8 +1391,8 @@ const TowreFlow = ({
                   <div
                     style={{
                       position: "relative",
-                      width: "250px",
-                      height: "180px",
+                      width: isMobile ? "220px" : "250px",
+                      height: isMobile ? "220px" : "180px",
                       marginRight: 10,
                       transform: "translateY(-40%)",
                     }}
@@ -1322,19 +1410,21 @@ const TowreFlow = ({
 
                     {/* Hide arrow for this specific message */}
                     {message !==
-                      "You'll go to the next set of words\nwhen you click the button below." && (
-                      <img
-                        src={arrowImg}
-                        alt="arrow"
-                        style={{
-                          width: "80px",
-                          position: "absolute",
-                          top: "15px",
-                          left: "50%",
-                          transform: "translateX(-50%)",
-                        }}
-                      />
-                    )}
+                      "You'll go to the next set of words when you click the button below." &&
+                      message !==
+                        "If you are not able to speak a word, You can move to the next word." && (
+                        <img
+                          src={arrowImg}
+                          alt="arrow"
+                          style={{
+                            width: isMobile ? "50px" : "80px",
+                            position: "absolute",
+                            top: "15px",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                          }}
+                        />
+                      )}
 
                     <div
                       style={{
@@ -1349,7 +1439,7 @@ const TowreFlow = ({
                       <div
                         style={{
                           whiteSpace: "pre-line",
-                          fontSize: "14px",
+                          fontSize: isMobile ? "11px" : "14px",
                           marginBottom: "15px",
                           lineHeight: "1.5",
                           color: "#333F61",
@@ -1393,29 +1483,29 @@ const TowreFlow = ({
                             }}
                           >
                             <img
-                              src={startImg}
+                              src={Assets.startNewButtonImg}
                               alt="next"
-                              style={{ width: 60 }}
+                              style={{ width: isMobile ? "30px" : 60 }}
                             />
                           </button>
                         </div>
                       ) : message ===
                         "Are You Ready?⏱️ You'll have 45 seconds." ? (
                         <img
-                          src={startImg}
+                          src={Assets.startNewButtonImg}
                           alt="start"
                           style={{
-                            width: "60px",
+                            width: isMobile ? "30px" : "60px",
                             cursor: "pointer",
                           }}
                           onClick={startCountdown}
                         />
                       ) : (
                         <img
-                          src={startImg}
+                          src={Assets.startNewButtonImg}
                           alt="next"
                           style={{
-                            width: "70px",
+                            height: isMobile ? "30px" : "45px",
                             cursor: "pointer",
                           }}
                           onClick={handleNext}
@@ -1428,7 +1518,10 @@ const TowreFlow = ({
                   <img
                     src={pandaImg}
                     alt="panda"
-                    style={{ height: 150, marginBottom: "-15px" }}
+                    style={{
+                      height: isMobile ? 120 : 150,
+                      marginBottom: "-15px",
+                    }}
                   />
                 </div>
                 {message ===
@@ -1472,39 +1565,70 @@ const TowreFlow = ({
             )}
           </div>
         )}
-        {loading && (
+        {!isStarted && (
           <div
             style={{
               width: "95%",
               maxWidth: 1150,
-              background: "#fff",
+              backgroundImage: `url(${Assets.yellowLightImg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
               borderRadius: 20,
               padding: "0 20px",
               position: "relative",
               overflow: "hidden",
               height: "530px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <div
+            <img
+              src={Assets.confettiImg}
+              alt="Confetti"
               style={{
-                backgroundColor: "#fff",
-                borderRadius: 4,
-                padding: 16,
-                width: "90%",
-                height: 200,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "64px",
-                fontWeight: "bold",
-                color: "#4CAF50",
-                boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "100%",
+                maxWidth: 500,
+                pointerEvents: "none",
               }}
-            >
-              {"...."}
+            />
+
+            <div style={{ textAlign: "center", zIndex: 1 }}>
+              <h2
+                style={{
+                  fontFamily: "Quicksand",
+                  fontWeight: 1200,
+                  fontSize: "56px",
+                  lineHeight: "60px",
+                  textAlign: "center",
+                  color: "#FF9050",
+                  marginBottom: "20px",
+                }}
+              >
+                Bonus Round!
+              </h2>
+              <img
+                src={Assets.birthdayBoxImg}
+                alt="Birthday Box"
+                style={{
+                  maxWidth: "200px",
+                  width: "100%",
+                  marginBottom: "20px",
+                }}
+              />
+              <img
+                src={Assets.startButtonImg}
+                alt="Start Button"
+                style={{ maxWidth: "180px", width: "100%", cursor: "pointer" }}
+                onClick={() => {
+                  setIsStarted(true);
+                }}
+              />
             </div>
           </div>
         )}

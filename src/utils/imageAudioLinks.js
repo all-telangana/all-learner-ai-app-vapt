@@ -2991,3 +2991,14 @@ export const thandR1Audio =
   "https://github.com/anik200002/ekstephindi/raw/refs/heads/main/thandR1Audio.wav";
 export const pankhR1Audio =
   "https://github.com/anik200002/ekstephindi/raw/refs/heads/main/pankhR1Audio.wav";
+
+export const startNewButtonImg =
+  "https://raw.githubusercontent.com/anik200002/ekstephindi/refs/heads/main/start.png";
+export const startButtonImg =
+  "https://raw.githubusercontent.com/anik200002/ekstephindi/65fac242857211c59db790a03dac98a7fa956a06/startButton.svg";
+export const birthdayBoxImg =
+  "https://raw.githubusercontent.com/anik200002/ekstephindi/65fac242857211c59db790a03dac98a7fa956a06/birthdayBox.svg";
+export const confettiImg =
+  "https://raw.githubusercontent.com/anik200002/ekstephindi/65fac242857211c59db790a03dac98a7fa956a06/confetti.svg";
+export const yellowLightImg =
+  "https://raw.githubusercontent.com/anik200002/ekstephindi/65fac242857211c59db790a03dac98a7fa956a06/yellowLight.svg";

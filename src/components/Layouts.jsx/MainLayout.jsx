@@ -18,6 +18,7 @@ import practicebg3 from "../../assets/images/practice-bg3.svg";
 import gameWon from "../../assets/images/gameWon.svg";
 import clouds from "../../assets/images/clouds.svg";
 import catLoading from "../../assets/images/catLoading.gif";
+import towreLoading from "../../assets/images/loaderGif.gif";
 import textureImage from "../../assets/images/textureImage.png";
 import timer from "../../assets/images/timer.svg";
 import playButton from "../../assets/listen.png";
@@ -191,7 +192,7 @@ const MainLayout = (props) => {
     }
   }
 
-  // console.log("Assigned LEVEL:", LEVEL, props.rStep);
+  //console.log("Assigned LEVEL:", LEVEL, props.rStep);
 
   const {
     handleNext,
@@ -295,7 +296,7 @@ const MainLayout = (props) => {
     };
   }, []);
 
-  // console.log("isCo", isCorrect);
+  //console.log("isCo", isCorrect);
 
   useEffect(() => {
     if (isRecordingComplete && answer && isCorrect) {
@@ -427,9 +428,35 @@ const MainLayout = (props) => {
             mt: "50px",
           }}
         >
-          <Box>
-            <img src={catLoading} alt="catLoading" />
-          </Box>
+          {tFlow === "true" ? (
+            <Box textAlign="center">
+              <img
+                src={towreLoading}
+                alt="catLoading"
+                height={200}
+                style={{
+                  display: "block",
+                  margin: "0 auto",
+                  marginBottom: "2px",
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "32px",
+                  fontWeight: "700",
+                  marginBottom: "5px",
+                  fontFamily: "Quicksand",
+                  color: "#333F61",
+                }}
+              >
+                Loading
+              </p>
+            </Box>
+          ) : (
+            <Box>
+              <img src={catLoading} alt="catLoading" />
+            </Box>
+          )}
         </Card>
       ) : (
         <>
@@ -1378,7 +1405,7 @@ const MainLayout = (props) => {
                                 (mFlow === true || mFlow === "true") &&
                                 language === "en"
                               ) {
-                                // console.log("mFlow value:", mFlow);
+                                //console.log("mFlow value:", mFlow);
                                 setLocalData("rFlow", true);
                               }
                               // if (

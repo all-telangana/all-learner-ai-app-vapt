@@ -136,11 +136,11 @@ const WordsOrImage = ({
   const transcriptRef = useRef("");
   useEffect(() => {
     transcriptRef.current = transcript;
-    console.log("Live Transcript:", transcript);
+    //console.log("Live Transcript:", transcript);
 
     if (transcript) {
       const filteredText = filterBadWords(transcript, language);
-      console.log("filteredText", filteredText);
+      //console.log("filteredText", filteredText);
 
       if (filteredText.includes("*")) {
         const count = parseInt(getLocalData("profanityCheck") || "0");
@@ -257,7 +257,7 @@ const WordsOrImage = ({
   }, []);
 
   const playRecordings = useCallback(() => {
-    // console.log("play", isPlaying);
+    //console.log("play", isPlaying);
 
     if (!recordedBlob || !(recordedBlob instanceof Blob)) {
       console.error("No valid audio blob to play:", recordedBlob);
@@ -271,7 +271,7 @@ const WordsOrImage = ({
       return;
     }
 
-    // console.log("bls", recordedBlob);
+    //console.log("bls", recordedBlob);
 
     const audioUrl = URL.createObjectURL(recordedBlob);
     const audio = new Audio(audioUrl);
@@ -283,7 +283,7 @@ const WordsOrImage = ({
     audio.play();
     setIsPlaying(true);
 
-    // console.log("play", isPlaying);
+    //console.log("play", isPlaying);
 
     audio.onended = () => {
       setIsPlaying(false);
@@ -397,7 +397,7 @@ const WordsOrImage = ({
       SpeechRecognition.stopListening();
       stopAudioRecording();
       const finalTranscript = transcriptRef.current;
-      // console.log("transcript", finalTranscript, currentWordRef.current);
+      //console.log("transcript", finalTranscript, currentWordRef.current);
 
       const matchPercentage = phoneticMatch(
         currentWordRef.current,
@@ -453,7 +453,7 @@ const WordsOrImage = ({
     const responseStartTime = new Date().getTime();
     let responseText = "";
     const base64Data = await blobToBase64(recordedBlob);
-    // console.log("bvlobss", recordedBlob);
+    //console.log("bvlobss", recordedBlob);
 
     await callTelemetryApi(
       words,
@@ -573,7 +573,7 @@ const WordsOrImage = ({
     return "#333F61";
   };
 
-  // console.log("wds", words, matchedChar, answer);
+  //console.log("wds", words, matchedChar, answer);
 
   return (
     <MainLayout
@@ -1121,7 +1121,7 @@ const WordsOrImage = ({
             mt: isMobile ? 2 : 0,
           }}
         >
-          {(level === 1 || level === 2 || level === 3) && !isShowCase ? (
+          {level === 15 && !isShowCase ? (
             <div>
               {showSpeakButton && (
                 <Box
