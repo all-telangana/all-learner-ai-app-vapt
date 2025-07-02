@@ -435,9 +435,9 @@ export const ProfileHeader = ({
     } finally {
       localStorage.clear();
       end({});
-      navigate("/login");
+      // navigate("/login");
     }
-    // window.parent.postMessage({ type: "LOGOUT" }, "*");
+    window.parent.postMessage({ type: "LOGOUT" }, "*");
   };
 
   const CustomIconButton = styled(IconButton)({
