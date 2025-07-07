@@ -2589,6 +2589,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@number-flow/react@^0.5.10":
+  version "0.5.10"
+  resolved "https://registry.npmjs.org/@number-flow/react/-/react-0.5.10.tgz"
+  integrity sha512-a8Wh5eNITn7Km4xbddAH7QH8eNmnduR6k34ER1hkHSGO4H2yU1DDnuAWLQM99vciGInFODemSc0tdxrXkJEpbA==
+  dependencies:
+    esm-env "^1.1.4"
+    number-flow "0.5.8"
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
@@ -7069,6 +7077,11 @@ eslint@^8.3.0:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
+esm-env@^1.1.4:
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/esm-env/-/esm-env-1.2.2.tgz"
+  integrity sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==
+
 esm@^3.2.22:
   version "3.2.25"
   resolved "https://registry.npmjs.org/esm/-/esm-3.2.25.tgz"
@@ -10701,6 +10714,13 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
+number-flow@0.5.8:
+  version "0.5.8"
+  resolved "https://registry.npmjs.org/number-flow/-/number-flow-0.5.8.tgz"
+  integrity sha512-FPr1DumWyGi5Nucoug14bC6xEz70A1TnhgSHhKyfqjgji2SOTz+iLJxKtv37N5JyJbteGYCm6NQ9p1O4KZ7iiA==
+  dependencies:
+    esm-env "^1.1.4"
+
 nwsapi@^2.2.0:
   version "2.2.13"
   resolved "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.13.tgz"
@@ -12124,7 +12144,7 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", react-dom@^18.0.0, "react-dom@^18.0.0 || ^19.0.0", react-dom@^18.2.0, react-dom@>=16, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, "react-dom@15 - 18":
+"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^18 || ^19", react-dom@^18.0.0, "react-dom@^18.0.0 || ^19.0.0", react-dom@^18.2.0, react-dom@>=16, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, "react-dom@15 - 18":
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -12330,7 +12350,7 @@ react-window@^1.8.6:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
-"react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.1 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^17.0.0, "react@^17.0.0 || ^18.0.0", react@^18.0, react@^18.0.0, "react@^18.0.0 || ^19.0.0", react@^18.2.0, react@^18.3.1, "react@>= 16", "react@>=0.0.0 <=99", react@>=16, react@>=16.0.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, "react@15 - 18":
+"react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.1 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^17.0.0, "react@^17.0.0 || ^18.0.0", "react@^18 || ^19", react@^18.0, react@^18.0.0, "react@^18.0.0 || ^19.0.0", react@^18.2.0, react@^18.3.1, "react@>= 16", "react@>=0.0.0 <=99", react@>=16, react@>=16.0.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, "react@15 - 18":
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==

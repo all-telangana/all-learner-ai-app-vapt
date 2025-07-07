@@ -380,7 +380,7 @@ const MainLayout = (props) => {
         {...{
           level: LEVEL,
           setOpenLangModal,
-          lang,
+          lang: language,
           points,
           handleBack,
           vocabCount,
@@ -1001,11 +1001,12 @@ const MainLayout = (props) => {
                                   </Typography>
                                 ) : (
                                   <Typography textAlign="center" sx={{ mt: 2 }}>
-                                    You need{" "}
+                                    Oops! You need{" "}
                                     <span style={{ fontWeight: "bold" }}>
                                       {Math.abs(70 - percentage)}
                                     </span>{" "}
-                                    more.
+                                    more points to pass. You're almost there—try
+                                    again!
                                   </Typography>
                                 )}
                               </Typography>
@@ -1402,8 +1403,7 @@ const MainLayout = (props) => {
                             onClick={() => {
                               if (
                                 (LEVEL === 1 || LEVEL === 2) &&
-                                (mFlow === true || mFlow === "true") &&
-                                language === "en"
+                                (mFlow === true || mFlow === "true")
                               ) {
                                 //console.log("mFlow value:", mFlow);
                                 setLocalData("rFlow", true);

@@ -161,7 +161,7 @@ const Practice = () => {
       ],
       L2: [
         {
-          completeWord: "Spier",
+          completeWord: "Spider",
           syllable: ["Spi", "der"],
           img: getAssetUrl(s3Assets.spiderM1),
           syllablesAudio: [
@@ -422,11 +422,11 @@ const Practice = () => {
         },
         {
           completeWord: "संतरा",
-          syllable: ["सन", "त्रा"],
+          syllable: ["सं", "तरा"],
           img: getAssetUrl(s3Assets.santraM1HinI),
           syllablesAudio: [
-            { name: "सन", audio: getAssetAudioUrl(s3Assets.sanM1Hin) },
-            { name: "त्रा", audio: getAssetAudioUrl(s3Assets.traM1Hin) },
+            { name: "सं", audio: getAssetAudioUrl(s3Assets.sanM1Hin) },
+            { name: "तरा", audio: getAssetAudioUrl(s3Assets.traM1Hin) },
           ],
           completeAudio: getAssetAudioUrl(s3Assets.santraM1Hin),
         },
@@ -609,30 +609,30 @@ const Practice = () => {
         },
         {
           completeWord: "बंदर",
-          syllable: ["बन", "दर"],
+          syllable: ["बं", "दर"],
           img: getAssetUrl(s3Assets.banarM1Hin),
           syllablesAudio: [
-            { name: "बन", audio: getAssetAudioUrl(s3Assets.banM1Hin) },
+            { name: "बं", audio: getAssetAudioUrl(s3Assets.banM1Hin) },
             { name: "दर", audio: getAssetAudioUrl(s3Assets.darM1Hin) },
           ],
           completeAudio: getAssetAudioUrl(s3Assets.bandarM1Hin),
         },
         {
           completeWord: "लंगूर",
-          syllable: ["लन", "गूर"],
+          syllable: ["लं", "गूर"],
           img: getAssetUrl(s3Assets.langurM1Hin),
           syllablesAudio: [
-            { name: "लन", audio: getAssetAudioUrl(s3Assets.lanM1Hin) },
+            { name: "लं", audio: getAssetAudioUrl(s3Assets.lanM1Hin) },
             { name: "गूर", audio: getAssetAudioUrl(s3Assets.goorM1Hin) },
           ],
           completeAudio: getAssetAudioUrl(s3Assets.langoorM1Hin),
         },
         {
           completeWord: "कद्दू",
-          syllable: ["कद", "दू"],
+          syllable: ["कद्", "दू"],
           img: getAssetUrl(s3Assets.kadduM2Hin),
           syllablesAudio: [
-            { name: "कद", audio: getAssetAudioUrl(s3Assets.kadM1Hin) },
+            { name: "कद्", audio: getAssetAudioUrl(s3Assets.kadM1Hin) },
             { name: "दू", audio: getAssetAudioUrl(s3Assets.duM1Hin) },
           ],
           completeAudio: getAssetAudioUrl(s3Assets.kadduM1Hin),
@@ -640,7 +640,7 @@ const Practice = () => {
       ],
       P3: [
         { completeWord: "रोटी", syllable: ["रो", "टी"], audio: "rotiM1Hin" },
-        { completeWord: "मूली", syllable: [" Moo", "ली"], audio: "mooliM1Hin" },
+        { completeWord: "मूली", syllable: ["मू", "ली"], audio: "mooliM1Hin" },
         { completeWord: "लीची", syllable: ["ली", "ची"], audio: "lichiM1Hin" },
         {
           completeWord: "नींबू",
@@ -1021,9 +1021,9 @@ const Practice = () => {
           syllable: ["ಕ", "ರ", "ಡಿ"],
           img: getAssetUrl(s3Assets.bearM1KanI),
           syllablesAudio: [
-            { name: "ಕ", audio: getAssetAudioUrl(s3Assets.bear1M1SylKan) },
-            { name: "ರ", audio: getAssetAudioUrl(s3Assets.bear2M1SylKan) },
-            { name: "ಡಿ", audio: getAssetAudioUrl(s3Assets.bear3M1SylKan) },
+            { name: "ಕ", audio: getAssetAudioUrl(s3Assets.bear1Kan) },
+            { name: "ರ", audio: getAssetAudioUrl(s3Assets.bear2Kan) },
+            { name: "ಡಿ", audio: getAssetAudioUrl(s3Assets.bear3Kan) },
           ],
           completeAudio: getAssetAudioUrl(s3Assets.bearM1Kan),
         },
@@ -1091,18 +1091,18 @@ const Practice = () => {
           syllablesAudio: [
             {
               name: "ಗ",
-              audio: getAssetAudioUrl(s3Assets.mathematiccs1M1SylKan),
+              audio: getAssetAudioUrl(s3Assets.Math1Kan),
             },
             {
               name: "ಣಿ",
-              audio: getAssetAudioUrl(s3Assets.mathematiccs2M1SylKan),
+              audio: getAssetAudioUrl(s3Assets.Math2Kan),
             },
             {
               name: "ತ",
-              audio: getAssetAudioUrl(s3Assets.mathematiccs3M1SylKan),
+              audio: getAssetAudioUrl(s3Assets.Math3Kan),
             },
           ],
-          completeAudio: getAssetAudioUrl(s3Assets.mathematicsM1Kan),
+          completeAudio: getAssetAudioUrl(s3Assets.MathKan),
         },
         {
           completeWord: "ಹಲಸು",
@@ -1121,26 +1121,34 @@ const Practice = () => {
       ],
       P1: [
         { completeWord: "ಆಕಾಶ", syllable: ["ಆ", "ಕಾಶ"], audio: "skyM1Kan" },
-        { completeWord: "ಹಲ್ಲು", syllable: ["ಹಲ್", "ಲು"], audio: "teethM1Kan" },
-        { completeWord: "ಕೋಪ", syllable: ["코", "ಪ"], audio: "angerM1Kan" },
-        { completeWord: "ಕಪ್ಪೆ", syllable: ["ಕಪ್", "ಪೆ"], audio: "frogM1Kan" },
-        { completeWord: "ಉಪ್ಪು", syllable: ["ಉಪ್", "ಪು"], audio: "saltM1Kan" },
+        { completeWord: "ಬೀಗ", syllable: ["ಬೀ", "ಗ"], audio: "lockM1KanA" },
+        { completeWord: "ಚರಕ", syllable: ["ಚರಕ", "ಕ"], audio: "spindleM1KanA" },
+        {
+          completeWord: "ಕೊಡೆ",
+          syllable: ["ಕೊ", "ಡೆ"],
+          audio: "umbrellaKan",
+        },
+        {
+          completeWord: "ಹೂವು",
+          syllable: ["ಹೂ", "ವು"],
+          audio: "FlowerKan",
+        },
       ],
       P2: [
         { completeWord: "ಸೀರೆ", syllable: ["ಸೀ", "ರೆ"], audio: "sareeM1Kan" },
         { completeWord: "ಸೀಬೆ", syllable: ["ಸೀ", "ಬೆ"], audio: "guavaM1Kan" },
-        { completeWord: "ಗೋಧಿ", syllable: ["ಗೋ", "ಧಿ"], audio: "wheatM1Kan" },
+        { completeWord: "ಗೋಧಿ", syllable: ["ಗೋ", "ಧಿ"], audio: "wheatKan" },
         {
-          completeWord: "ಕೊಡೆ",
-          syllable: ["ಕೊ", "ಡೆ"],
-          audio: "umbrellaM1Kan",
+          completeWord: "ಚೇಳು",
+          syllable: ["ಚೇ", "ಳು"],
+          audio: "scorpionKan",
         },
         { completeWord: "ಆಹಾರ", syllable: ["ಆ", "ಹಾರ"], audio: "foodM1Kan" },
       ],
       S1: [
         { completeWord: "ಕಮಲ", syllable: ["Ti", "ger"] },
         { completeWord: "ಗೋಧಿ", syllable: ["Rock", "et"] },
-        { completeWord: "ಕಪ್ಪೆ", syllable: ["Le", "mon"] },
+        { completeWord: "ಊಟ", syllable: ["Me", "al"] },
         { completeWord: "ಅಗಸ", syllable: ["To", "ma", "to"] },
         { completeWord: "ಹಡಗು", syllable: ["Man", "go"] },
       ],
@@ -1150,11 +1158,11 @@ const Practice = () => {
           syllable: ["ಹು", "ಡು", "ಗ"],
           img: getAssetUrl(s3Assets.boyM1KanI),
           syllablesAudio: [
-            { name: "ಹು", audio: getAssetAudioUrl(s3Assets.boy1M1SylKan) },
-            { name: "ಡು", audio: getAssetAudioUrl(s3Assets.boy2M1SylKan) },
-            { name: "ಗ", audio: getAssetAudioUrl(s3Assets.boy3M1SylKan) },
+            { name: "ಹು", audio: getAssetAudioUrl(s3Assets.Boy1Kan) },
+            { name: "ಡು", audio: getAssetAudioUrl(s3Assets.Boy2Kan) },
+            { name: "ಗ", audio: getAssetAudioUrl(s3Assets.Boy3Kan) },
           ],
-          completeAudio: getAssetAudioUrl(s3Assets.boyM1Kan),
+          completeAudio: getAssetAudioUrl(s3Assets.BoyKan),
         },
         {
           completeWord: "ಬಟಾಣಿ",
@@ -1255,18 +1263,18 @@ const Practice = () => {
         },
       ],
       P3: [
-        { completeWord: "ಹಕ್ಕಿ", syllable: ["ಹಕ್", "ಕಿ"], audio: "birdM1Kan" },
+        { completeWord: "ಒಂದು", syllable: ["ಒಂ", "ದು"], audio: "oneM1KanA" },
         {
-          completeWord: "ಗುಬ್ಬಿ",
-          syllable: ["ಗುಬ್", "ಬಿ"],
-          audio: "sparrowM1Kan",
+          completeWord: "ಆರು",
+          syllable: ["ಆರು", "ರು"],
+          audio: "sixM1KanA",
         },
-        { completeWord: "ಹಣ್ಣು", syllable: ["ಹಣ್", "ಣು"], audio: "fruitM1Kan" },
-        { completeWord: "ಸುಣ್ಣ", syllable: ["ಸುಣ್", "ಣ"], audio: "limeM1Kan" },
+        { completeWord: "ಓಡು", syllable: ["ಓಡು", "ಡು"], audio: "runM1KanA" },
+        { completeWord: "ಈಜು", syllable: ["ಈಜು", "ಜು"], audio: "swimM1KanA" },
         {
-          completeWord: "ಬುಟ್ಟಿ",
-          syllable: ["ಬುಟ್", "ಟಿ"],
-          audio: "basketM1Kan",
+          completeWord: "ಜನ",
+          syllable: ["ಜನ", "ನ"],
+          audio: "peopleM1KanA",
         },
       ],
       P4: [
@@ -1281,19 +1289,23 @@ const Practice = () => {
           audio: "moustacheM1Kan",
         },
         {
-          completeWord: "ಹಬ್ಬ",
-          syllable: ["ಹಬ್", "ಬ"],
-          audio: "festivalM1Kan",
+          completeWord: "ಮಂಚ",
+          syllable: ["ಮಂ", "ಚ"],
+          audio: "cotKan",
         },
-        { completeWord: "ಲಡ್ಡು", syllable: ["ಲಡ್", "ಡು"], audio: "ladduM1Kan" },
-        { completeWord: "ಹದ್ದು", syllable: ["ಹದ್", "ದು"], audio: "eagleM1Kan" },
+        {
+          completeWord: "ಸರ",
+          syllable: ["ಸರ", "ರ"],
+          audio: "necklaceKan",
+        },
+        { completeWord: "ಐದು", syllable: ["ಐದು", "ದು"], audio: "fiveM1KanA" },
       ],
       S2: [
         { completeWord: "ಹುಡುಗ", syllable: ["Bas", "ket"] },
-        { completeWord: "ಹಕ್ಕಿ", syllable: ["Tab", "let"] },
+        { completeWord: "ಕಾಗೆ", syllable: ["Cr", "ow"] },
         { completeWord: "ವಾಹನ", syllable: ["Sun", "set"] },
         { completeWord: "ನಿಂಬೆ", syllable: ["But", "ton"] },
-        { completeWord: "ಬುಟ್ಟಿ", syllable: ["Win", "dow"] },
+        { completeWord: "ತೋಳ", syllable: ["Wo", "lf"] },
       ],
     },
     te: {
@@ -1401,10 +1413,10 @@ const Practice = () => {
         },
         {
           completeWord: "పిచుక",
-          syllable: ["పీ", "చు", "క"],
+          syllable: ["పి", "చు", "క"],
           img: getAssetUrl(s3Assets.sparrowM1TelI),
           syllablesAudio: [
-            { name: "పీ", audio: getAssetAudioUrl(s3Assets.sparrow1M3Tel) },
+            { name: "పి", audio: getAssetAudioUrl(s3Assets.sparrow1M3Tel) },
             { name: "చు", audio: getAssetAudioUrl(s3Assets.sparrow2M3Tel) },
             { name: "క", audio: getAssetAudioUrl(s3Assets.sparrow3M3Tel) },
           ],
@@ -1412,29 +1424,49 @@ const Practice = () => {
         },
       ],
       P1: [
-        { completeWord: "ಆಕಾಶ", syllable: ["ಆ", "ಕಾಶ"], audio: "skyM1Kan" },
-        { completeWord: "ಹಲ್ಲು", syllable: ["ಹಲ್", "ಲು"], audio: "teethM1Kan" },
-        { completeWord: "ಕೋಪ", syllable: ["코", "ಪ"], audio: "angerM1Kan" },
-        { completeWord: "ಕಪ್ಪೆ", syllable: ["ಕಪ್", "ಪೆ"], audio: "frogM1Kan" },
-        { completeWord: "ಉಪ್ಪು", syllable: ["ಉಪ್", "ಪು"], audio: "saltM1Kan" },
+        {
+          completeWord: "నిప్పు",
+          syllable: ["ని", "ప్పు"],
+          audio: "fireM1Tel",
+        },
+        { completeWord: "కత్తి", syllable: ["కత్", "తి"], audio: "knifeM1Tel" },
+        {
+          completeWord: "గుర్రం",
+          syllable: ["గు", "ర్రం"],
+          audio: "horseM1Tel",
+        },
+        {
+          completeWord: "పువ్వు",
+          syllable: ["పు", "వ్వు"],
+          audio: "flowerM1Tel",
+        },
+        {
+          completeWord: "అల్లం",
+          syllable: ["అల్", "లం"],
+          audio: "gingerM1Tel",
+        },
       ],
       P2: [
-        { completeWord: "ಸೀರೆ", syllable: ["ಸೀ", "ರೆ"], audio: "sareeM1Kan" },
-        { completeWord: "ಸೀಬೆ", syllable: ["ಸೀ", "ಬೆ"], audio: "guavaM1Kan" },
-        { completeWord: "ಗೋಧಿ", syllable: ["ಗೋ", "ಧಿ"], audio: "wheatM1Kan" },
         {
-          completeWord: "ಕೊಡೆ",
-          syllable: ["ಕೊ", "ಡೆ"],
-          audio: "umbrellaM1Kan",
+          completeWord: "ముగ్గు",
+          syllable: ["ము", "గ్గు"],
+          audio: "rangoliM1Tel",
         },
-        { completeWord: "ಆಹಾರ", syllable: ["ಆ", "ಹಾರ"], audio: "foodM1Kan" },
+        {
+          completeWord: "అవ్వ",
+          syllable: ["అ", "వ్వ"],
+          audio: "gandmotherM1Tel",
+        },
+        { completeWord: "బస్సు", syllable: ["బస్", "సు"], audio: "busM1Tel" },
+        { completeWord: "గీయు", syllable: ["గీ", "యు"], audio: "drawM1Tel" },
+        { completeWord: "ఎముక", syllable: ["ఎ", "ముక"], audio: "boneM1Tel" },
       ],
       S1: [
-        { completeWord: "పనస", syllable: ["Ti", "ger"] },
-        { completeWord: "అరటి", syllable: ["Rock", "et"] },
-        { completeWord: "చెంచా", syllable: ["Le", "mon"] },
-        { completeWord: "రోటీ", syllable: ["To", "ma", "to"] },
-        { completeWord: "భూమి", syllable: ["Man", "go"] },
+        { completeWord: "గద్ద", syllable: ["గద్ద"] },
+        { completeWord: "బుట్ట", syllable: ["బు", "ట్ట"] },
+        { completeWord: "సబ్బు", syllable: ["సబ్", "బు"] },
+        { completeWord: "కప్పు", syllable: ["కప్", "పు"] },
+        { completeWord: "కుక్క", syllable: ["కు", "క్క"] },
       ],
       L3: [
         {
@@ -1544,45 +1576,37 @@ const Practice = () => {
         },
       ],
       P3: [
-        { completeWord: "ಹಕ್ಕಿ", syllable: ["ಹಕ್", "ಕಿ"], audio: "birdM1Kan" },
+        { completeWord: "ఇటుక", syllable: ["ఇ", "టుక"], audio: "brickM1Tel" },
         {
-          completeWord: "ಗುಬ್ಬಿ",
-          syllable: ["ಗುಬ್", "ಬಿ"],
-          audio: "sparrowM1Kan",
+          completeWord: "పండుగ",
+          syllable: ["పం", "డుగ"],
+          audio: "festivalM1Tel",
         },
-        { completeWord: "ಹಣ್ಣು", syllable: ["ಹಣ್", "ಣು"], audio: "fruitM1Kan" },
-        { completeWord: "ಸುಣ್ಣ", syllable: ["ಸುಣ್", "ಣ"], audio: "limeM1Kan" },
         {
-          completeWord: "ಬುಟ್ಟಿ",
-          syllable: ["ಬುಟ್", "ಟಿ"],
-          audio: "basketM1Kan",
+          completeWord: "కంబళి",
+          syllable: ["కం", "బళి"],
+          audio: "blanketM1Tel",
         },
+        { completeWord: "గడియ", syllable: ["గ", "డియ"], audio: "boltM1Tel" },
+        { completeWord: "చాకలి", syllable: ["చా", "కలి"], audio: "dhobiM1Tel" },
       ],
       P4: [
         {
-          completeWord: "ಸೌತೆ",
-          syllable: ["ಸೌ", "ತೆ"],
-          audio: "cucumberM1Kan",
+          completeWord: "మిడత",
+          syllable: ["మి", "డత"],
+          audio: "grasshopperM1Tel",
         },
-        {
-          completeWord: "ಮೀಸೆ",
-          syllable: ["ಮೀ", "ಸೆ"],
-          audio: "moustacheM1Kan",
-        },
-        {
-          completeWord: "ಹಬ್ಬ",
-          syllable: ["ಹಬ್", "ಬ"],
-          audio: "festivalM1Kan",
-        },
-        { completeWord: "ಲಡ್ಡು", syllable: ["ಲಡ್", "ಡು"], audio: "ladduM1Kan" },
-        { completeWord: "ಹದ್ದು", syllable: ["ಹದ್", "ದು"], audio: "eagleM1Kan" },
+        { completeWord: "టోపీ", syllable: ["టో", "పీ"], audio: "capM1Tel" },
+        { completeWord: "గడ్డి", syllable: ["గ్", "డి"], audio: "grassM1Tel" },
+        { completeWord: "లడ్డు", syllable: ["లడ్", "డు"], audio: "ladduM1Tel" },
+        { completeWord: "నవ్వు", syllable: ["న", "వ్వు"], audio: "laughM1Tel" },
       ],
       S2: [
-        { completeWord: "తామర", syllable: ["Bas", "ket"] },
-        { completeWord: "ಹಕ್ಕಿ", syllable: ["Tab", "let"] },
-        { completeWord: "ಕೊಡೆ", syllable: ["Sun", "set"] },
-        { completeWord: "ಉಪ್ಪು", syllable: ["But", "ton"] },
-        { completeWord: "ಹಣ್ಣು", syllable: ["Win", "dow"] },
+        { completeWord: "బల్ల", syllable: ["బల్", "ల"] },
+        { completeWord: "గుడ్డు", syllable: ["గు", "డ్డు"] },
+        { completeWord: "మబ్బు", syllable: ["మబ్", "బు"] },
+        { completeWord: "ఉప్పు", syllable: ["ఉప్", "పు"] },
+        { completeWord: "మొక్క", syllable: ["మొ", "క్క"] },
       ],
     },
     gu: {
@@ -2798,7 +2822,7 @@ const Practice = () => {
     },
     kn: {
       P1: [
-        { completeWord: "ಸೂರ್ಯ", syllable: ["ಸೂ", "ರ್ಯ"], audio: "sunM2Kan" },
+        { completeWord: "ರವಿ", syllable: ["ರ", "ವಿ"], audio: "sunM2Kan" },
         {
           completeWord: "ಸಹೋದರ",
           syllable: ["ಸ", "ಹೋದರ"],
@@ -2831,7 +2855,7 @@ const Practice = () => {
           syllable: ["ವಿಜ್", "್ಞಾನಿ"],
           audio: "scientistM2Kan",
         },
-        { completeWord: "ವಾಚ್", syllable: ["ವಾ", "ಚ್"], audio: "watchM2Kan" },
+        { completeWord: "ಹಸಿರು", syllable: ["ಹಸಿ", "ರು"], audio: "greenKan" },
         {
           completeWord: "ಕ್ಯಾರೆಟ್",
           syllable: ["ಕ್ಯಾ", "ರೆಟ್"],
@@ -3852,9 +3876,9 @@ const Practice = () => {
           audio: "turtleSwims",
         },
         {
-          completeWord: "ನಾಯಿ ಓಡುತಿದೆ",
-          syllable: ["ನಾಯಿ", "ಓಡುತಿದೆ"],
-          audio: "dogIsRunning2",
+          completeWord: "ಚೆಂಡು ಎಸೆದನು",
+          syllable: ["ಚೆಂಡು", "ಎಸೆದನು"],
+          audio: "throwedballKan",
         },
         {
           completeWord: "ಫೌಂಟನ್ ಪೆನ್ನು",
@@ -4264,6 +4288,15 @@ const Practice = () => {
       setVoiceText("");
       setEnableNext(false);
     }
+    if (voiceText === "profanity") {
+      setOpenMessageDialog({
+        message: `Please speak appropriately.`,
+        severity: "warning",
+        isError: true,
+      });
+      setVoiceText("");
+      setEnableNext(false);
+    }
     if (voiceText == "success") {
       setVoiceText("");
     }
@@ -4429,15 +4462,8 @@ const Practice = () => {
           }
           //setLocalData("previous_level", getSetData.data.previous_level);
           setLocalData("previous_level", getSetData.previous_level);
-          if (getSetData.sessionResult === "pass") {
-            if (
-              level === 15 &&
-              (currentLevel === "S1" || currentLevel === "S2")
-            ) {
-              setLocalData("allCompleted", true);
-              gameOver({ link: "/assesment-end" }, true);
-              return;
-            }
+
+          try {
             const lang = getLocalData("lang");
             const getMilestoneDetails = await getFetchMilestoneDetails(lang);
             setVocabCount(
@@ -4447,7 +4473,20 @@ const Practice = () => {
               getMilestoneDetails?.data?.extra?.latest_towre_data
                 ?.wordsPerMinute || 0
             );
-            if (level === 3 || level === 6 || level === 9) {
+          } catch (e) {
+            // catch error
+          }
+
+          if (getSetData.sessionResult === "pass") {
+            if (
+              level === 15 &&
+              (currentLevel === "S1" || currentLevel === "S2")
+            ) {
+              setLocalData("allCompleted", true);
+              gameOver({ link: "/assesment-end" }, true);
+              return;
+            }
+            if (lang === "en" && (level === 3 || level === 6 || level === 9)) {
               gameOver({ link: "/assesment-end" }, true);
               setLocalData("tFlow", true);
             }
@@ -4470,22 +4509,8 @@ const Practice = () => {
             setLocalData("mFail", true);
             setTimeout(() => {
               setLocalData("rFlow", true);
-            }, 10000);
+            }, 7000);
           }
-        }
-
-        try {
-          const lang = getLocalData("lang");
-          const getMilestoneDetails = await getFetchMilestoneDetails(lang);
-          setVocabCount(
-            getMilestoneDetails?.data?.extra?.vocabulary_count || 0
-          );
-          setWordCount(
-            getMilestoneDetails?.data?.extra?.latest_towre_data
-              ?.wordsPerMinute || 0
-          );
-        } catch (e) {
-          // catch error
         }
 
         let quesArr = [];
@@ -5255,108 +5280,13 @@ const Practice = () => {
           }}
         />
       );
-    } else if (rFlow === "true" && level === 2 && rStep === 2) {
+    } else if (rFlow === "true" && level === 2 && [2, 3, 4].includes(rStep)) {
       return (
         <R2
           page={page}
           setPage={setPage}
           rStep={rStep}
-          onComplete={() => handleComplete(3)}
-          {...{
-            level: level,
-            header:
-              questions[currentQuestion]?.contentType === "image"
-                ? `Guess the below image`
-                : `Speak the below word`,
-            //
-            currentImg: currentImage,
-            parentWords: parentWords,
-            contentType: currentContentType,
-            contentId: questions[currentQuestion]?.contentId,
-            setVoiceText,
-            setRecordedAudio,
-            setVoiceAnimate,
-            storyLine,
-            handleNext,
-            type: "word",
-            // image: elephant,
-            enableNext,
-            showTimer: false,
-            points,
-            steps: questions?.length,
-            currentStep: currentQuestion + 1,
-            progressData,
-            showProgress: true,
-            background:
-              isShowCase &&
-              "linear-gradient(281.02deg, #AE92FF 31.45%, #555ADA 100%)",
-            playTeacherAudio,
-            callUpdateLearner: isShowCase,
-            disableScreen,
-            isShowCase,
-            handleBack: !isShowCase && handleBack,
-            setEnableNext,
-            loading,
-            setOpenMessageDialog,
-            vocabCount,
-            wordCount,
-          }}
-        />
-      );
-    } else if (rFlow === "true" && level === 2 && rStep === 3) {
-      return (
-        <R3Flow
-          page={page}
-          setPage={setPage}
-          rStep={rStep}
-          onComplete={() => handleComplete(4)}
-          {...{
-            level: level,
-            header:
-              questions[currentQuestion]?.contentType === "image"
-                ? `Guess the below image`
-                : `Speak the below word`,
-            //
-            currentImg: currentImage,
-            parentWords: parentWords,
-            contentType: currentContentType,
-            contentId: questions[currentQuestion]?.contentId,
-            setVoiceText,
-            setRecordedAudio,
-            setVoiceAnimate,
-            storyLine,
-            handleNext,
-            type: "word",
-            // image: elephant,
-            enableNext,
-            showTimer: false,
-            points,
-            steps: questions?.length,
-            currentStep: currentQuestion + 1,
-            progressData,
-            showProgress: true,
-            background:
-              isShowCase &&
-              "linear-gradient(281.02deg, #AE92FF 31.45%, #555ADA 100%)",
-            playTeacherAudio,
-            callUpdateLearner: isShowCase,
-            disableScreen,
-            isShowCase,
-            handleBack: !isShowCase && handleBack,
-            setEnableNext,
-            loading,
-            setOpenMessageDialog,
-            vocabCount,
-            wordCount,
-          }}
-        />
-      );
-    } else if (rFlow === "true" && level === 2 && rStep === 4) {
-      return (
-        <R4
-          page={page}
-          setPage={setPage}
-          rStep={rStep}
+          //onComplete={() => handleComplete(3)}
           {...{
             level: level,
             header:
