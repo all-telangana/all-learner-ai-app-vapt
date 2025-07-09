@@ -10254,12 +10254,12 @@ export const levelConfig = {
 
 const AllLanguages = [
   { name: "English", lang: "en", symbol: "A" },
-  // { name: "தமிழ்", lang: "ta", symbol: "இ" },
+  { name: "தமிழ்", lang: "ta", symbol: "இ" },
   { name: "हिंदी", lang: "hi", symbol: "क" },
-  // { name: "ಕನ್ನಡ", lang: "kn", symbol: "ಕ" },
-  // { name: "తెలుగు", lang: "te", symbol: "ఈ" },
-  // { name: "ગુજરાતી", lang: "gu", symbol: "ક" },
-  // { name: "ଓଡିଆ", lang: "or", symbol: "କ" },
+  { name: "ಕನ್ನಡ", lang: "kn", symbol: "ಕ" },
+  { name: "తెలుగు", lang: "te", symbol: "ఈ" },
+  { name: "ગુજરાતી", lang: "gu", symbol: "ક" },
+  { name: "ଓଡିଆ", lang: "or", symbol: "କ" },
 ];
 
 const appLanguages = process.env.REACT_APP_LANGUAGES

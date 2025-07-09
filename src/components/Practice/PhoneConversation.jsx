@@ -149,7 +149,7 @@ const PhoneConversation = ({
         if (count > 2) {
           setOpenMessageDialog({
             open: true,
-            message: `Please speak properly.`,
+            message: `Please speak appropriately.`,
             severity: "warning",
             isError: true,
           });
@@ -708,6 +708,7 @@ const PhoneConversation = ({
       //isRecordingComplete={isRecordingComplete}
       parentWords={parentWords}
       fluency={false}
+      lang={language}
       //={recAudio}
       {...{
         steps,

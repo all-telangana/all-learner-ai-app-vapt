@@ -191,7 +191,7 @@ const Mechanics7 = ({
 
         setOpenMessageDialog({
           open: true,
-          message: `Warning: Inappropriate language detected. Please refrain from using such words.`,
+          message: `Please speak appropriately.`,
           severity: "warning",
           isError: true,
         });
@@ -757,6 +757,7 @@ const Mechanics7 = ({
       parentWords={parentWords}
       recAudio={recAudio}
       isCorrect={isCorrect}
+      lang={language}
       {...{
         steps,
         currentStep,

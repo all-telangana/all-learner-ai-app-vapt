@@ -223,7 +223,7 @@ const McqFlow = ({
         if (count > 2) {
           setOpenMessageDialog({
             open: true,
-            message: `Please speak properly.`,
+            message: `Please speak appropriately.`,
             severity: "warning",
             isError: true,
           });
@@ -254,7 +254,7 @@ const McqFlow = ({
     let responseText = "";
     //console.log("apiResp", responseText);
     await callTelemetryApi(
-      conversation?.tasks[currentStep - 1]?.answer,
+      correctAnswer,
       sessionId,
       currentStep - 1,
       recAudio,
@@ -281,6 +281,7 @@ const McqFlow = ({
       points={points}
       pageName={"m7"}
       parentWords={parentWords}
+      lang={language}
       {...{
         steps,
         currentStep,

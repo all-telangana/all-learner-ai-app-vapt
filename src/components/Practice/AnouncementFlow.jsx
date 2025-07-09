@@ -152,7 +152,7 @@ const AnouncementFlow = ({
         if (count > 2) {
           setOpenMessageDialog({
             open: true,
-            message: `Please speak properly.`,
+            message: `Please speak appropriately.`,
             severity: "warning",
             isError: true,
           });
@@ -618,14 +618,14 @@ const AnouncementFlow = ({
       audioInstance.currentTime = 0;
       setIsPlaying(false);
     }
-    if (finalTranscript && filterBadWords(finalTranscript)) {
-      setOpenMessageDialog({
-        open: true,
-        message: `Cannot proceed - inappropriate language detected (${detectedWord}). Please try again.`,
-        severity: "error",
-      });
-      return;
-    }
+    // if (finalTranscript && filterBadWords(finalTranscript)) {
+    //   setOpenMessageDialog({
+    //     open: true,
+    //     message: `Cannot proceed - inappropriate language detected (${detectedWord}). Please try again.`,
+    //     severity: "error",
+    //   });
+    //   return;
+    // }
     setIsLoading(true);
 
     const sessionId = getLocalData("sessionId");
@@ -851,6 +851,7 @@ const AnouncementFlow = ({
       //isRecordingComplete={isRecordingComplete}
       parentWords={parentWords}
       fluency={false}
+      lang={language}
       //={recAudio}
       {...{
         steps,
