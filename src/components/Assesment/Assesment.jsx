@@ -464,15 +464,27 @@ export const ProfileHeader = ({
 
   const handleLogout = async () => {
     try {
+      // Call logout API
       await logoutUser();
     } catch (error) {
       console.error("Logout failed, but proceeding with local logout");
     } finally {
-      localStorage.clear();
+      // End telemetry session
       end({});
-      // navigate("/login");
+
+      // Don't clear all of localStorage — preserve telemetry/session data
+      // localStorage.clear(); ❌
+
+      // Optional: Remove only specific auth-related keys (if needed)
+      // localStorage.removeItem('authToken');
+      // localStorage.removeItem('userProfile');
+
+      // Notify parent window
+      window.parent.postMessage({ type: "LOGOUT" }, "*");
+
+      // Redirect to login
+      // navigate("/login"); ✅ Uncomment if needed
     }
-    window.parent.postMessage({ type: "LOGOUT" }, "*");
   };
 
   const CustomIconButton = styled(IconButton)({
