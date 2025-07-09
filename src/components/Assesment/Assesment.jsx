@@ -464,18 +464,23 @@ export const ProfileHeader = ({
 
   const handleLogout = async () => {
     try {
-      // 1. Call logout API
+      // 1. Set initial status
+      localStorage.setItem("logout_status", "pending");
+
+      // 2. Execute child's logout API
+      // console.log("[Child] 🔐 Calling logoutUser()...");
       await logoutUser();
 
-      // 2. Optionally call local telemetry end
+      // 3. Fire telemetry (fire-and-forget)
+      // console.log("[Child] 📡 Starting telemetry end...");
       end({});
-    } catch (error) {
-      console.error("Logout failed, but proceeding with local logout");
-    } finally {
-      // 3. DO NOT clear anything from localStorage here!
 
-      // 4. Notify parent to take over full logout handling
-      window.parent.postMessage({ type: "LOGOUT" }, "*");
+      // 4. Mark completion
+      localStorage.setItem("logout_status", "complete");
+      // console.log("[Child] ✅ Logout process completed");
+    } catch (error) {
+      console.error("[Child] ❌ Logout failed:", error);
+      localStorage.setItem("logout_status", "failed");
     }
   };
 
