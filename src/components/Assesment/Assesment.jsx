@@ -464,15 +464,15 @@ export const ProfileHeader = ({
 
   const handleLogout = async () => {
     try {
+      // Call logout API
       await logoutUser();
     } catch (error) {
       console.error("Logout failed, but proceeding with local logout");
     } finally {
-      localStorage.clear();
+      // End telemetry session
       end({});
-      // navigate("/login");
+      window.parent.postMessage({ type: "LOGOUT" }, "*");
     }
-    window.parent.postMessage({ type: "LOGOUT" }, "*");
   };
 
   const CustomIconButton = styled(IconButton)({
