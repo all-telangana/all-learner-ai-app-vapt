@@ -464,14 +464,23 @@ export const ProfileHeader = ({
 
   const handleLogout = async () => {
     try {
-      // Call logout API
+      // 1. Set initial status
+      localStorage.setItem("logout_status", "pending");
+
+      // 2. Execute child's logout API
+      // console.log("[Child] 🔐 Calling logoutUser()...");
       await logoutUser();
-    } catch (error) {
-      console.error("Logout failed, but proceeding with local logout");
-    } finally {
-      // End telemetry session
+
+      // 3. Fire telemetry (fire-and-forget)
+      // console.log("[Child] 📡 Starting telemetry end...");
       end({});
-      window.parent.postMessage({ type: "LOGOUT" }, "*");
+
+      // 4. Mark completion
+      localStorage.setItem("logout_status", "complete");
+      // console.log("[Child] ✅ Logout process completed");
+    } catch (error) {
+      console.error("[Child] ❌ Logout failed:", error);
+      localStorage.setItem("logout_status", "failed");
     }
   };
 
