@@ -20,8 +20,9 @@ const App = () => {
   useEffect(() => {
     const token = localStorage.getItem("apiToken");
     const profileName = getLocalData("profileName");
+    const axlToken = localStorage.getItem("axl-token");
 
-    if (token && profileName) {
+    if (token && profileName && axlToken) {
       setAppInitialized(true);
     }
   }, [navigate]);
@@ -99,15 +100,15 @@ const App = () => {
           ) {
             window.parent.postMessage(
               {
-                message: "Unauthorized",
+                type: "LOGOUT",
               },
-              window?.location?.ancestorOrigins?.[0] ||
-                window.parent.location.origin
+              "*"
             );
           } else {
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/login");
+            localStorage.setItem("logout_status", "complete");
+            // localStorage.clear();
+            // sessionStorage.clear();
+            // navigate("/login");
           }
         }
       }
@@ -131,8 +132,7 @@ const App = () => {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        "If the PWA app doesn't load properly, please try logging out and back
-        in."
+        "If the app doesn't load properly, please go back and login again."
       </div>
     );
 
