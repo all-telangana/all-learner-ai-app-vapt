@@ -1,124 +1,52 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material/styles";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import routes from "./routes";
 import { AppContent } from "./views";
 import theme from "./assets/styles/theme";
-import { initialize } from "./services/telementryService";
-import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
-import { getLocalData } from "./utils/constants";
 
 const App = () => {
-  const navigate = useNavigate();
-  const ranonce = useRef(false);
-  const [appInitialized, setAppInitialized] = useState(false);
-
   useEffect(() => {
-    const token = localStorage.getItem("apiToken");
-    const profileName = getLocalData("profileName");
-
-    if (token && profileName) {
-      setAppInitialized(true);
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    if (!appInitialized) return;
-
-    const initService = async (visitorId) => {
-      await initialize({
-        context: {
-          mode: process.env.REACT_APP_MODE,
-          authToken: localStorage.getItem("apiToken"),
-          did: localStorage.getItem("deviceId") || visitorId,
-          uid: "anonymous",
-          channel: process.env.REACT_APP_CHANNEL,
-          env: process.env.REACT_APP_ENV,
-          pdata: {
-            id: process.env.REACT_APP_ID,
-            ver: process.env.REACT_APP_VER,
-            pid: process.env.REACT_APP_PID,
-          },
-          tags: [""],
-          timeDiff: 0,
-          host: process.env.REACT_APP_HOST,
-          endpoint: process.env.REACT_APP_ENDPOINT,
-          apislug: process.env.REACT_APP_APISLUG,
-        },
-        config: {},
-        metadata: {},
-      });
-
-      if (!ranonce.current) {
-        if (localStorage.getItem("contentSessionId") === null) {
-          startEvent();
-        }
-        ranonce.current = true;
-      }
-    };
-
-    const setFp = async () => {
-      const fp = await FingerprintJS.load();
-      const { visitorId } = await fp.get();
-      initService(visitorId);
-    };
-
-    setFp();
-  }, [appInitialized]);
-
-  useEffect(() => {
-    if (!appInitialized) return;
-
     const handleBeforeUnload = () => {
       window.telemetry?.syncEvents?.();
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [appInitialized]);
+  }, []);
 
   axios.interceptors.response.use(
     (response) => {
-      console.log("Interceptor - Successful response:", response);
+      // console.log("Interceptor - Successful response:", response);
       return response;
     },
     (error) => {
-      console.log("Interceptor - Error response:", error);
+      // console.log("Interceptor - Error response:", error);
       if (
         error.response &&
         (error.response.status === 401 || error.response.status === 400)
       ) {
-        console.log("401/400 error detected");
+        // console.log("401/400 error detected");
         if (
           error?.response?.data?.error === "Unauthorized" ||
           error?.response?.data?.error === "Invalid token" ||
           error?.response?.data?.error === "Token expired"
         ) {
-          console.log("Token-related error detected");
+          // console.log("Token-related error detected");
           if (
             localStorage.getItem("allAppContentSessionId") &&
             process.env.REACT_APP_IS_APP_IFRAME === "true"
           ) {
-            console.log("Posting LOGOUT message to parent window");
-            localStorage.clear();
-            sessionStorage.clear();
+            // console.log("Posting LOGOUT message to parent window");
+            localStorage.setItem("logout_status", "complete");
             // window.parent.postMessage({ type: "LOGOUT" }, "*");
-            // window.parent.postMessage(
-            //   {
-            //     message: "Unauthorized",
-            //   },
-            //   window?.location?.ancestorOrigins?.[0] ||
-            //     window.parent.location.origin
-            // );
           } else {
-            console.log("Performing local logout");
-            // localStorage.setItem("logout_status", "complete");
-            localStorage.clear();
-            sessionStorage.clear();
+            // console.log("Performing local logout");
+            localStorage.setItem("logout_status", "complete");
+            // localStorage.clear();
+            // sessionStorage.clear();
             // navigate("/login");
           }
         }
@@ -126,26 +54,6 @@ const App = () => {
       return Promise.reject(error);
     }
   );
-
-  if (!appInitialized)
-    return (
-      <div
-        style={{
-          height: "100vh",
-          width: "100vw",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#f5f5f5",
-          fontSize: "20px",
-          fontWeight: "bold",
-          color: "#333",
-          fontFamily: "Arial, sans-serif",
-        }}
-      >
-        "If the app doesn't load properly, please go back and login again."
-      </div>
-    );
 
   return (
     <StyledEngineProvider injectFirst>
