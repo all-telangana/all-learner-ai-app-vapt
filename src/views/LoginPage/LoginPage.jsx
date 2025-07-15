@@ -12,7 +12,7 @@ import {
 import { useMediaQuery } from "@mui/material";
 import { fetchVirtualId } from "../../services/userservice/userService";
 import "./LoginPage.css";
-import { getLocalData, setLocalData } from "../../utils/constants";
+import { setLocalData } from "../../utils/constants";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { initialize } from "../../services/telementryService";
 import { startEvent } from "../../services/callTelemetryIntract";
@@ -25,53 +25,53 @@ const LoginPage = () => {
   const ranonce = useRef(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("apiToken");
-    const profileName = getLocalData("profileName");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("apiToken");
+  //   const profileName = getLocalData("profileName");
 
-    if (token && profileName) {
-      const initService = async (visitorId) => {
-        await initialize({
-          context: {
-            mode: process.env.REACT_APP_MODE,
-            authToken: localStorage.getItem("apiToken"),
-            did: localStorage.getItem("deviceId") || visitorId,
-            uid: "anonymous",
-            channel: process.env.REACT_APP_CHANNEL,
-            env: process.env.REACT_APP_ENV,
-            pdata: {
-              id: process.env.REACT_APP_ID,
-              ver: process.env.REACT_APP_VER,
-              pid: process.env.REACT_APP_PID,
-            },
-            tags: [""],
-            timeDiff: 0,
-            host: process.env.REACT_APP_HOST,
-            endpoint: process.env.REACT_APP_ENDPOINT,
-            apislug: process.env.REACT_APP_APISLUG,
-          },
-          config: {},
-          metadata: {},
-        });
+  //   if (token && profileName) {
+  //     const initService = async (visitorId) => {
+  //       await initialize({
+  //         context: {
+  //           mode: process.env.REACT_APP_MODE,
+  //           authToken: localStorage.getItem("apiToken"),
+  //           did: localStorage.getItem("deviceId") || visitorId,
+  //           uid: "anonymous",
+  //           channel: process.env.REACT_APP_CHANNEL,
+  //           env: process.env.REACT_APP_ENV,
+  //           pdata: {
+  //             id: process.env.REACT_APP_ID,
+  //             ver: process.env.REACT_APP_VER,
+  //             pid: process.env.REACT_APP_PID,
+  //           },
+  //           tags: [""],
+  //           timeDiff: 0,
+  //           host: process.env.REACT_APP_HOST,
+  //           endpoint: process.env.REACT_APP_ENDPOINT,
+  //           apislug: process.env.REACT_APP_APISLUG,
+  //         },
+  //         config: {},
+  //         metadata: {},
+  //       });
 
-        if (!ranonce.current) {
-          if (localStorage.getItem("contentSessionId") === null) {
-            startEvent();
-          }
-          ranonce.current = true;
-        }
-      };
+  //       if (!ranonce.current) {
+  //         if (localStorage.getItem("contentSessionId") === null) {
+  //           startEvent();
+  //         }
+  //         ranonce.current = true;
+  //       }
+  //     };
 
-      const setFp = async () => {
-        const fp = await FingerprintJS.load();
-        const { visitorId } = await fp.get();
-        initService(visitorId);
-      };
+  //     const setFp = async () => {
+  //       const fp = await FingerprintJS.load();
+  //       const { visitorId } = await fp.get();
+  //       initService(visitorId);
+  //     };
 
-      setFp();
-      navigate("/discover-start");
-    }
-  }, [navigate]);
+  //     setFp();
+  //     navigate("/discover-start");
+  //   }
+  // }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
