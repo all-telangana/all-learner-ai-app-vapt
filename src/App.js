@@ -82,32 +82,44 @@ const App = () => {
   }, [appInitialized]);
 
   axios.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      console.log("Interceptor - Successful response:", response);
+      return response;
+    },
     (error) => {
+      console.log("Interceptor - Error response:", error);
       if (
         error.response &&
         (error.response.status === 401 || error.response.status === 400)
       ) {
+        console.log("401/400 error detected");
         if (
           error?.response?.data?.error === "Unauthorized" ||
           error?.response?.data?.error === "Invalid token" ||
           error?.response?.data?.error === "Token expired"
         ) {
+          console.log("Token-related error detected");
           if (
-            localStorage.getItem("contentSessionId") &&
+            localStorage.getItem("allAppContentSessionId") &&
             process.env.REACT_APP_IS_APP_IFRAME === "true"
           ) {
-            window.parent.postMessage(
-              {
-                message: "Unauthorized",
-              },
-              window?.location?.ancestorOrigins?.[0] ||
-                window.parent.location.origin
-            );
-          } else {
+            console.log("Posting LOGOUT message to parent window");
             localStorage.clear();
             sessionStorage.clear();
-            navigate("/login");
+            // window.parent.postMessage({ type: "LOGOUT" }, "*");
+            // window.parent.postMessage(
+            //   {
+            //     message: "Unauthorized",
+            //   },
+            //   window?.location?.ancestorOrigins?.[0] ||
+            //     window.parent.location.origin
+            // );
+          } else {
+            console.log("Performing local logout");
+            // localStorage.setItem("logout_status", "complete");
+            localStorage.clear();
+            sessionStorage.clear();
+            // navigate("/login");
           }
         }
       }
@@ -131,8 +143,7 @@ const App = () => {
           fontFamily: "Arial, sans-serif",
         }}
       >
-        "If the PWA app doesn't load properly, please try logging out and back
-        in."
+        "If the app doesn't load properly, please go back and login again."
       </div>
     );
 
