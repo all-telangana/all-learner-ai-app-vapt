@@ -94,22 +94,21 @@ const App = () => {
           error?.response?.data?.error === "Invalid token" ||
           error?.response?.data?.error === "Token expired"
         ) {
-          if (
-            localStorage.getItem("contentSessionId") &&
-            process.env.REACT_APP_IS_APP_IFRAME === "true"
-          ) {
-            window.parent.postMessage(
-              {
-                type: "LOGOUT",
-              },
-              "*"
-            );
-          } else {
-            localStorage.setItem("logout_status", "complete");
-            // localStorage.clear();
-            // sessionStorage.clear();
-            // navigate("/login");
-          }
+          // if (
+          //   localStorage.getItem("allAppContentSessionId") &&
+          //   process.env.REACT_APP_IS_APP_IFRAME === "true"
+          // ) {
+          //   localStorage.setItem("logout_status", "complete");
+          //   window.parent.postMessage({ type: "LOGOUT" }, "*");
+          // } else {
+          //   localStorage.setItem("logout_status", "complete");
+          //   window.parent.postMessage({ type: "LOGOUT" }, "*");
+          //   // localStorage.clear();
+          //   // sessionStorage.clear();
+          //   // navigate("/login");
+          // }
+          localStorage.setItem("logout_status", "complete");
+          window.parent.postMessage({ type: "LOGOUT" }, "*");
         }
       }
       return Promise.reject(error);
