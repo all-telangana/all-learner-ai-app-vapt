@@ -96,17 +96,24 @@ const App = () => {
           error?.response?.data?.error === "Token expired"
         ) {
           // if (
-          //   localStorage.getItem("allAppContentSessionId") &&
+          //   localStorage.getItem("contentSessionId") &&
           //   process.env.REACT_APP_IS_APP_IFRAME === "true"
           // ) {
-          //   localStorage.setItem("logout_status", "complete");
-          //   window.parent.postMessage({ type: "LOGOUT" }, "*");
+          //   window.parent.postMessage(
+          //     {
+          //       message: "Unauthorized",
+          //     },
+          //     window?.location?.ancestorOrigins?.[0] ||
+          //       window.parent.location.origin
+          //   );
           // } else {
-          //   localStorage.setItem("logout_status", "complete");
+          //   localStorage.clear();
+          //   sessionStorage.clear();
+          //   navigate("/login");
           // }
+          // window.parent.postMessage({ type: "LOGOUT" }, "*");
           localStorage.setItem("logout_status", "complete");
-          window.parent.postMessage({ type: "LOGOUT" }, "*");
-          window.location.reload();
+          // window.location.reload();
         }
       }
       return Promise.reject(error);
