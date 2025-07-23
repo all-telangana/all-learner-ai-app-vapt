@@ -83,36 +83,30 @@ const App = () => {
 
   axios.interceptors.response.use(
     (response) => {
-      // console.log("Interceptor - Successful response:", response);
       return response;
     },
     (error) => {
-      // console.log("Interceptor - Error response:", error);
       if (
         error.response &&
         (error.response.status === 401 || error.response.status === 400)
       ) {
-        // console.log("401/400 error detected");
         if (
           error?.response?.data?.error === "Unauthorized" ||
           error?.response?.data?.error === "Invalid token" ||
           error?.response?.data?.error === "Token expired"
         ) {
-          // console.log("Token-related error detected");
-          if (
-            localStorage.getItem("allAppContentSessionId") &&
-            process.env.REACT_APP_IS_APP_IFRAME === "true"
-          ) {
-            // console.log("Posting LOGOUT message to parent window");
-            localStorage.setItem("logout_status", "complete");
-            window.parent.postMessage({ type: "LOGOUT" }, "*");
-          } else {
-            // console.log("Performing local logout");
-            localStorage.setItem("logout_status", "complete");
-            // localStorage.clear();
-            // sessionStorage.clear();
-            // navigate("/login");
-          }
+          // if (
+          //   localStorage.getItem("allAppContentSessionId") &&
+          //   process.env.REACT_APP_IS_APP_IFRAME === "true"
+          // ) {
+          //   localStorage.setItem("logout_status", "complete");
+          //   window.parent.postMessage({ type: "LOGOUT" }, "*");
+          // } else {
+          //   localStorage.setItem("logout_status", "complete");
+          // }
+          localStorage.setItem("logout_status", "complete");
+          window.parent.postMessage({ type: "LOGOUT" }, "*");
+          window.location.reload();
         }
       }
       return Promise.reject(error);
