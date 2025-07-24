@@ -81,14 +81,16 @@ const App = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [appInitialized]);
 
-  axios.interceptors.response.use(
+  axios?.interceptors?.response.use(
     (response) => {
+      // console.log("Interceptor - Successful response:", response);
       return response;
     },
     (error) => {
+      // console.log("Interceptor - Error response:", error);
       if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 400)
+        error?.response &&
+        (error.response?.status === 401 || error?.response?.status === 400)
       ) {
         if (
           error?.response?.data?.error === "Unauthorized" ||
@@ -96,17 +98,23 @@ const App = () => {
           error?.response?.data?.error === "Token expired"
         ) {
           // if (
-          //   localStorage.getItem("allAppContentSessionId") &&
+          //   localStorage.getItem("contentSessionId") &&
           //   process.env.REACT_APP_IS_APP_IFRAME === "true"
           // ) {
-          //   localStorage.setItem("logout_status", "complete");
-          //   window.parent.postMessage({ type: "LOGOUT" }, "*");
+          //   window.parent.postMessage(
+          //     {
+          //       message: "Unauthorized",
+          //     },
+          //     window?.location?.ancestorOrigins?.[0] ||
+          //       window.parent.location.origin
+          //   );
           // } else {
-          //   localStorage.setItem("logout_status", "complete");
+          //   localStorage.clear();
+          //   sessionStorage.clear();
+          //   navigate("/login");
           // }
+          localStorage.setItem("logout_reason", error?.response?.data?.message);
           localStorage.setItem("logout_status", "complete");
-          window.parent.postMessage({ type: "LOGOUT" }, "*");
-          window.location.reload();
         }
       }
       return Promise.reject(error);

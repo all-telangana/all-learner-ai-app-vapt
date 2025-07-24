@@ -462,25 +462,26 @@ export const ProfileHeader = ({
     }
   };
 
+  // const handleLogout = async () => {
+  //   try {
+  //     await logoutUser();
+  //   } catch (error) {
+  //     console.error("Logout failed, but proceeding with local logout");
+  //   } finally {
+  //     localStorage.clear();
+  //     end({});
+  //     navigate("/login");
+  //   }
+  // };
+
   const handleLogout = async () => {
     try {
-      // 1. Set initial status
-      localStorage.setItem("logout_status", "pending");
-
-      // 2. Execute child's logout API
-      // console.log("[Child] 🔐 Calling logoutUser()...");
       await logoutUser();
-
-      // 3. Fire telemetry (fire-and-forget)
-      // console.log("[Child] 📡 Starting telemetry end...");
-      end({});
-
-      // 4. Mark completion
-      localStorage.setItem("logout_status", "complete");
-      // console.log("[Child] ✅ Logout process completed");
     } catch (error) {
-      console.error("[Child] ❌ Logout failed:", error);
-      localStorage.setItem("logout_status", "failed");
+      console.error("Logout failed :", error);
+    } finally {
+      end({});
+      localStorage.setItem("logout_status", "complete");
     }
   };
 
