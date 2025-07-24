@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ThemeProvider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "../node_modules/react-router-dom/dist/index";
 import { StyledEngineProvider } from "@mui/material/styles";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import routes from "./routes";
@@ -90,30 +90,22 @@ const App = () => {
         error.response &&
         (error.response.status === 401 || error.response.status === 400)
       ) {
-        if (
-          error?.response?.data?.error === "Unauthorized" ||
-          error?.response?.data?.error === "Invalid token" ||
-          error?.response?.data?.error === "Token expired"
-        ) {
-          // if (
-          //   localStorage.getItem("contentSessionId") &&
-          //   process.env.REACT_APP_IS_APP_IFRAME === "true"
-          // ) {
-          //   window.parent.postMessage(
-          //     {
-          //       message: "Unauthorized",
-          //     },
-          //     window?.location?.ancestorOrigins?.[0] ||
-          //       window.parent.location.origin
-          //   );
-          // } else {
-          //   localStorage.clear();
-          //   sessionStorage.clear();
-          //   navigate("/login");
-          // }
-          // window.parent.postMessage({ type: "LOGOUT" }, "*");
-          localStorage.setItem("logout_status", "complete");
-          // window.location.reload();
+        const errorMessage = error?.response?.data?.message
+          ?.trim()
+          ?.toLowerCase();
+        if (!errorMessage?.includes("profanity")) {
+          if (
+            process.env.REACT_APP_IS_APP_IFRAME === "true" &&
+            (localStorage.getItem("contentSessionId") ||
+              localStorage.getItem("allAppContentSessionId"))
+          ) {
+            localStorage.setItem("logout_reason", errorMessage);
+            localStorage.setItem("logout_status", "complete");
+          } else {
+            localStorage.clear();
+            sessionStorage.clear();
+            navigate("/login");
+          }
         }
       }
       return Promise.reject(error);
