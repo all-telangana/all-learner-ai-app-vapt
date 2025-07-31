@@ -221,6 +221,8 @@ const PhrasesInAction = ({
 
   let currentLevel = practiceSteps?.[currentPracticeStep]?.titleThree || "L1";
 
+  let apiLevel = `M${level}-${currentLevel}`;
+
   if (
     String(level) === "10" ||
     String(level) === "12" ||
@@ -3437,7 +3439,7 @@ const PhrasesInAction = ({
                 text: "ಅಂದದ ಸರ",
               },
             ],
-            audio: getAssetAudioUrl(s3Assets.beautifulNecklaceM3KanAudio),
+            audio: getAssetAudioUrl(s3Assets.AndadaSaraBeautifulNecklace),
           },
           step2: {
             allwordsTwo: [
@@ -3455,7 +3457,7 @@ const PhrasesInAction = ({
               },
             ],
             correctWordTwo: "ಅಂದದ ಸರ",
-            audio: getAssetAudioUrl(s3Assets.beautifulNecklaceM3KanAudio),
+            audio: getAssetAudioUrl(s3Assets.NecklaceinBingosheetKan),
           },
         },
         {
@@ -4912,7 +4914,10 @@ const PhrasesInAction = ({
       currentStep - 1,
       base64Data,
       responseStartTime,
-      responseText?.responseText || ""
+      currentSteps === "step1"
+        ? levelData?.allwords[0]?.text
+        : levelData?.correctWordTwo,
+      apiLevel
     );
   };
 

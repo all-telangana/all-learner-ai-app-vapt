@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ThemeProvider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "../node_modules/react-router-dom/dist/index";
 import { StyledEngineProvider } from "@mui/material/styles";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import routes from "./routes";
@@ -11,22 +11,29 @@ import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
 import { getLocalData } from "./utils/constants";
+import { CircularProgress, Box } from "@mui/material";
 
 const App = () => {
   const navigate = useNavigate();
   const ranonce = useRef(false);
+
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [appInitialized, setAppInitialized] = useState(false);
 
+  // Step 1: Check token/profile
   useEffect(() => {
     const token = localStorage.getItem("apiToken");
     const profileName = getLocalData("profileName");
-    const axlToken = localStorage.getItem("axl-token");
 
-    if (token && profileName && axlToken) {
+    if (token && profileName) {
       setAppInitialized(true);
+    } else {
+      navigate("/login");
     }
+    setCheckingAuth(false); // stop loader after check
   }, [navigate]);
 
+  // Step 2: Initialize telemetry
   useEffect(() => {
     if (!appInitialized) return;
 
@@ -71,6 +78,7 @@ const App = () => {
     setFp();
   }, [appInitialized]);
 
+  // Step 3: Sync telemetry before unload
   useEffect(() => {
     if (!appInitialized) return;
 
@@ -82,61 +90,64 @@ const App = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [appInitialized]);
 
+  // Step 4: Axios interceptor for auth errors
   axios.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      return response;
+    },
     (error) => {
       if (
         error.response &&
         (error.response.status === 401 || error.response.status === 400)
       ) {
-        if (
-          error?.response?.data?.error === "Unauthorized" ||
-          error?.response?.data?.error === "Invalid token" ||
-          error?.response?.data?.error === "Token expired"
-        ) {
-          // if (
-          //   localStorage.getItem("contentSessionId") &&
-          //   process.env.REACT_APP_IS_APP_IFRAME === "true"
-          // ) {
-          //   window.parent.postMessage(
-          //     {
-          //       message: "Unauthorized",
-          //     },
-          //     window?.location?.ancestorOrigins?.[0] ||
-          //       window.parent.location.origin
-          //   );
-          // } else {
-          //   localStorage.clear();
-          //   sessionStorage.clear();
-          //   navigate("/login");
-          // }
-          localStorage.setItem("logout_status", "complete");
-          window.parent.postMessage({ type: "LOGOUT" }, "*");
+        const errorMessage = error?.response?.data?.message
+          ?.trim()
+          ?.toLowerCase();
+
+        const contentSessionId = localStorage.getItem("contentSessionId");
+        const allAppContentSessionId = localStorage.getItem(
+          "allAppContentSessionId"
+        );
+
+        if (!errorMessage?.includes("profanity")) {
+          if (
+            process.env.REACT_APP_IS_APP_IFRAME === "true" &&
+            ((contentSessionId !== null &&
+              contentSessionId !== undefined &&
+              contentSessionId !== "") ||
+              (allAppContentSessionId !== null &&
+                allAppContentSessionId !== undefined &&
+                allAppContentSessionId !== ""))
+          ) {
+            localStorage.setItem("logout_reason", errorMessage);
+            localStorage.setItem("logout_status", "complete");
+          } else {
+            localStorage.clear();
+            sessionStorage.clear();
+            navigate("/login");
+          }
         }
       }
       return Promise.reject(error);
     }
   );
 
-  if (!appInitialized)
+  // Show loader during auth check
+  if (checkingAuth) {
     return (
-      <div
-        style={{
+      <Box
+        sx={{
           height: "100vh",
-          width: "100vw",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#f5f5f5",
-          fontSize: "20px",
-          fontWeight: "bold",
-          color: "#333",
-          fontFamily: "Arial, sans-serif",
+          backgroundColor: "#fff",
         }}
       >
-        "If the app doesn't load properly, please go back and login again."
-      </div>
+        <CircularProgress />
+      </Box>
     );
+  }
 
   return (
     <StyledEngineProvider injectFirst>
