@@ -103,10 +103,11 @@ const App = () => {
         const errorMessage = error?.response?.data?.message
           ?.trim()
           ?.toLowerCase();
-
-        // Skip only if message contains profanity
-        if (!errorMessage?.includes("profanity")) {
-          // Set logout info for ALL other errors (invalid token, unauthorized, etc.)
+        if (
+          errorMessage?.includes("unauthorized") ||
+          errorMessage?.includes("token") ||
+          errorMessage?.includes("logged")
+        ) {
           localStorage.setItem("logout_reason", errorMessage);
           localStorage.setItem("logout_status", "complete");
         }
