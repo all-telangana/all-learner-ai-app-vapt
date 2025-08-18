@@ -33,33 +33,76 @@
     <script src="./js/jquery-3.7.0.min.js" defer></script>
     <title>EkStep</title>
 
-    <!-- Content Security Policy -->
     <!-- <meta
       http-equiv="Content-Security-Policy"
       content="
-  default-src 'self';
-  script-src 'self' https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js 'unsafe-eval';
-  style-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com 'unsafe-inline';
-  object-src 'none';
-  base-uri 'self';
-  connect-src 'self' *.theall.ai https://all-dev-storage.s3.ap-south-1.amazonaws.com https://all-dev-content-service.s3.ap-south-1.amazonaws.com https://all-prod-content-service.s3.ap-south-1.amazonaws.com blob: https://huggingface.co https://cas-bridge.xethub.hf.co https://cdn.jsdelivr.net;
-  font-src 'self' https://fonts.googleapis.com https://fonts.cdnfonts.com https://fonts.gstatic.com;
-  frame-src 'self';
-  img-src 'self' data: blob: 
-  https://images.squarespace-cdn.com 
-  https://all-prod-content-service.s3.ap-south-1.amazonaws.com 
-  https://all-dev-content-service.s3.ap-south-1.amazonaws.com 
-  https://s3.ap-south-1.amazonaws.com 
-  https://raw.githubusercontent.com 
-  https://cdn.jsdelivr.net;
-  https://github.com
-  manifest-src 'self';
-  media-src 'self' blob: https://all-prod-content-service.s3.ap-south-1.amazonaws.com https://all-dev-content-service.s3.ap-south-1.amazonaws.com https://raw.githubusercontent.com https://github.com;
-  worker-src 'self' blob: https://d114esnbvw5tst.cloudfront.net;
-  form-action 'self';
-  frame-ancestors 'self';
-"
+        default-src 'none';
+        script-src 'self' 'unsafe-eval' 
+          https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js 
+          https://www.google.com/recaptcha/ 
+          https://www.gstatic.com/recaptcha/ 
+          https://www.gstatic.com/dialogflow-console/;
+
+        script-src-elem 'self' 
+          https://www.google.com/recaptcha/ 
+          https://www.gstatic.com/recaptcha/ 
+          https://www.gstatic.com/dialogflow-console/;
+
+        style-src 'self' 'unsafe-inline' 
+        https://fonts.googleapis.com 
+        https://fonts.cdnfonts.com 
+        https://www.gstatic.com ;
+
+        style-src-elem 'self' 'unsafe-inline' 
+        https://fonts.googleapis.com 
+        https://fonts.cdnfonts.com 
+        https://www.gstatic.com;
+
+        font-src 'self' 
+        https://fonts.googleapis.com 
+        https://fonts.cdnfonts.com 
+        https://fonts.gstatic.com;
+
+        img-src 'self' data: blob:
+          https://images.squarespace-cdn.com
+          https://all-prod-content-service.s3.ap-south-1.amazonaws.com
+          https://all-dev-content-service.s3.ap-south-1.amazonaws.com
+          https://all-dev-storage.s3.ap-south-1.amazonaws.com
+          https://s3.ap-south-1.amazonaws.com
+          https://cdn.jsdelivr.net;
+
+        media-src 'self' blob:
+          https://all-prod-content-service.s3.ap-south-1.amazonaws.com 
+          https://all-dev-content-service.s3.ap-south-1.amazonaws.com
+          https://all-dev-storage.s3.ap-south-1.amazonaws.com
+          https://s3.ap-south-1.amazonaws.com;
+
+        connect-src 'self'
+          http://localhost:5000
+          http://localhost:3000
+          ws://localhost:* 
+          ws://127.0.0.1:*
+          https://www.google.com
+          *.theall.ai
+          https://all-prod-content-service.s3.ap-south-1.amazonaws.com
+          https://dev-ekstep-nd-all-orchestration-service-853306655660.asia-south1.run.app
+          https://dev-ekstep-nd-all-learner-ai-services-853306655660.asia-south1.run.app
+          https://dev-ekstep-nd-all-content-service-853306655660.asia-south1.run.app
+          https://telemetry-dev.theall.ai
+          https://lab.the-axl.ai
+          https://lab2.the-axl.ai
+          https://api.lab.the-axl.ai
+          blob:;
+
+        form-action 'self';
+        object-src 'none';
+        base-uri 'none';
+        manifest-src 'self';
+        worker-src 'self' blob: https://d114esnbvw5tst.cloudfront.net;
+      "
     /> -->
+
+    <!-- frame-ancestors 'self' https://lab.the-axl.ai https://lab2.the-axl.ai https://api.lab.the-axl.ai; -->
   </head>
   <body>
     <div id="root" />
