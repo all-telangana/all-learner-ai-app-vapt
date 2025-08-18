@@ -12,7 +12,7 @@ import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
 import { getLocalData, setLocalData } from "./utils/constants";
 import { CircularProgress, Box } from "@mui/material";
-import LanguageModalNew from "../../utils/LanguageModal";
+import LanguageModalNew from "./utils/LanguageModal";
 
 const App = () => {
   const navigate = useNavigate();
