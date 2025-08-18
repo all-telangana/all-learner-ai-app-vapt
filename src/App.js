@@ -103,29 +103,13 @@ const App = () => {
         const errorMessage = error?.response?.data?.message
           ?.trim()
           ?.toLowerCase();
-
-        const contentSessionId = localStorage.getItem("contentSessionId");
-        const allAppContentSessionId = localStorage.getItem(
-          "allAppContentSessionId"
-        );
-
-        if (!errorMessage?.includes("profanity")) {
-          if (
-            process.env.REACT_APP_IS_APP_IFRAME === "true" &&
-            ((contentSessionId !== null &&
-              contentSessionId !== undefined &&
-              contentSessionId !== "") ||
-              (allAppContentSessionId !== null &&
-                allAppContentSessionId !== undefined &&
-                allAppContentSessionId !== ""))
-          ) {
-            localStorage.setItem("logout_reason", errorMessage);
-            localStorage.setItem("logout_status", "complete");
-          } else {
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/login");
-          }
+        if (
+          errorMessage?.includes("unauthorized") ||
+          errorMessage?.includes("token") ||
+          errorMessage?.includes("logged")
+        ) {
+          localStorage.setItem("logout_reason", errorMessage);
+          localStorage.setItem("logout_status", "complete");
         }
       }
       return Promise.reject(error);
