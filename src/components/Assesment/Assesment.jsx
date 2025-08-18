@@ -471,7 +471,8 @@ export const ProfileHeader = ({
     } finally {
       localStorage.clear();
       end({});
-      navigate("/login");
+      // navigate("/login");
+      localStorage.setItem("logout_status", "complete");
     }
   };
 

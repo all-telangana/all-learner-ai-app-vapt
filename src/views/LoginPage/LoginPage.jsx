@@ -1,5 +1,4 @@
-import React, { useState, useRef } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -7,11 +6,10 @@ import {
   Button,
   Grid,
   CircularProgress,
+  Box,
 } from "@mui/material";
-import config from "../../utils/urlConstants.json";
 import { useMediaQuery } from "@mui/material";
 import { fetchVirtualId } from "../../services/userservice/userService";
-import { jwtDecode } from "jwt-decode";
 import "./LoginPage.css";
 import { setLocalData } from "../../utils/constants";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -21,11 +19,15 @@ import LanguageModalNew from "../../utils/LanguageModal";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const isMobile = useMediaQuery("(max-width:600px)");
   const ranonce = useRef(false);
+
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleWordClick = () => {
     setShowModal(true);
@@ -38,13 +40,12 @@ const LoginPage = () => {
       return;
     }
     localStorage.clear();
-
+    setLoading(true);
     try {
       const usernameDetails = await fetchVirtualId(username);
       let token = usernameDetails?.result?.token;
 
       localStorage.setItem("apiToken", token);
-      // const tokenDetails = jwtDecode(token);
       if (token) {
         setLocalData("profileName", username);
 
@@ -96,6 +97,28 @@ const LoginPage = () => {
       alert("An error occurred. Please try again later.");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("apiToken") !== null) {
+      navigate("/discover-start");
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(240,240,240,0.6)",
+        }}
+      >
+        <CircularProgress size="3rem" sx={{ color: "#E15404" }} />
+      </Box>
+    );
+  }
 
   return (
     <div className={`login-container ${isMobile ? "mobile-view" : ""}`}>

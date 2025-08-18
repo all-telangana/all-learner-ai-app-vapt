@@ -1,35 +1,109 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ThemeProvider } from "@mui/material";
 import { useNavigate } from "../node_modules/react-router-dom/dist/index";
 import { StyledEngineProvider } from "@mui/material/styles";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import routes from "./routes";
 import { AppContent } from "./views";
 import theme from "./assets/styles/theme";
+import { initialize } from "./services/telementryService";
+import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
+import { getLocalData, setLocalData } from "./utils/constants";
+import { CircularProgress, Box } from "@mui/material";
+import LanguageModalNew from "../../utils/LanguageModal";
 
 const App = () => {
   const navigate = useNavigate();
   const ranonce = useRef(false);
 
+  const [showModal, setShowModal] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [appInitialized, setAppInitialized] = useState(false);
+
+  const handleWordClick = () => {
+    setShowModal(true);
+  };
+
+  // Step 1: Check token/profile
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      window.telemetry &&
-        window.telemetry.syncEvents &&
-        window.telemetry.syncEvents();
+    const token = localStorage.getItem("apiToken");
+    const profileName = getLocalData("profileName");
+
+    if (token && profileName) {
+      setAppInitialized(true);
+    } else {
+      navigate("/login");
+    }
+    setCheckingAuth(false); // stop loader after check
+  }, [navigate]);
+
+  // Step 2: Initialize telemetry
+  useEffect(() => {
+    if (!appInitialized) return;
+
+    const initService = async (visitorId) => {
+      await initialize({
+        context: {
+          mode: process.env.REACT_APP_MODE,
+          authToken: localStorage.getItem("apiToken"),
+          did: localStorage.getItem("deviceId") || visitorId,
+          uid: "anonymous",
+          channel: process.env.REACT_APP_CHANNEL,
+          env: process.env.REACT_APP_ENV,
+          pdata: {
+            id: process.env.REACT_APP_ID,
+            ver: process.env.REACT_APP_VER,
+            pid: process.env.REACT_APP_PID,
+          },
+          tags: [""],
+          timeDiff: 0,
+          host: process.env.REACT_APP_HOST,
+          endpoint: process.env.REACT_APP_ENDPOINT,
+          apislug: process.env.REACT_APP_APISLUG,
+        },
+        config: {},
+        metadata: {},
+      });
+
+      if (!ranonce.current) {
+        if (localStorage.getItem("contentSessionId") === null) {
+          startEvent();
+        }
+        ranonce.current = true;
+      }
     };
 
-    // Add the event listener
+    const setFp = async () => {
+      const fp = await FingerprintJS.load();
+      const { visitorId } = await fp.get();
+      initService(visitorId);
+      setLocalData("readMatch", true);
+      //setLocalData("wordWall", true);
+      handleWordClick();
+    };
+
+    setFp();
+  }, [appInitialized]);
+
+  // Step 3: Sync telemetry before unload
+  useEffect(() => {
+    if (!appInitialized) return;
+
+    const handleBeforeUnload = () => {
+      window.telemetry?.syncEvents?.();
+    };
+
     window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [appInitialized]);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
+  // Step 4: Axios interceptor for auth errors
   axios.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      return response;
+    },
     (error) => {
       if (
         error.response &&
@@ -43,36 +117,42 @@ const App = () => {
           errorMessage?.includes("token") ||
           errorMessage?.includes("logged")
         ) {
-          if (
-            localStorage.getItem("contentSessionId") &&
-            process.env.REACT_APP_IS_APP_IFRAME === "true"
-          ) {
-            window.parent.postMessage(
-              {
-                message: "Logged out!",
-              },
-              window?.location?.ancestorOrigins?.[0] ||
-                window.parent.location.origin
-            );
-            console.log("if logout!");
-            localStorage.clear();
-            sessionStorage.clear();
-          } else {
-            console.log("else logout!");
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/login");
-          }
+          localStorage.setItem("logout_reason", errorMessage);
+          localStorage.setItem("logout_status", "complete");
         }
       }
       return Promise.reject(error);
     }
   );
 
+  // Show loader during auth check
+  if (checkingAuth) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <AppContent routes={routes} />
+        {/* Show language modal when showModal = true */}
+        {showModal && (
+          <LanguageModalNew
+            show={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        )}
       </ThemeProvider>
     </StyledEngineProvider>
   );
