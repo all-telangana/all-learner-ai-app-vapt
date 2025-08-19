@@ -95,6 +95,8 @@ const LoginPage = () => {
     } catch (error) {
       console.error(error);
       alert("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 

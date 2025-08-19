@@ -10,21 +10,15 @@ import { initialize } from "./services/telementryService";
 import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
-import { getLocalData, setLocalData } from "./utils/constants";
+import { getLocalData } from "./utils/constants";
 import { CircularProgress, Box } from "@mui/material";
-import LanguageModalNew from "./utils/LanguageModal";
 
 const App = () => {
   const navigate = useNavigate();
   const ranonce = useRef(false);
 
-  const [showModal, setShowModal] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [appInitialized, setAppInitialized] = useState(false);
-
-  const handleWordClick = () => {
-    setShowModal(true);
-  };
 
   // Step 1: Check token/profile
   useEffect(() => {
@@ -79,9 +73,6 @@ const App = () => {
       const fp = await FingerprintJS.load();
       const { visitorId } = await fp.get();
       initService(visitorId);
-      setLocalData("readMatch", true);
-      //setLocalData("wordWall", true);
-      handleWordClick();
     };
 
     setFp();
@@ -146,13 +137,6 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <AppContent routes={routes} />
-        {/* Show language modal when showModal = true */}
-        {showModal && (
-          <LanguageModalNew
-            show={showModal}
-            onClose={() => setShowModal(false)}
-          />
-        )}
       </ThemeProvider>
     </StyledEngineProvider>
   );
