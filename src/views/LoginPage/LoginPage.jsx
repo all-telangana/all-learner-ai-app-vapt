@@ -86,6 +86,7 @@ const LoginPage = () => {
         await initService(visitorId);
 
         setLocalData("readMatch", true);
+        //setLocalData("rFlow", true);
         //setLocalData("wordWall", true);
         handleWordClick();
         navigate("/discover-start");

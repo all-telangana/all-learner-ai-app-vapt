@@ -7,6 +7,7 @@ import BingoCard from "../../components/Practice/BingoCard";
 import SyllablePuzzle from "../../components/Practice/SyllablePuzzle";
 import ReadAloud from "../../components/Practice/ReadAloud";
 import R3 from "../../components/Practice/R3";
+import R0 from "../../RFlow/R0";
 import R1 from "../../RFlow/R1";
 import R2 from "../../RFlow/R2";
 import R3Flow from "../../RFlow/R3";
@@ -108,6 +109,18 @@ const Practice = () => {
   const [rStep, setRStep] = useState(() => {
     return Number(getLocalData("rStep")) || 2;
   });
+  const [rStepZero, setRStepZero] = useState(() => {
+    return Number(getLocalData("rStepZero"));
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRStepZero(Number(getLocalData("rStepZero")));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  console.log("practice rStepZero", rStepZero);
 
   const levels = {
     en: {
@@ -4493,7 +4506,9 @@ const Practice = () => {
             return;
           }
 
-          const addCorrectWords = await addCorrectPracticeWords();
+          if (level === 1 || level === 2) {
+            const addCorrectWords = await addCorrectPracticeWords();
+          }
 
           const result = await addPointer(points, milestone);
           const awardedPoints = result?.result?.points;
@@ -4585,6 +4600,7 @@ const Practice = () => {
             setLocalData("mFail", true);
             setTimeout(() => {
               setLocalData("rFlow", true);
+              setLocalData("rStepZero", 0);
             }, 7000);
           }
         }
@@ -4621,7 +4637,8 @@ const Practice = () => {
               storyMode: currentGetContent?.storyMode,
               CEFR_level: currentGetContent?.CEFR_level,
               multilingual: currentGetContent?.multilingual,
-            }
+            },
+            level
           );
 
           setTotalSyllableCount(resGetContent?.totalSyllableCount);
@@ -4884,7 +4901,8 @@ const Practice = () => {
             storyMode: currentGetContent?.storyMode,
             CEFR_level: currentGetContent?.CEFR_level,
             multilingual: currentGetContent?.multilingual,
-          }
+          },
+          level
         );
         // TODO: handle error if resWord is empty
 
@@ -5015,7 +5033,8 @@ const Practice = () => {
             storyMode: currentGetContent?.storyMode,
             CEFR_level: currentGetContent?.CEFR_level,
             multilingual: currentGetContent?.multilingual,
-          }
+          },
+          level
         );
         setTotalSyllableCount(resWord?.totalSyllableCount);
         setLivesData({
@@ -5234,6 +5253,7 @@ const Practice = () => {
                 ? questions[currentQuestion]?.mechanics_data?.[0]?.text
                 : questions[currentQuestion]?.contentSourceData?.[0]?.text,
             hints: questions[currentQuestion]?.mechanics_data?.[0]?.hints?.text,
+            multilingual: questions[currentQuestion]?.multilingual,
             contentType: currentContentType,
             contentId: questions[currentQuestion]?.contentId,
             setVoiceText,
@@ -5419,7 +5439,54 @@ const Practice = () => {
           }}
         />
       );
-    } else if (rFlow === "true" && level === 1) {
+    } else if (rFlow === "true" && level === 1 && rStepZero === 0) {
+      return (
+        <R0
+          page={page}
+          setPage={setPage}
+          {...{
+            level: level,
+            header:
+              questions[currentQuestion]?.contentType === "image"
+                ? `Guess the below image`
+                : `Speak the below word`,
+            //
+            currentImg: currentImage,
+            parentWords: parentWords,
+            contentType: currentContentType,
+            contentId: questions[currentQuestion]?.contentId,
+            setVoiceText,
+            setRecordedAudio,
+            setVoiceAnimate,
+            storyLine,
+            handleNext,
+            type: "word",
+            // image: elephant,
+            enableNext,
+            showTimer: false,
+            points,
+            steps: questions?.length,
+            currentStep: currentQuestion + 1,
+            progressData,
+            showProgress: true,
+            background:
+              isShowCase &&
+              "linear-gradient(281.02deg, #AE92FF 31.45%, #555ADA 100%)",
+            playTeacherAudio,
+            callUpdateLearner: isShowCase,
+            disableScreen,
+            isShowCase,
+            handleBack: !isShowCase && handleBack,
+            setEnableNext,
+            setIsNextButtonCalled,
+            loading,
+            setOpenMessageDialog,
+            vocabCount,
+            wordCount,
+          }}
+        />
+      );
+    } else if (rFlow === "true" && level === 1 && rStepZero === 1) {
       return (
         <R1
           page={page}
@@ -5644,6 +5711,7 @@ const Practice = () => {
             //
             currentImg: questions[currentQuestion]?.contentSourceData?.[0],
             parentWords: questions[currentQuestion]?.mechanics_data?.[0],
+            multilingual: questions[currentQuestion]?.multilingual,
             contentType: currentContentType,
             contentId: questions[currentQuestion]?.contentId,
             setVoiceText,
@@ -5689,7 +5757,7 @@ const Practice = () => {
                 : `Speak the below word`,
             //
             currentImg: currentImage,
-            parentWords: parentWords,
+            parentWords: questions[currentQuestion]?.mechanics_data?.[0],
             contentType: currentContentType,
             contentId: questions[currentQuestion]?.contentId,
             setVoiceText,
@@ -6370,10 +6438,11 @@ const Practice = () => {
                 ? `Guess the below image`
                 : `Speak the below word`,
             //
-            currentImg: currentImage,
-            parentWords: parentWords,
+            currentImg: questions[currentQuestion]?.contentSourceData?.[0],
+            parentWords: questions[currentQuestion]?.mechanics_data?.[0],
             contentType: currentContentType,
             contentId: questions[currentQuestion]?.contentId,
+            multilingual: questions[currentQuestion]?.multilingual,
             setVoiceText,
             setRecordedAudio,
             setVoiceAnimate,
