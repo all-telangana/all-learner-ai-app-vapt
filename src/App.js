@@ -10,8 +10,8 @@ import { initialize } from "./services/telementryService";
 import { startEvent } from "./services/callTelemetryIntract";
 import "@tekdi/all-telemetry-sdk/index.js";
 import axios from "axios";
-import { getLocalData } from "./utils/constants";
 import { CircularProgress, Box } from "@mui/material";
+import { getLocalData } from "./utils/constants";
 
 const App = () => {
   const navigate = useNavigate();
