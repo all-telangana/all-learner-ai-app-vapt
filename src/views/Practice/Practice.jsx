@@ -4233,6 +4233,9 @@ const Practice = () => {
   }
 
   const currentLevel = practiceSteps?.[currentPracticeStep]?.title || "P1";
+  const milestoneType = ["S1", "S2"].includes(currentLevel)
+    ? "showcase"
+    : "practice";
 
   //console.log("prog", progressDatas);
 
@@ -4573,7 +4576,7 @@ const Practice = () => {
             try {
               await addLesson({
                 sessionId,
-                milestone: `practice`,
+                milestone: milestoneType,
                 lesson: "0",
                 progress: 0,
                 language: lang,
@@ -4600,7 +4603,7 @@ const Practice = () => {
         }
         await addLesson({
           sessionId: sessionId,
-          milestone: `practice`,
+          milestone: milestoneType,
           lesson: newPracticeStep,
           progress: currentPracticeProgress,
           language: lang,
@@ -4931,16 +4934,16 @@ const Practice = () => {
 
       let showcaseLevel = userState === 4 || userState === 9;
       setIsShowCase(showcaseLevel);
-      if (showcaseLevel) {
-        await addLesson({
-          sessionId: sessionId,
-          milestone: "showcase",
-          lesson: userState,
-          progress: 0,
-          language: lang,
-          milestoneLevel: `m${level}`,
-        });
-      }
+      // if (showcaseLevel) {
+      //   await addLesson({
+      //     sessionId: sessionId,
+      //     milestone: "showcase",
+      //     lesson: userState,
+      //     progress: 0,
+      //     language: lang,
+      //     milestoneLevel: `m${level}`,
+      //   });
+      // }
       setCurrentQuestion(practiceProgress?.currentQuestion || 0);
       setLocalData("practiceProgress", JSON.stringify(practiceProgress));
       setProgressData(practiceProgress);
@@ -4986,7 +4989,7 @@ const Practice = () => {
       };
       await addLesson({
         sessionId: sessionId,
-        milestone: "practice",
+        milestone: milestoneType,
         lesson: newCurrentPracticeStep,
         progress: (newCurrentPracticeStep / practiceSteps.length) * 100,
         language: lang,
