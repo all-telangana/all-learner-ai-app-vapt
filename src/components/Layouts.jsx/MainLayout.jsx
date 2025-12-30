@@ -517,7 +517,8 @@ const MainLayout = (props) => {
                 </Box>
                 <CardContent
                   sx={{
-                    minHeight: "100%",
+                    flex: 1,
+                    overflowY: "auto",
                     opacity: disableScreen ? 0.25 : 1,
                     pointerEvents: disableScreen ? "none" : "initial",
                   }}

@@ -13,7 +13,7 @@ const App = () => {
   const navigate = useNavigate();
   const ranonce = useRef(false);
 
-  console.log("appSessionid", getLocalData("sessionId"));
+  // console.log("appSessionid", getLocalData("sessionId"));
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
