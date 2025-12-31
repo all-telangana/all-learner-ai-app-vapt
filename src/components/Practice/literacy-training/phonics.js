@@ -10,6 +10,20 @@ import iglooImg from "../../../assets/literacy-training-images/igloo.png";
 import jamImg from "../../../assets/literacy-training-images/jam.png";
 import kiteImg from "../../../assets/literacy-training-images/kite.png";
 import lionImg from "../../../assets/literacy-training-images/lion.png";
+import monkeyImg from "../../../assets/literacy-training-images/monkey.png";
+import nestImg from "../../../assets/literacy-training-images/nest.png";
+import orangeImg from "../../../assets/literacy-training-images/orange.png";
+import parrotImg from "../../../assets/literacy-training-images/parrot.png";
+import queenImg from "../../../assets/literacy-training-images/queen.png";
+import rabbitImg from "../../../assets/literacy-training-images/rabbit.png";
+import sunImg from "../../../assets/literacy-training-images/sun.png";
+import tigerImg from "../../../assets/literacy-training-images/tiger.png";
+import umbrellaImg from "../../../assets/literacy-training-images/umbrella.png";
+import vanImg from "../../../assets/literacy-training-images/van.png";
+import watchImg from "../../../assets/literacy-training-images/watch.png";
+import xylophoneImg from "../../../assets/literacy-training-images/xylophone.png";
+import yakImg from "../../../assets/literacy-training-images/yak.png";
+import zebraImg from "../../../assets/literacy-training-images/zebra.png";
 
 export const englishPhonicsData = [
   {
@@ -126,7 +140,7 @@ export const englishPhonicsData = [
     syllableText: "Mm",
     wordText: "Monkey",
     complexWord: "Mat",
-    image: "https://placehold.co/300x300/ff6b6b/FFFFFF?text=Monkey",
+    image: monkeyImg,
     color: "var(--card-red)",
   },
   {
@@ -135,7 +149,7 @@ export const englishPhonicsData = [
     syllableText: "Nn",
     wordText: "Nest",
     complexWord: "Net",
-    image: "https://placehold.co/300x300/4ecdc4/FFFFFF?text=Nest",
+    image: nestImg,
     color: "var(--card-blue)",
   },
   {
@@ -144,7 +158,7 @@ export const englishPhonicsData = [
     syllableText: "Oo",
     wordText: "Orange",
     complexWord: "Owl",
-    image: "https://placehold.co/300x300/ffe66d/FFFFFF?text=Orange",
+    image: orangeImg,
     color: "var(--card-yellow)",
   },
   {
@@ -153,7 +167,7 @@ export const englishPhonicsData = [
     syllableText: "Pp",
     wordText: "Parrot",
     complexWord: "Pen",
-    image: "https://placehold.co/300x300/95e1d3/FFFFFF?text=Parrot",
+    image: parrotImg,
     color: "var(--card-green)",
   },
   {
@@ -162,7 +176,7 @@ export const englishPhonicsData = [
     syllableText: "Qq",
     wordText: "Queen",
     complexWord: "Quiz",
-    image: "https://placehold.co/300x300/e0bbe4/FFFFFF?text=Queen",
+    image: queenImg,
     color: "var(--card-purple)",
   },
   {
@@ -171,7 +185,7 @@ export const englishPhonicsData = [
     syllableText: "Rr",
     wordText: "Rabbit",
     complexWord: "Rat",
-    image: "https://placehold.co/300x300/957dad/FFFFFF?text=Rabbit",
+    image: rabbitImg,
     color: "var(--card-pink)",
   },
   {
@@ -180,7 +194,7 @@ export const englishPhonicsData = [
     syllableText: "Ss",
     wordText: "Sun",
     complexWord: "Sun",
-    image: "https://placehold.co/300x300/ffdfd3/FFFFFF?text=Sun",
+    image: sunImg,
     color: "var(--card-orange)",
   },
   {
@@ -189,7 +203,7 @@ export const englishPhonicsData = [
     syllableText: "Tt",
     wordText: "Tiger",
     complexWord: "Toy",
-    image: "https://placehold.co/300x300/fec8d8/FFFFFF?text=Tiger",
+    image: tigerImg,
     color: "var(--card-red)",
   },
   {
@@ -198,7 +212,7 @@ export const englishPhonicsData = [
     syllableText: "Uu",
     wordText: "Umbrella",
     complexWord: "Urn",
-    image: "https://placehold.co/300x300/d291bc/FFFFFF?text=Umbrella",
+    image: umbrellaImg,
     color: "var(--card-blue)",
   },
   {
@@ -207,7 +221,7 @@ export const englishPhonicsData = [
     syllableText: "Vv",
     wordText: "Van",
     complexWord: "Van",
-    image: "https://placehold.co/300x300/a0d2eb/FFFFFF?text=Van",
+    image: vanImg,
     color: "var(--card-cyan)",
   },
   {
@@ -216,7 +230,7 @@ export const englishPhonicsData = [
     syllableText: "Ww",
     wordText: "Watch",
     complexWord: "Web",
-    image: "https://placehold.co/300x300/e5eec1/FFFFFF?text=Watch",
+    image: watchImg,
     color: "var(--card-lime)",
   },
   {
@@ -225,7 +239,7 @@ export const englishPhonicsData = [
     syllableText: "Xx",
     wordText: "Xylophone",
     complexWord: "Box",
-    image: "https://placehold.co/300x300/b3cde0/FFFFFF?text=Xylophone",
+    image: xylophoneImg,
     color: "var(--card-teal)",
   },
   {
@@ -234,7 +248,7 @@ export const englishPhonicsData = [
     syllableText: "Yy",
     wordText: "Yak",
     complexWord: "Yak",
-    image: "https://placehold.co/300x300/ffc1b6/FFFFFF?text=Yak",
+    image: yakImg,
     color: "var(--card-yellow)",
   },
   {
@@ -243,7 +257,7 @@ export const englishPhonicsData = [
     syllableText: "Zz",
     wordText: "Zebra",
     complexWord: "Zip",
-    image: "https://placehold.co/300x300/c5a3ff/FFFFFF?text=Zebra",
+    image: zebraImg,
     color: "var(--card-indigo)",
   },
 ];
